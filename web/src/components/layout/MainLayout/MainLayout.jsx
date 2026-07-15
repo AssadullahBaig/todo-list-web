@@ -1,14 +1,16 @@
-import Sidebar from "../Sidebar/Sidebar";
-import Header from "../Header/Header";
+import Header from "../Header";
+import Sidebar from "../Sidebar";
 
 function MainLayout({ children }) {
   return (
-    <div>
+    <div className="flex min-h-screen bg-slate-950">
       <Sidebar />
-      <main>
+
+      <div className="flex flex-1 flex-col">
         <Header />
-        {children}
-      </main>
+
+        <main className="flex-1 overflow-y-auto">{children}</main>
+      </div>
     </div>
   );
 }

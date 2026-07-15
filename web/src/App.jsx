@@ -1,7 +1,7 @@
-import MainLayout from "./components/layout/MainLayout/MainLayout";
+import TodoPage from "./pages/TodoPage";
 
 function App() {
-  return <MainLayout></MainLayout>;
+  return <TodoPage />;
 }
 
 export default App;
