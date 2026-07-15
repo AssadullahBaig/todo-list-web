@@ -1,13 +1,22 @@
 import MainLayout from "../../components/layout/MainLayout";
+import PageHeader from "../../components/todo/TodoHeader";
+import TodoInput from "../../components/todo/TodoInput";
+import TodoFilters from "../../components/todo/TodoFilters";
+import TodoList from "../../components/todo/TodoList";
+
+import todos from "../../data/todos";
 
 function TodoPage() {
   return (
     <MainLayout>
-      <div className="p-8">
-        <h1 className="text-4x1 font-bold text-white">My Tasks</h1>
-        <p className="mt-2 text-slate-400">
-          Manage your daily work efficiently.
-        </p>
+      <div className="mx-auto max-w-5xl p-8">
+        <PageHeader />
+
+        <TodoInput />
+
+        <TodoFilters />
+
+        <TodoList todos={todos} />
       </div>
     </MainLayout>
   );
