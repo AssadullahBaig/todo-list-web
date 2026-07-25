@@ -1,23 +1,18 @@
+import { useState } from "react";
+
 import MainLayout from "../../components/layout/MainLayout";
-import PageHeader from "../../components/todo/TodoHeader";
-import TodoInput from "../../components/todo/TodoInput";
-import TodoFilters from "../../components/todo/TodoFilters";
+import PageHeader from "../../components/todo/PageHeader";
 import TodoList from "../../components/todo/TodoList";
 
-import todos from "../../data/todos";
+import initialTodos from "../../data/initialTodos";
 
 function TodoPage() {
+  const [todos, setTodos] = useState(initialTodos);
+
   return (
     <MainLayout>
-      <div className="mx-auto max-w-5xl p-8">
-        <PageHeader />
-
-        <TodoInput />
-
-        <TodoFilters />
-
-        <TodoList todos={todos} />
-      </div>
+      <PageHeader />
+      <TodoList todos={todos} />
     </MainLayout>
   );
 }
