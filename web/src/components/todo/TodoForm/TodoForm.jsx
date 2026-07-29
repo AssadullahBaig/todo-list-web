@@ -1,4 +1,4 @@
-function TodoForm() {
+function TodoForm({ newTodo, onInputChange }) {
   return (
     <section className="mb-8 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow">
       <h2 className="mb-6 text-xl font-semibold text-white">Add New Task</h2>
@@ -14,7 +14,10 @@ function TodoForm() {
 
           <input
             id="title"
+            name="title"
             type="text"
+            value={newTodo.title}
+            onChange={onInputChange}
             placeholder="Enter task title..."
             className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-white outline-none transition focus:border-violet-500"
           />
@@ -30,7 +33,10 @@ function TodoForm() {
 
           <textarea
             id="description"
+            name="description"
             rows="3"
+            value={newTodo.description}
+            onChange={onInputChange}
             placeholder="Enter task description..."
             className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-white outline-none transition focus:border-violet-500"
           />
@@ -47,7 +53,10 @@ function TodoForm() {
 
             <input
               id="dueDate"
+              name="dueDate"
               type="date"
+              value={newTodo.dueDate}
+              onChange={onInputChange}
               className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-white outline-none transition focus:border-violet-500"
             />
           </div>
@@ -62,6 +71,9 @@ function TodoForm() {
 
             <select
               id="priority"
+              name="priority"
+              value={newTodo.priority}
+              onChange={onInputChange}
               className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-white outline-none transition focus:border-violet-500"
             >
               <option>High</option>

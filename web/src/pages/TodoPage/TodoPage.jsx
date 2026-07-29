@@ -1,7 +1,8 @@
 import { useState } from "react";
 
 import MainLayout from "../../components/layout/MainLayout";
-import PageHeader from "../../components/todo/PageHeader";
+import TodoHeader from "../../components/todo/TodoHeader";
+import TodoForm from "../../components/todo/TodoForm";
 import TodoList from "../../components/todo/TodoList";
 
 import initialTodos from "../../data/initialTodos";
@@ -9,9 +10,27 @@ import initialTodos from "../../data/initialTodos";
 function TodoPage() {
   const [todos, setTodos] = useState(initialTodos);
 
+  const [newTodo, setNewTodo] = useState({
+    title: "",
+    description: "",
+    dueDate: "",
+    priority: "Medium",
+  });
+
+  function handleInputChange(event) {
+    const { name, value } = event.target;
+    setNewTodo((previousTodo) => ({
+      ...previousTodo,
+      [name]: value,
+    }));
+  }
+
   return (
     <MainLayout>
-      <PageHeader />
+      <TodoHeader />
+
+      <TodoForm newTodo={newTodo} onInputChange={handleInputChange} />
+
       <TodoList todos={todos} />
     </MainLayout>
   );
