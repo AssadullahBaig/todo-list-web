@@ -1,9 +1,9 @@
-function TodoForm({ newTodo, onInputChange }) {
+function TodoForm({ newTodo, onInputChange, onSubmit }) {
   return (
     <section className="mb-8 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow">
       <h2 className="mb-6 text-xl font-semibold text-white">Add New Task</h2>
 
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={onSubmit}>
         <div>
           <label
             htmlFor="title"

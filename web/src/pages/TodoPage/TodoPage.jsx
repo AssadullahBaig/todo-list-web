@@ -19,17 +19,48 @@ function TodoPage() {
 
   function handleInputChange(event) {
     const { name, value } = event.target;
+
     setNewTodo((previousTodo) => ({
       ...previousTodo,
       [name]: value,
     }));
   }
 
+  function handleAddTodo(event) {
+    event.preventDefault();
+
+    if (newTodo.title.trim() === "") {
+      return;
+    }
+
+    const todo = {
+      id: Date.now(),
+      title: newTodo.title,
+      description: newTodo.description,
+      dueDate: newTodo.dueDate,
+      priority: newTodo.priority,
+      completed: false,
+    };
+
+    setTodos((previousTodos) => [...previousTodos, todo]);
+
+    setNewTodo({
+      title: "",
+      description: "",
+      dueDate: "",
+      priority: "Medium",
+    });
+  }
+
   return (
     <MainLayout>
       <TodoHeader />
 
-      <TodoForm newTodo={newTodo} onInputChange={handleInputChange} />
+      <TodoForm
+        newTodo={newTodo}
+        onInputChange={handleInputChange}
+        onSubmit={handleAddTodo}
+      />
 
       <TodoList todos={todos} />
     </MainLayout>
