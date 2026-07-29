@@ -1,4 +1,4 @@
-function TodoForm({ newTodo, onInputChange, onSubmit }) {
+function TodoForm({ newTodo, onInputChange, onSubmit, isEditing }) {
   return (
     <section className="mb-8 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow">
       <h2 className="mb-6 text-xl font-semibold text-white">Add New Task</h2>
@@ -87,7 +87,7 @@ function TodoForm({ newTodo, onInputChange, onSubmit }) {
           type="submit"
           className="w-full rounded-xl bg-violet-600 px-5 py-3 font-medium text-white transition hover:bg-violet-500"
         >
-          Add Task
+          {isEditing ? "Save Changes" : "Add Task"}
         </button>
       </form>
     </section>

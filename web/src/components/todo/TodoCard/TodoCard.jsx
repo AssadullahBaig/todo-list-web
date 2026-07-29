@@ -1,4 +1,4 @@
-function TodoCard({ todo, onDelete, onToggle }) {
+function TodoCard({ todo, onDelete, onToggle, onEdit }) {
   const { id, title, description, dueDate, priority, completed } = todo;
 
   return (
@@ -29,6 +29,14 @@ function TodoCard({ todo, onDelete, onToggle }) {
           <span className="rounded-full bg-violet-600 px-3 py-1 text-sm text-white">
             {priority}
           </span>
+
+          <button
+            type="button"
+            onClick={() => onEdit(todo)}
+            className="rounded-lg bg-blue-600 px-3 py-1 text-sm text-white transition hover:bg-blue-500"
+          >
+            Edit
+          </button>
 
           <button
             type="button"

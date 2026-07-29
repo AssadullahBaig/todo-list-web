@@ -1,12 +1,13 @@
 import TodoCard from "../TodoCard";
 
-function TodoList({ todos, onDelete, onToggle }) {
+function TodoList({ todos, onDelete, onToggle, onEdit }) {
   const todoCards = todos.map((todo) => (
     <TodoCard
       key={todo.id}
       todo={todo}
       onDelete={onDelete}
       onToggle={onToggle}
+      onEdit={onEdit}
     />
   ));
 

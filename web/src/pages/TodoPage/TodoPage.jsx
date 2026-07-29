@@ -8,14 +8,16 @@ import TodoList from "../../components/todo/TodoList";
 import initialTodos from "../../data/initialTodos";
 
 function TodoPage() {
-  const [todos, setTodos] = useState(initialTodos);
-
-  const [newTodo, setNewTodo] = useState({
+  const emptyTodo = {
     title: "",
     description: "",
     dueDate: "",
     priority: "Medium",
-  });
+  };
+
+  const [todos, setTodos] = useState(initialTodos);
+  const [newTodo, setNewTodo] = useState(emptyTodo);
+  const [editingTodoId, setEditingTodoId] = useState(null);
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -26,48 +28,72 @@ function TodoPage() {
     }));
   }
 
-  function handleAddTodo(event) {
+  function handleSubmit(event) {
     event.preventDefault();
 
     if (newTodo.title.trim() === "") {
       return;
     }
 
+    if (editingTodoId !== null) {
+      setTodos((previousTodos) =>
+        previousTodos.map((todo) =>
+          todo.id === editingTodoId
+            ? {
+                ...todo,
+                ...newTodo,
+              }
+            : todo,
+        ),
+      );
+
+      setEditingTodoId(null);
+      setNewTodo(emptyTodo);
+
+      return;
+    }
+
     const todo = {
       id: Date.now(),
-      title: newTodo.title,
-      description: newTodo.description,
-      dueDate: newTodo.dueDate,
-      priority: newTodo.priority,
+      ...newTodo,
       completed: false,
     };
 
     setTodos((previousTodos) => [...previousTodos, todo]);
-
-    setNewTodo({
-      title: "",
-      description: "",
-      dueDate: "",
-      priority: "Medium",
-    });
+    setNewTodo(emptyTodo);
   }
 
   function handleDeleteTodo(id) {
     setTodos((previousTodos) => previousTodos.filter((todo) => todo.id !== id));
+
+    if (editingTodoId === id) {
+      setEditingTodoId(null);
+      setNewTodo(emptyTodo);
+    }
   }
 
   function handleToggleComplete(id) {
     setTodos((previousTodos) =>
-      previousTodos.map((todo) => {
-        if (todo.id == id) {
-          return {
-            ...todo,
-            completed: !todo.completed,
-          };
-        }
-        return todo;
-      }),
+      previousTodos.map((todo) =>
+        todo.id === id
+          ? {
+              ...todo,
+              completed: !todo.completed,
+            }
+          : todo,
+      ),
     );
+  }
+
+  function handleEditTodo(todo) {
+    setEditingTodoId(todo.id);
+
+    setNewTodo({
+      title: todo.title,
+      description: todo.description,
+      dueDate: todo.dueDate,
+      priority: todo.priority,
+    });
   }
 
   return (
@@ -77,13 +103,15 @@ function TodoPage() {
       <TodoForm
         newTodo={newTodo}
         onInputChange={handleInputChange}
-        onSubmit={handleAddTodo}
+        onSubmit={handleSubmit}
+        isEditing={editingTodoId !== null}
       />
 
       <TodoList
         todos={todos}
         onDelete={handleDeleteTodo}
         onToggle={handleToggleComplete}
+        onEdit={handleEditTodo}
       />
     </MainLayout>
   );
