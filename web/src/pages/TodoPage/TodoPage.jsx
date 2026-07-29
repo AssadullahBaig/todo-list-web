@@ -52,6 +52,10 @@ function TodoPage() {
     });
   }
 
+  function handleDeleteTodo(id) {
+    setTodos((previousTodos) => previousTodos.filter((todo) => todo.id !== id));
+  }
+
   return (
     <MainLayout>
       <TodoHeader />
@@ -62,7 +66,7 @@ function TodoPage() {
         onSubmit={handleAddTodo}
       />
 
-      <TodoList todos={todos} />
+      <TodoList todos={todos} onDelete={handleDeleteTodo} />
     </MainLayout>
   );
 }
