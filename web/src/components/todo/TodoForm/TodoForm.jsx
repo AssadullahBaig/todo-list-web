@@ -1,4 +1,4 @@
-function TodoForm({ newTodo, onInputChange, onSubmit, isEditing }) {
+function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
   return (
     <section className="mb-8 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow">
       <h2 className="mb-6 text-xl font-semibold text-white">Add New Task</h2>
@@ -83,12 +83,24 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing }) {
           </div>
         </div>
 
-        <button
-          type="submit"
-          className="w-full rounded-xl bg-violet-600 px-5 py-3 font-medium text-white transition hover:bg-violet-500"
-        >
-          {isEditing ? "Save Changes" : "Add Task"}
-        </button>
+        <div className="flex gap-4">
+          <button
+            type="submit"
+            className="flex-1 rounded-xl bg-violet-600 px-5 py-3 font-medium text-white transition hover:bg-violet-500"
+          >
+            {isEditing ? "Save Changes" : "Add Task"}
+          </button>
+
+          {isEditing && (
+            <button
+              type="button"
+              onClick={onCancel}
+              className="rounded-xl border border-slate-700 px-5 py-3 text-white transition hover:bg-slate-800"
+            >
+              Cancel
+            </button>
+          )}
+        </div>
       </form>
     </section>
   );

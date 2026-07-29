@@ -96,6 +96,17 @@ function TodoPage() {
     });
   }
 
+  function handleCancelEdit() {
+    setEditingTodoId(null);
+
+    setNewTodo({
+      title: "",
+      description: "",
+      dueDate: "",
+      priority: "Medium",
+    });
+  }
+
   return (
     <MainLayout>
       <TodoHeader />
@@ -105,6 +116,7 @@ function TodoPage() {
         onInputChange={handleInputChange}
         onSubmit={handleSubmit}
         isEditing={editingTodoId !== null}
+        onCancel={handleCancelEdit}
       />
 
       <TodoList
