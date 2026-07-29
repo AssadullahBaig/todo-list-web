@@ -56,6 +56,20 @@ function TodoPage() {
     setTodos((previousTodos) => previousTodos.filter((todo) => todo.id !== id));
   }
 
+  function handleToggleComplete(id) {
+    setTodos((previousTodos) =>
+      previousTodos.map((todo) => {
+        if (todo.id == id) {
+          return {
+            ...todo,
+            completed: !todo.completed,
+          };
+        }
+        return todo;
+      }),
+    );
+  }
+
   return (
     <MainLayout>
       <TodoHeader />
@@ -66,7 +80,11 @@ function TodoPage() {
         onSubmit={handleAddTodo}
       />
 
-      <TodoList todos={todos} onDelete={handleDeleteTodo} />
+      <TodoList
+        todos={todos}
+        onDelete={handleDeleteTodo}
+        onToggle={handleToggleComplete}
+      />
     </MainLayout>
   );
 }

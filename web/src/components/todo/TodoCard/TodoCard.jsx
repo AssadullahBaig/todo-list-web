@@ -1,19 +1,28 @@
-function TodoCard({ todo, onDelete }) {
+function TodoCard({ todo, onDelete, onToggle }) {
   const { id, title, description, dueDate, priority, completed } = todo;
 
   return (
     <article className="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow">
       <div className="flex items-start justify-between">
-        <div>
-          <h3
-            className={`text-xl font-semibold ${
-              completed ? "line-through text-slate-500" : "text-white"
-            }`}
-          >
-            {title}
-          </h3>
+        <div className="flex items-start gap-4">
+          <input
+            type="checkbox"
+            checked={completed}
+            onChange={() => onToggle(id)}
+            className="mt-1 h-5 w-5 cursor-pointer accent-violet-600"
+          />
 
-          <p className="mt-2 text-slate-400">{description}</p>
+          <div>
+            <h3
+              className={`text-xl font-semibold ${
+                completed ? "line-through text-slate-500" : "text-white"
+              }`}
+            >
+              {title}
+            </h3>
+
+            <p className="mt-2 text-slate-400">{description}</p>
+          </div>
         </div>
 
         <div className="flex items-center gap-2">
