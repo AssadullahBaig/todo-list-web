@@ -19,7 +19,7 @@ function TodoPage() {
   const [newTodo, setNewTodo] = useState(emptyTodo);
   const [editingTodoId, setEditingTodoId] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [searchItem, setSearchItem] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -55,112 +55,95 @@ function TodoPage() {
       return;
     }
 
-    setTodos((previousTodos) => [
-      ...previousTodos,
-      {
-        id: Date.now(),
-        ...newTodo,
-        completed: false,
-      },
-    ]);
+    const todo = {
+      id: Date.now(),
+      ...newTodo,
+      completed: false,
+    };
+
+    setTodos((previousTodos) => [...previousTodos, todo]);
 
     setNewTodo(emptyTodo);
     setIsFormVisible(false);
   }
+
+  function handleDeleteTodo(id) {
+    setTodos((previousTodos) => previousTodos.filter((todo) => todo.id !== id));
+
+    if (editingTodoId === id) {
+      setEditingTodoId(null);
+      setNewTodo(emptyTodo);
+      setIsFormVisible(false);
+    }
+  }
+
+  function handleToggleComplete(id) {
+    setTodos((previousTodos) =>
+      previousTodos.map((todo) =>
+        todo.id === id
+          ? {
+              ...todo,
+              completed: !todo.completed,
+            }
+          : todo,
+      ),
+    );
+  }
+
+  function handleEditTodo(todo) {
+    setEditingTodoId(todo.id);
+
+    setNewTodo({
+      title: todo.title,
+      description: todo.description,
+      dueDate: todo.dueDate,
+      priority: todo.priority,
+    });
+
+    setIsFormVisible(true);
+  }
+
+  function handleCancelEdit() {
+    setEditingTodoId(null);
+    setNewTodo(emptyTodo);
+    setIsFormVisible(false);
+  }
+
   function handleToggleForm() {
     if (isFormVisible && editingTodoId !== null) {
       handleCancelEdit();
       return;
     }
-    setIsFormVisible(!isFormVisible);
+
+    setIsFormVisible((previous) => !previous);
   }
 
-  const todo = {
-    id: Date.now(),
-    ...newTodo,
-    completed: false,
-  };
+  const filteredTodos = todos.filter((todo) =>
+    todo.title.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
 
-  setTodos((previousTodos) => [...previousTodos, todo]);
-  setNewTodo(emptyTodo);
-  setIsFormVisible(false);
-}
+  return (
+    <MainLayout onToggleForm={handleToggleForm} isFormVisible={isFormVisible}>
+      <TodoHeader searchTerm={searchTerm} onSearchChange={setSearchTerm} />
 
-function handleDeleteTodo(id) {
-  setTodos((previousTodos) => previousTodos.filter((todo) => todo.id !== id));
+      {isFormVisible && (
+        <TodoForm
+          newTodo={newTodo}
+          onInputChange={handleInputChange}
+          onSubmit={handleSubmit}
+          isEditing={editingTodoId !== null}
+          onCancel={handleCancelEdit}
+        />
+      )}
 
-  if (editingTodoId === id) {
-    setEditingTodoId(null);
-    setNewTodo(emptyTodo);
-    setIsFormVisible(false);
-  }
-}
-
-function handleToggleComplete(id) {
-  setTodos((previousTodos) =>
-    previousTodos.map((todo) =>
-      todo.id === id
-        ? {
-            ...todo,
-            completed: !todo.completed,
-          }
-        : todo,
-    ),
+      <TodoList
+        todos={filteredTodos}
+        onDelete={handleDeleteTodo}
+        onToggle={handleToggleComplete}
+        onEdit={handleEditTodo}
+      />
+    </MainLayout>
   );
 }
-
-function handleEditTodo(todo) {
-  setEditingTodoId(todo.id);
-  setIsFormVisible(true);
-
-  setNewTodo({
-    title: todo.title,
-    description: todo.description,
-    dueDate: todo.dueDate,
-    priority: todo.priority,
-  });
-}
-
-function handleCancelEdit() {
-  setEditingTodoId(null);
-  setIsFormVisible(false);
-
-  setNewTodo({
-    title: "",
-    description: "",
-    dueDate: "",
-    priority: "Medium",
-  });
-}
-
-function handleToggleForm() {
-  setIsFormVisible((previous) => !previous);
-}
-
-function filteredTodos = todos.filter((todo) =>
-  todo.title.toLowerCase().includes(searchItem.toLowerCase()),
-);
-return (
-  <MainLayout onToggleForm={handleToggleForm} isFormVisible={isFormVisible}>
-    <TodoHeader />
-
-    {isFormVisible && (
-      <TodoForm
-        newTodo={newTodo}
-        onInputChange={handleInputChange}
-        onSubmit={handleSubmit}
-        isEditing={editingTodoId !== null}
-        onCancel={handleCancelEdit}
-      />
-    )}
-
-    <TodoList
-      todos={todos}
-      onDelete={handleDeleteTodo}
-      onToggle={handleToggleComplete}
-      onEdit={handleEditTodo}
-    />
-  </MainLayout>
-);
 
 export default TodoPage;
