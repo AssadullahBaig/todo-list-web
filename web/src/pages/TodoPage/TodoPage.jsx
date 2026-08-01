@@ -119,9 +119,21 @@ function TodoPage() {
     setIsFormVisible((previous) => !previous);
   }
 
-  const filteredTodos = todos.filter((todo) =>
-    todo.title.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
+  const filteredTodos = todos.filter((todo) => {
+    const matchesSearch = todo.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    if (filter === "Active") {
+      return matchesSearch && !todo.completed;
+    }
+
+    if (filter === "Completed") {
+      return matchesSearch && todo.completed;
+    }
+
+    return matchesSearch;
+  });
 
   return (
     <MainLayout onToggleForm={handleToggleForm} isFormVisible={isFormVisible}>
