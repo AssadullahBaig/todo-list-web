@@ -8,231 +8,90 @@ This approach ensures that every stage builds upon the previous one, allowing th
 
 ---
 
-# Version 1 – React Fundamentals
+Version 1 – React Basics Completed
 
 ## Objective
 
-Build the first working version of the Todo application using React.
+Create the first version of the application and become familiar with the basics of React.
 
-## Concepts
+## Work Completed
+
+- Set up the project using Vite.
+- Configured Tailwind CSS.
+- Created a clean project folder structure.
+- Built the main application layout.
+- Created reusable components:
+  - MainLayout
+  - Sidebar
+  - Header
+  - Todo Header
+  - Todo Card
+  - Todo List
+- Displayed hardcoded tasks.
+- Deployed the project to GitHub Pages.
+
+## Concepts Learned
 
 - JSX
 - Components
 - Props
-- State Management (`useState`)
+- Project Structure
+
+---
+
+# Version 2 – Task Management Completed
+
+## Objective
+
+Allow users to fully manage their tasks using React state.
+
+## Work Completed
+
+- Implemented `useState` to manage tasks.
+- Converted the form into a controlled component.
+- Added new tasks.
+- Deleted existing tasks.
+- Marked tasks as completed.
+- Edited existing tasks.
+
+## Work Remaining
+
+- Open and close the task form using the sidebar button.
+- Improve form validation.
+- Add task search.
+- Add task filters.
+- Improve the overall user interface.
+
+## Concepts Learned
+
+- `useState`
 - Event Handling
-
-## Features
-
-- Add Todo
-- Delete Todo
-- Mark Todo as Complete
-
-## Expected Outcome
-
-By the end of this version, users will be able to create and manage a simple todo list using React state.
-
----
-
-# Version 2 – Local Persistence & User Experience
-
-## Objective
-
-Improve the user experience and persist application data.
-
-## Concepts
-
-- `useEffect`
-- Local Storage
 - Controlled Components
+- Updating arrays and objects in state
 
-## Features
-
-- Save Todos
-- Edit Todos
-- Search Todos
-- Filter Todos
-- Dark Mode
-
-## Expected Outcome
-
-Todos will remain available after refreshing the browser, and users will have additional tools to organize their tasks.
-
----
-
-# Version 3 – Multi-Page Application
+# Version 3 – User Experience Improvements In Progress
 
 ## Objective
 
-Transform the application into a multi-page React application.
+Improve the overall user experience of the Todo List application by making the interface more interactive, organized, and easier to use.
 
-## Concepts
+## Work Completed
 
-- React Router
-- Navigation
-- Layout Components
-- Client-Side Routing
+- Started planning the new user interface improvements.
+- Identified features that will improve usability without changing the application's core functionality.
 
-## Features
+## Work Remaining
 
-- Dashboard Page
-- Todo Page
-- Settings Page
-- About Page
-- Navigation Bar
+- Show and hide the task form using the **New Task** button in the sidebar.
+- Automatically close the form after adding a task.
+- Automatically open the form when editing a task.
+- Add task search.
+- Add task filters (All, Completed, Pending).
+- Improve form validation and overall user experience.
 
-## Expected Outcome
+## Concepts to Learn
 
-The application will have a structured navigation system and a more scalable frontend architecture.
-
----
-
-# Version 4 – Backend Development
-
-## Objective
-
-Replace Local Storage with a backend API.
-
-## Concepts
-
-- Express.js
-- REST APIs
-- HTTP Methods
-- CRUD Operations
-- JSON
-
-## Features
-
-- Retrieve Todos from API
-- Create Todos
-- Update Todos
-- Delete Todos
-
-## HTTP Methods
-
-- GET
-- POST
-- PUT
-- DELETE
-
-## Expected Outcome
-
-The frontend will communicate with an Express backend, introducing the client-server architecture.
-
----
-
-# Version 5 – Database Integration
-
-## Objective
-
-Store application data permanently in a PostgreSQL database.
-
-## Concepts
-
-- PostgreSQL
-- SQL
-- CRUD Operations
-- Database Relationships
-
-## Features
-
-- Persistent Todo Storage
-- Database Queries
-- Improved Data Management
-
-## Expected Outcome
-
-Application data will be stored securely in a relational database instead of server memory.
-
----
-
-# Version 6 – Authentication & Authorization
-
-## Objective
-
-Allow users to securely manage their own personal todo lists.
-
-## Concepts
-
-- Authentication
-- Authorization
-- JWT
-- Sessions
-- Protected Routes
-
-## Features
-
-- User Registration
-- User Login
-- User Logout
-- User-Specific Todos
-- Protected Pages
-
-## Expected Outcome
-
-Each user will have their own secure account and personal todo list.
-
----
-
-# Future Enhancements
-
-The following features are outside the scope of the initial project but may be implemented in future versions.
-
-## Version 7 – Productivity Features
-
-- Task Categories
-- Priority Levels
-- Due Dates
-- Notifications
-- Drag-and-Drop Sorting
-
----
-
-## Version 8 – Deployment
-
-### Frontend
-
-- Deploy to Vercel
-
-### Backend
-
-- Deploy Express API
-
-### Database
-
-- Supabase PostgreSQL
-
-### Additional Tasks
-
-- Environment Variables
-- Production Configuration
-- Performance Optimization
-
----
-
-# Learning Progression
-
-| Version   | Main Focus               | Technologies         |
-| --------- | ------------------------ | -------------------- |
-| Version 1 | React Fundamentals       | React                |
-| Version 2 | State Persistence        | React, Local Storage |
-| Version 3 | Application Architecture | React Router         |
-| Version 4 | Backend Development      | Express.js           |
-| Version 5 | Database Integration     | PostgreSQL, Supabase |
-| Version 6 | Authentication           | Supabase Auth        |
-| Version 7 | Advanced Features        | React + Backend      |
-| Version 8 | Deployment               | Vercel, Supabase     |
-
----
-
-# Success Criteria
-
-The project will be considered complete when it meets the following objectives:
-
-- A responsive and user-friendly interface.
-- A well-structured React frontend.
-- A RESTful Express backend.
-- PostgreSQL database integration.
-- Secure user authentication.
-- Deployment to a public hosting platform.
-- Clean, maintainable, and documented source code.
+- Component Communication
+- Lifting State
+- Conditional Rendering
+- State Management Across Components

@@ -18,6 +18,7 @@ function TodoPage() {
   const [todos, setTodos] = useState(initialTodos);
   const [newTodo, setNewTodo] = useState(emptyTodo);
   const [editingTodoId, setEditingTodoId] = useState(null);
+  const [isFormVisible, setIsFormVisible] = useState(false);
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -26,6 +27,14 @@ function TodoPage() {
       ...previousTodo,
       [name]: value,
     }));
+  }
+
+  function handleToggleForm() {
+    if (isFormVisible && editingTodoId !== null) {
+      handleCancelEdit();
+      return;
+    }
+    setIsFormVisible(!isFormVisible);
   }
 
   function handleSubmit(event) {
@@ -49,7 +58,7 @@ function TodoPage() {
 
       setEditingTodoId(null);
       setNewTodo(emptyTodo);
-
+      setIsFormVisible(false);
       return;
     }
 
@@ -61,6 +70,7 @@ function TodoPage() {
 
     setTodos((previousTodos) => [...previousTodos, todo]);
     setNewTodo(emptyTodo);
+    setIsFormVisible(false);
   }
 
   function handleDeleteTodo(id) {
@@ -69,6 +79,7 @@ function TodoPage() {
     if (editingTodoId === id) {
       setEditingTodoId(null);
       setNewTodo(emptyTodo);
+      setIsFormVisible(false);
     }
   }
 
@@ -87,6 +98,7 @@ function TodoPage() {
 
   function handleEditTodo(todo) {
     setEditingTodoId(todo.id);
+    setIsFormVisible(true);
 
     setNewTodo({
       title: todo.title,
@@ -98,6 +110,7 @@ function TodoPage() {
 
   function handleCancelEdit() {
     setEditingTodoId(null);
+    setIsFormVisible(false);
 
     setNewTodo({
       title: "",
@@ -108,16 +121,18 @@ function TodoPage() {
   }
 
   return (
-    <MainLayout>
+    <MainLayout onToggleForm={handleToggleForm} isFormVisible={isFormVisible}>
       <TodoHeader />
 
-      <TodoForm
-        newTodo={newTodo}
-        onInputChange={handleInputChange}
-        onSubmit={handleSubmit}
-        isEditing={editingTodoId !== null}
-        onCancel={handleCancelEdit}
-      />
+      {isFormVisible && (
+        <TodoForm
+          newTodo={newTodo}
+          onInputChange={handleInputChange}
+          onSubmit={handleSubmit}
+          isEditing={editingTodoId !== null}
+          onCancel={handleCancelEdit}
+        />
+      )}
 
       <TodoList
         todos={todos}
