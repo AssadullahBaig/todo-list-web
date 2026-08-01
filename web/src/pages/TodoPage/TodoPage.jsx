@@ -19,6 +19,7 @@ function TodoPage() {
   const [newTodo, setNewTodo] = useState(emptyTodo);
   const [editingTodoId, setEditingTodoId] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [searchItem, setSearchItem] = useState("");
 
   function handleInputChange(event) {
     const { name, value } = event.target;
