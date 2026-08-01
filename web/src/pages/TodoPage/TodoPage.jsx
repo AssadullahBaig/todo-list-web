@@ -120,6 +120,10 @@ function TodoPage() {
     });
   }
 
+  function handleToggleForm() {
+    setIsFormVisible((previous) => !previous);
+  }
+
   return (
     <MainLayout onToggleForm={handleToggleForm} isFormVisible={isFormVisible}>
       <TodoHeader />

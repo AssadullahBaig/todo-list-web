@@ -1,10 +1,10 @@
 import Header from "../Header";
 import Sidebar from "../Sidebar";
 
-function MainLayout({ children }) {
+function MainLayout({ children, onToggleForm, isFormVisible }) {
   return (
     <div className="flex min-h-screen bg-slate-950">
-      <Sidebar />
+      <Sidebar onToggleForm={onToggleForm} isFormVisible={isFormVisible} />
 
       <div className="flex flex-1 flex-col">
         <Header />

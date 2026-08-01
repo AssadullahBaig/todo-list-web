@@ -1,4 +1,4 @@
-function Sidebar() {
+function Sidebar({ onToggleForm, isFormVisible }) {
   return (
     <aside className="flex h-screen w-64 flex-col border-r border-slate-800 bg-slate-900 p-6">
       {/* Logo */}
@@ -28,8 +28,11 @@ function Sidebar() {
       </nav>
 
       {/* Bottom Button */}
-      <button className="rounded-xl bg-violet-600 py-3 font-semibold text-white transition hover:bg-violet-500">
-        + New Task
+      <button
+        onClick={onToggleForm}
+        className="rounded-xl bg-violet-600 py-3 font-semibold text-white transition hover:bg-violet-500"
+      >
+        {isFormVisible ? "Close Form" : "New Task"}
       </button>
     </aside>
   );
