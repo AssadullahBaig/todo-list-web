@@ -20,6 +20,7 @@ function TodoPage() {
   const [editingTodoId, setEditingTodoId] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [filter, setFilter] = useState("All");
 
   function handleInputChange(event) {
     const { name, value } = event.target;
