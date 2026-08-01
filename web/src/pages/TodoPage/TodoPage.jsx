@@ -125,7 +125,12 @@ function TodoPage() {
 
   return (
     <MainLayout onToggleForm={handleToggleForm} isFormVisible={isFormVisible}>
-      <TodoHeader searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+      <TodoHeader
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        filter={filter}
+        onFilterChange={setFilter}
+      />
 
       {isFormVisible && (
         <TodoForm
