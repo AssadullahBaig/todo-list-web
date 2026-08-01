@@ -137,6 +137,9 @@ function handleToggleForm() {
   setIsFormVisible((previous) => !previous);
 }
 
+function filteredTodos = todos.filter((todo) =>
+  todo.title.toLowerCase().includes(searchItem.toLowerCase()),
+);
 return (
   <MainLayout onToggleForm={handleToggleForm} isFormVisible={isFormVisible}>
     <TodoHeader />
