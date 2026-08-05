@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import MainLayout from "../../components/layout/MainLayout";
 import TodoHeader from "../../components/todo/TodoHeader";
@@ -118,6 +118,10 @@ function TodoPage() {
 
     setIsFormVisible((previous) => !previous);
   }
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const filteredTodos = todos.filter((todo) => {
     const matchesSearch = todo.title

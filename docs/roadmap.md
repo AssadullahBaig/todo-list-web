@@ -73,25 +73,47 @@ Allow users to fully manage their tasks using React state.
 
 ## Objective
 
-Improve the overall user experience of the Todo List application by making the interface more interactive, organized, and easier to use.
+Improve the overall user experience by making the interface cleaner and easier to interact with.
 
 ## Work Completed
 
-- Started planning the new user interface improvements.
-- Identified features that will improve usability without changing the application's core functionality.
+- Connected the sidebar **New Task** button to show and hide the task form.
+- Automatically closed the form after adding a task.
+- Automatically opened the form when editing a task.
+- Added a search bar to search tasks by title.
+- Added task filters (All, Active, Completed).
 
 ## Work Remaining
 
-- Show and hide the task form using the **New Task** button in the sidebar.
-- Automatically close the form after adding a task.
-- Automatically open the form when editing a task.
-- Add task search.
-- Add task filters (All, Completed, Pending).
-- Improve form validation and overall user experience.
+- Improve form validation.
+- Display better feedback for invalid input.
+- Disable submission when required fields are empty.
 
-## Concepts to Learn
+## Concepts Learned
 
 - Component Communication
 - Lifting State
 - Conditional Rendering
-- State Management Across Components
+- Filtering Data
+- Controlled Inputs
+
+---
+
+# Version 4 – Local Storage
+
+## Objective
+
+Save tasks in the browser so they remain available after refreshing or reopening the application.
+
+## Planned Work
+
+- Save todos to Local Storage.
+- Load saved todos when the application starts.
+- Update Local Storage whenever tasks change.
+
+## Concepts to Learn
+
+- useEffect
+- Local Storage
+- Data Persistence
+- Side Effects in React
