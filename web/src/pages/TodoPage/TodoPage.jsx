@@ -7,6 +7,16 @@ import TodoList from "../../components/todo/TodoList";
 
 import initialTodos from "../../data/initialTodos";
 
+function loadTodos() {
+  const savedTodos = localStorage.getItem("todos");
+
+  if (savedTodos) {
+    return JSON.parse(savedTodos);
+  }
+
+  return initialTodos;
+}
+
 function TodoPage() {
   const emptyTodo = {
     title: "",
@@ -15,7 +25,7 @@ function TodoPage() {
     priority: "Medium",
   };
 
-  const [todos, setTodos] = useState(initialTodos);
+  const [todos, setTodos] = useState(loadTodos);
   const [newTodo, setNewTodo] = useState(emptyTodo);
   const [editingTodoId, setEditingTodoId] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
