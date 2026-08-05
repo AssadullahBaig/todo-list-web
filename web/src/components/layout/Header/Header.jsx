@@ -3,20 +3,11 @@ import { Search, Bell, Sun } from "lucide-react";
 function Header() {
   return (
     <header className="sticky top-0 z-40 flex h-20 items-center justify-between border-b border-slate-800 bg-[#070B1A]/95 px-10 backdrop-blur-md">
-      {/* Search */}
-      <div className="relative w-[420px]">
-        <Search
-          size={18}
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
-        />
+      <div>
+        <h2 className="text-xl font-semibold text-white">Dashboard</h2>
 
-        <input
-          type="text"
-          placeholder="Search tasks..."
-          className="h-12 w-full rounded-xl border border-slate-700 bg-[#111827] pl-11 pr-4 text-sm text-white placeholder:text-slate-500 transition-all duration-200 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
-        />
+        <p className="text-sm text-slate-400">Welcome back 👋</p>
       </div>
-
       {/* Right Side */}
       <div className="flex items-center gap-4">
         <button className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-700 bg-[#111827] text-slate-300 transition hover:bg-slate-800 hover:text-white">
