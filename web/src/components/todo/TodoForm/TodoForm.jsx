@@ -1,9 +1,19 @@
 function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
   return (
-    <section className="mb-8 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow">
-      <h2 className="mb-6 text-xl font-semibold text-white">Add New Task</h2>
+    <section className="mb-10 rounded-3xl border border-slate-800 bg-[#111827] p-8 shadow-xl shadow-black/20">
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold text-white">
+          {isEditing ? "Edit Task" : "Create New Task"}
+        </h2>
 
-      <form className="space-y-4" onSubmit={onSubmit}>
+        <p className="mt-2 text-slate-400">
+          Fill in the details below to keep your work organized.
+        </p>
+      </div>
+
+      <form onSubmit={onSubmit} className="space-y-6">
+        {/* Title */}
+
         <div>
           <label
             htmlFor="title"
@@ -19,9 +29,11 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
             value={newTodo.title}
             onChange={onInputChange}
             placeholder="Enter task title..."
-            className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-white outline-none transition focus:border-violet-500"
+            className="h-12 w-full rounded-xl border border-slate-700 bg-[#1E293B] px-4 text-white placeholder:text-slate-500 outline-none transition-all duration-200 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
           />
         </div>
+
+        {/* Description */}
 
         <div>
           <label
@@ -34,15 +46,17 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
           <textarea
             id="description"
             name="description"
-            rows="3"
+            rows={5}
             value={newTodo.description}
             onChange={onInputChange}
-            placeholder="Enter task description..."
-            className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-white outline-none transition focus:border-violet-500"
+            placeholder="Describe your task..."
+            className="w-full rounded-xl border border-slate-700 bg-[#1E293B] px-4 py-3 text-white placeholder:text-slate-500 outline-none transition-all duration-200 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 resize-none"
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        {/* Date + Priority */}
+
+        <div className="grid gap-6 md:grid-cols-2">
           <div>
             <label
               htmlFor="dueDate"
@@ -57,7 +71,7 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
               type="date"
               value={newTodo.dueDate}
               onChange={onInputChange}
-              className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-white outline-none transition focus:border-violet-500"
+              className="h-12 w-full rounded-xl border border-slate-700 bg-[#1E293B] px-4 text-white outline-none transition-all duration-200 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
             />
           </div>
 
@@ -74,7 +88,7 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
               name="priority"
               value={newTodo.priority}
               onChange={onInputChange}
-              className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-white outline-none transition focus:border-violet-500"
+              className="h-12 w-full rounded-xl border border-slate-700 bg-[#1E293B] px-4 text-white outline-none transition-all duration-200 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
             >
               <option>High</option>
               <option>Medium</option>
@@ -83,23 +97,25 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
           </div>
         </div>
 
-        <div className="flex gap-4">
-          <button
-            type="submit"
-            className="flex-1 rounded-xl bg-violet-600 px-5 py-3 font-medium text-white transition hover:bg-violet-500"
-          >
-            {isEditing ? "Save Changes" : "Add Task"}
-          </button>
+        {/* Buttons */}
 
+        <div className="flex justify-end gap-4 pt-4">
           {isEditing && (
             <button
               type="button"
               onClick={onCancel}
-              className="rounded-xl border border-slate-700 px-5 py-3 text-white transition hover:bg-slate-800"
+              className="rounded-xl border border-slate-700 bg-transparent px-6 py-3 font-medium text-slate-300 transition hover:bg-slate-800"
             >
               Cancel
             </button>
           )}
+
+          <button
+            type="submit"
+            className="rounded-xl bg-gradient-to-r from-violet-700 to-violet-500 px-8 py-3 font-semibold text-white shadow-lg shadow-violet-900/30 transition-all duration-200 hover:scale-[1.02] hover:from-violet-600 hover:to-violet-400 active:scale-[0.98]"
+          >
+            {isEditing ? "Save Changes" : "Create Task"}
+          </button>
         </div>
       </form>
     </section>
