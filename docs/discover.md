@@ -9,7 +9,7 @@ that we may add to TaskFlow in future versions.
 
 - [ ] Improve overall UI polish
 - [ ] Improve spacing and typography
-- [ ] Improve task cards
+- [x] Improve task cards
 - [ ] Add better empty states
 - [ ] Add better hover and focus states
 - [ ] Improve responsive/mobile layout
@@ -71,7 +71,6 @@ Possible lists:
 - [ ] Separate rendering/UI from application logic
 - [ ] Create custom hooks for task logic
 - [ ] Separate business logic from components
-- [ ] Create reusable components
 - [ ] Create service layer
 - [ ] Improve project folder structure
 
