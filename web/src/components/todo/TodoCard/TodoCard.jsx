@@ -43,7 +43,8 @@ function getDueDateStatus(dueDate) {
 }
 
 function TodoCard({ todo, onDelete, onToggle, onEdit }) {
-  const { id, title, description, dueDate, priority, completed } = todo;
+  const { id, title, description, dueDate, dueTime, priority, completed } =
+    todo;
 
   const dueDateStatus = getDueDateStatus(dueDate);
 
@@ -104,7 +105,7 @@ function TodoCard({ todo, onDelete, onToggle, onEdit }) {
         </div>
       </div>
 
-      <div className="mt-5 flex items-center gap-3 border-t border-slate-800 pt-4 text-sm">
+      <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-slate-800 pt-4 text-sm">
         <span className={dueDateStatus.color}>{dueDateStatus.label}</span>
 
         {dueDate && (
@@ -116,6 +117,19 @@ function TodoCard({ todo, onDelete, onToggle, onEdit }) {
                 month: "short",
                 day: "numeric",
                 year: "numeric",
+              })}
+            </span>
+          </>
+        )}
+
+        {dueTime && (
+          <>
+            <span className="text-slate-700">•</span>
+
+            <span className="text-slate-500">
+              {new Date(`1970-01-01T${dueTime}`).toLocaleTimeString(undefined, {
+                hour: "numeric",
+                minute: "2-digit",
               })}
             </span>
           </>

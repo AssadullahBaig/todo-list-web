@@ -56,7 +56,7 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
 
         {/* Date + Priority */}
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-3">
           <div>
             <label
               htmlFor="dueDate"
@@ -70,6 +70,24 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
               name="dueDate"
               type="date"
               value={newTodo.dueDate}
+              onChange={onInputChange}
+              className="h-12 w-full rounded-xl border border-slate-700 bg-[#1E293B] px-4 text-white outline-none transition-all duration-200 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="dueTime"
+              className="mb-2 block text-sm font-medium text-slate-300"
+            >
+              Time
+            </label>
+
+            <input
+              id="dueTime"
+              name="dueTime"
+              type="time"
+              value={newTodo.dueTime}
               onChange={onInputChange}
               className="h-12 w-full rounded-xl border border-slate-700 bg-[#1E293B] px-4 text-white outline-none transition-all duration-200 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
             />

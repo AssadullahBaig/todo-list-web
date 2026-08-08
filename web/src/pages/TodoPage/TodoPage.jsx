@@ -22,6 +22,7 @@ function TodoPage() {
     title: "",
     description: "",
     dueDate: "",
+    dueTime: "",
     priority: "Medium",
   };
 
@@ -109,6 +110,7 @@ function TodoPage() {
       title: todo.title,
       description: todo.description,
       dueDate: todo.dueDate,
+      dueTime: todo.dueTime || "",
       priority: todo.priority,
     });
 
