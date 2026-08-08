@@ -1,81 +1,125 @@
-import { CalendarDays, Pencil, Trash2 } from "lucide-react";
+function getDueDateStatus(dueDate) {
+  if (!dueDate) {
+    return {
+      label: "No due date",
+      color: "text-slate-500",
+    };
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const due = new Date(`${dueDate}T00:00:00`);
+  due.setHours(0, 0, 0, 0);
+
+  const differenceInTime = due.getTime() - today.getTime();
+  const differenceInDays = Math.round(differenceInTime / (1000 * 60 * 60 * 24));
+
+  if (differenceInDays < 0) {
+    return {
+      label: "Overdue",
+      color: "text-red-400",
+    };
+  }
+
+  if (differenceInDays === 0) {
+    return {
+      label: "Due today",
+      color: "text-blue-400",
+    };
+  }
+
+  if (differenceInDays === 1) {
+    return {
+      label: "Due tomorrow",
+      color: "text-yellow-400",
+    };
+  }
+
+  return {
+    label: `Due in ${differenceInDays} days`,
+    color: "text-emerald-400",
+  };
+}
 
 function TodoCard({ todo, onDelete, onToggle, onEdit }) {
   const { id, title, description, dueDate, priority, completed } = todo;
 
-  function getPriorityStyle() {
-    switch (priority) {
-      case "High":
-        return "bg-red-500/20 text-red-300 border-red-500/30";
-
-      case "Medium":
-        return "bg-amber-500/20 text-amber-300 border-amber-500/30";
-
-      case "Low":
-        return "bg-emerald-500/20 text-emerald-300 border-emerald-500/30";
-
-      default:
-        return "bg-violet-500/20 text-violet-300 border-violet-500/30";
-    }
-  }
+  const dueDateStatus = getDueDateStatus(dueDate);
 
   return (
-    <article className="rounded-2xl border border-slate-800 bg-[#111827] p-6 transition-all duration-200 hover:-translate-y-1 hover:border-violet-500/40 hover:shadow-xl hover:shadow-violet-900/20">
-      <div className="flex items-start gap-5">
-        <input
-          type="checkbox"
-          checked={completed}
-          onChange={() => onToggle(id)}
-          className="mt-1 h-5 w-5 cursor-pointer accent-violet-600"
-        />
+    <article className="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow transition-all duration-200 hover:border-slate-700 hover:shadow-lg">
+      <div className="flex items-start justify-between gap-6">
+        <div className="flex items-start gap-4">
+          <input
+            type="checkbox"
+            checked={completed}
+            onChange={() => onToggle(id)}
+            className="mt-1 h-5 w-5 cursor-pointer accent-violet-600"
+          />
 
-        <div className="flex-1">
-          <div className="flex items-start justify-between gap-5">
-            <div>
-              <h3
-                className={`text-xl font-semibold ${
-                  completed ? "text-slate-500 line-through" : "text-white"
-                }`}
-              >
-                {title}
-              </h3>
-
-              <p className="mt-3 text-slate-400">{description}</p>
-            </div>
-
-            <span
-              className={`rounded-full border px-3 py-1 text-xs font-semibold ${getPriorityStyle()}`}
+          <div>
+            <h3
+              className={`text-xl font-semibold ${
+                completed ? "text-slate-500 line-through" : "text-white"
+              }`}
             >
-              {priority}
-            </span>
-          </div>
+              {title}
+            </h3>
 
-          <div className="mt-6 flex items-center justify-between">
-            <div className="flex items-center gap-2 text-sm text-slate-400">
-              <CalendarDays size={16} />
-
-              <span>{dueDate}</span>
-            </div>
-
-            <div className="flex gap-3">
-              <button
-                onClick={() => onEdit(todo)}
-                className="flex items-center gap-2 rounded-lg bg-slate-800 px-4 py-2 text-sm text-slate-300 transition hover:bg-blue-600 hover:text-white"
-              >
-                <Pencil size={16} />
-                Edit
-              </button>
-
-              <button
-                onClick={() => onDelete(id)}
-                className="flex items-center gap-2 rounded-lg bg-slate-800 px-4 py-2 text-sm text-slate-300 transition hover:bg-red-600 hover:text-white"
-              >
-                <Trash2 size={16} />
-                Delete
-              </button>
-            </div>
+            {description && (
+              <p className="mt-2 text-slate-400">{description}</p>
+            )}
           </div>
         </div>
+
+        <div className="flex shrink-0 items-center gap-2">
+          <span
+            className={`rounded-full px-3 py-1 text-sm font-medium ${
+              priority === "High"
+                ? "bg-red-500/10 text-red-400"
+                : priority === "Medium"
+                  ? "bg-yellow-500/10 text-yellow-400"
+                  : "bg-emerald-500/10 text-emerald-400"
+            }`}
+          >
+            {priority}
+          </span>
+
+          <button
+            type="button"
+            onClick={() => onEdit(todo)}
+            className="rounded-lg bg-blue-600 px-3 py-1 text-sm text-white transition hover:bg-blue-500"
+          >
+            Edit
+          </button>
+
+          <button
+            type="button"
+            onClick={() => onDelete(id)}
+            className="rounded-lg bg-red-600 px-3 py-1 text-sm text-white transition hover:bg-red-500"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+
+      <div className="mt-5 flex items-center gap-3 border-t border-slate-800 pt-4 text-sm">
+        <span className={dueDateStatus.color}>{dueDateStatus.label}</span>
+
+        {dueDate && (
+          <>
+            <span className="text-slate-700">•</span>
+
+            <span className="text-slate-500">
+              {new Date(`${dueDate}T00:00:00`).toLocaleDateString(undefined, {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </span>
+          </>
+        )}
       </div>
     </article>
   );
