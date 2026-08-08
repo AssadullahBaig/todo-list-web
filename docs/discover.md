@@ -20,7 +20,7 @@ that we may add to TaskFlow in future versions.
 
 ## Task Management
 
-- [ ] Task sorting
+- [x] Task sorting
 - [ ] Due-date status
 - [ ] Task time
 - [ ] Priority colors

@@ -31,6 +31,7 @@ function TodoPage() {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("All");
+  const [sortBy, setSortBy] = useState("newest");
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -149,6 +150,43 @@ function TodoPage() {
     return matchesSearch;
   });
 
+  const sortedTodos = [...filteredTodos].sort((a, b) => {
+    if (sortBy === "newest") {
+      return b.id - a.id;
+    }
+
+    if (sortBy === "oldest") {
+      return a.id - b.id;
+    }
+
+    if (sortBy === "dueDate") {
+      if (!a.dueDate) return 1;
+      if (!b.dueDate) return -1;
+
+      return new Date(a.dueDate) - new Date(b.dueDate);
+    }
+
+    if (sortBy === "priority") {
+      const priorityOrder = {
+        High: 1,
+        Medium: 2,
+        Low: 3,
+      };
+
+      return priorityOrder[a.priority] - priorityOrder[b.priority];
+    }
+
+    if (sortBy === "az") {
+      return a.title.localeCompare(b.title);
+    }
+
+    if (sortBy === "za") {
+      return b.title.localeCompare(a.title);
+    }
+
+    return 0;
+  });
+
   return (
     <MainLayout onToggleForm={handleToggleForm} isFormVisible={isFormVisible}>
       <TodoHeader
@@ -156,6 +194,8 @@ function TodoPage() {
         onSearchChange={setSearchTerm}
         filter={filter}
         onFilterChange={setFilter}
+        sortBy={sortBy}
+        onSortChange={setSortBy}
       />
 
       {isFormVisible && (
@@ -169,7 +209,7 @@ function TodoPage() {
       )}
 
       <TodoList
-        todos={filteredTodos}
+        todos={sortedTodos}
         onDelete={handleDeleteTodo}
         onToggle={handleToggleComplete}
         onEdit={handleEditTodo}

@@ -1,11 +1,19 @@
 import { CheckCircle2, Search } from "lucide-react";
 
-function TodoHeader({ searchTerm, onSearchChange, filter, onFilterChange }) {
+function TodoHeader({
+  searchTerm,
+  onSearchChange,
+  filter,
+  onFilterChange,
+  sortBy,
+  onSortChange,
+}) {
   return (
-    <section className="mb-10">
-      <div className="flex items-center justify-between">
+    <section className="p-8">
+      {/* Page Heading */}
+      <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-start">
         <div>
-          <h1 className="text-5xl font-bold tracking-tight text-white">
+          <h1 className="text-4xl font-bold tracking-tight text-white">
             My Tasks
           </h1>
 
@@ -27,7 +35,9 @@ function TodoHeader({ searchTerm, onSearchChange, filter, onFilterChange }) {
         </div>
       </div>
 
+      {/* Search / Filter / Sort */}
       <div className="mt-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        {/* Search */}
         <div className="relative w-full lg:max-w-md">
           <Search
             size={18}
@@ -39,12 +49,15 @@ function TodoHeader({ searchTerm, onSearchChange, filter, onFilterChange }) {
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Search tasks..."
-            className="h-12 w-full rounded-xl border border-slate-700 bg-[#111827] pl-11 pr-4 text-white outline-none transition focus:border-violet-500"
+            className="h-12 w-full rounded-xl border border-slate-700 bg-[#111827] pl-11 pr-4 text-white outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
           />
         </div>
 
-        <div className="flex gap-3">
+        {/* Controls */}
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Filter */}
           <button
+            type="button"
             onClick={() => onFilterChange("All")}
             className={`rounded-xl px-5 py-2 font-medium transition ${
               filter === "All"
@@ -56,6 +69,7 @@ function TodoHeader({ searchTerm, onSearchChange, filter, onFilterChange }) {
           </button>
 
           <button
+            type="button"
             onClick={() => onFilterChange("Active")}
             className={`rounded-xl px-5 py-2 font-medium transition ${
               filter === "Active"
@@ -67,6 +81,7 @@ function TodoHeader({ searchTerm, onSearchChange, filter, onFilterChange }) {
           </button>
 
           <button
+            type="button"
             onClick={() => onFilterChange("Completed")}
             className={`rounded-xl px-5 py-2 font-medium transition ${
               filter === "Completed"
@@ -76,6 +91,20 @@ function TodoHeader({ searchTerm, onSearchChange, filter, onFilterChange }) {
           >
             Completed
           </button>
+
+          {/* Sort */}
+          <select
+            value={sortBy}
+            onChange={(e) => onSortChange(e.target.value)}
+            className="h-10 rounded-xl border border-slate-700 bg-[#111827] px-4 text-sm font-medium text-slate-300 outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
+          >
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+            <option value="dueDate">Due Date</option>
+            <option value="priority">Priority</option>
+            <option value="az">A → Z</option>
+            <option value="za">Z → A</option>
+          </select>
         </div>
       </div>
     </section>
