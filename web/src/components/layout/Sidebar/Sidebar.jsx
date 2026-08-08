@@ -17,9 +17,7 @@ function Sidebar({ onToggleForm }) {
             TaskFlow
           </h1>
 
-          <p className="mt-2 text-sm text-slate-400">
-            Premium Productivity App
-          </p>
+          <p className="mt-2 text-sm text-slate-400">Premium Productivity</p>
         </div>
 
         {/* Navigation */}
