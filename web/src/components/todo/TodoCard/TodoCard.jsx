@@ -50,6 +50,7 @@ function TodoCard({ todo, onDelete, onToggle, onEdit }) {
     todo;
 
   const [isAnimating, setIsAnimating] = useState(false);
+
   const dueDateStatus = getDueDateStatus(dueDate);
 
   useEffect(() => {
@@ -73,7 +74,9 @@ function TodoCard({ todo, onDelete, onToggle, onEdit }) {
   return (
     <article
       className={`
-        relative overflow-hidden rounded-2xl border bg-slate-900 p-5 shadow
+        relative overflow-hidden rounded-xl border
+        bg-slate-900 px-4 py-3
+        shadow-sm
         transition-all duration-300
         ${
           completed
@@ -86,59 +89,62 @@ function TodoCard({ todo, onDelete, onToggle, onEdit }) {
       {/* Completion flash */}
       <div
         className={`
-          pointer-events-none absolute inset-0 bg-emerald-400/5
+          pointer-events-none absolute inset-0
+          bg-emerald-400/5
           transition-opacity duration-300
           ${isAnimating ? "opacity-100" : "opacity-0"}
         `}
       />
 
-      <div className="relative flex items-start justify-between gap-6">
-        <div className="flex items-start gap-4">
-          {/* Animated checkbox */}
-          <button
-            type="button"
-            onClick={handleToggle}
-            aria-label={
-              completed ? "Mark task as incomplete" : "Mark task as complete"
+      <div className="relative flex items-center gap-3">
+        {/* Animated checkbox */}
+        <button
+          type="button"
+          onClick={handleToggle}
+          aria-label={
+            completed ? "Mark task as incomplete" : "Mark task as complete"
+          }
+          className={`
+            relative flex h-5 w-5 shrink-0
+            items-center justify-center
+            rounded-md border
+            transition-all duration-300
+            ${
+              completed
+                ? "border-emerald-500 bg-emerald-500"
+                : "border-slate-600 bg-transparent hover:border-violet-500 hover:bg-violet-500/10"
             }
+            ${isAnimating ? "scale-125" : ""}
+          `}
+        >
+          {/* Glow */}
+          <span
             className={`
-              relative mt-1 flex h-6 w-6 shrink-0 items-center justify-center
-              rounded-lg border
-              transition-all duration-300
-              ${
-                completed
-                  ? "scale-100 border-emerald-500 bg-emerald-500"
-                  : "border-slate-600 bg-transparent hover:border-violet-500 hover:bg-violet-500/10"
-              }
-              ${isAnimating ? "scale-125" : ""}
+              absolute inset-0 rounded-md
+              bg-emerald-400
+              transition-all duration-500
+              ${isAnimating ? "scale-150 opacity-30" : "scale-100 opacity-0"}
             `}
-          >
-            {/* Glow */}
-            <span
-              className={`
-                absolute inset-0 rounded-lg bg-emerald-400
-                transition-all duration-500
-                ${isAnimating ? "scale-150 opacity-30" : "scale-100 opacity-0"}
-              `}
-            />
+          />
 
-            {/* Checkmark */}
-            <Check
-              size={15}
-              strokeWidth={3}
-              className={`
-                relative z-10 text-white
-                transition-all duration-300
-                ${completed ? "scale-100 opacity-100" : "scale-50 opacity-0"}
-              `}
-            />
-          </button>
+          {/* Checkmark */}
+          <Check
+            size={13}
+            strokeWidth={3}
+            className={`
+              relative z-10 text-white
+              transition-all duration-300
+              ${completed ? "scale-100 opacity-100" : "scale-50 opacity-0"}
+            `}
+          />
+        </button>
 
-          {/* Task content */}
-          <div className="min-w-0">
+        {/* Task content */}
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-3">
             <h3
               className={`
-                text-xl font-semibold
+                truncate text-base font-semibold
                 transition-all duration-500
                 ${
                   completed
@@ -150,40 +156,92 @@ function TodoCard({ todo, onDelete, onToggle, onEdit }) {
               {title}
             </h3>
 
-            {description && (
-              <p
-                className={`
-                  mt-2 transition-all duration-500
-                  ${completed ? "text-slate-600" : "text-slate-400"}
-                `}
-              >
-                {description}
-              </p>
-            )}
+            {/* Priority */}
+            <span
+              className={`
+                shrink-0 rounded-full
+                px-2.5 py-0.5
+                text-xs font-medium
+                ${
+                  priority === "High"
+                    ? "bg-red-500/10 text-red-400"
+                    : priority === "Medium"
+                      ? "bg-yellow-500/10 text-yellow-400"
+                      : "bg-emerald-500/10 text-emerald-400"
+                }
+              `}
+            >
+              {priority}
+            </span>
           </div>
+
+          {/* Description */}
+          {description && (
+            <p
+              className={`
+                mt-0.5 truncate text-sm
+                transition-all duration-500
+                ${completed ? "text-slate-600" : "text-slate-500"}
+              `}
+            >
+              {description}
+            </p>
+          )}
+        </div>
+
+        {/* Due information */}
+        <div className="hidden shrink-0 items-center gap-2 text-xs sm:flex">
+          <span
+            className={`
+              ${completed ? "text-slate-600" : dueDateStatus.color}
+            `}
+          >
+            {dueDateStatus.label}
+          </span>
+
+          {dueDate && (
+            <>
+              <span className="text-slate-700">•</span>
+
+              <span className="text-slate-500">
+                {new Date(`${dueDate}T00:00:00`).toLocaleDateString(undefined, {
+                  month: "short",
+                  day: "numeric",
+                })}
+              </span>
+            </>
+          )}
+
+          {dueTime && (
+            <>
+              <span className="text-slate-700">•</span>
+
+              <span className="text-slate-500">
+                {new Date(`1970-01-01T${dueTime}`).toLocaleTimeString(
+                  undefined,
+                  {
+                    hour: "numeric",
+                    minute: "2-digit",
+                  },
+                )}
+              </span>
+            </>
+          )}
         </div>
 
         {/* Actions */}
-        <div className="flex shrink-0 items-center gap-2">
-          <span
-            className={`
-              rounded-full px-3 py-1 text-sm font-medium
-              ${
-                priority === "High"
-                  ? "bg-red-500/10 text-red-400"
-                  : priority === "Medium"
-                    ? "bg-yellow-500/10 text-yellow-400"
-                    : "bg-emerald-500/10 text-emerald-400"
-              }
-            `}
-          >
-            {priority}
-          </span>
-
+        <div className="flex shrink-0 items-center gap-1">
           <button
             type="button"
             onClick={() => onEdit(todo)}
-            className="rounded-lg bg-blue-600 px-3 py-1 text-sm text-white transition hover:bg-blue-500"
+            className="
+              rounded-lg px-2.5 py-1.5
+              text-xs font-medium
+              text-slate-400
+              transition
+              hover:bg-slate-800
+              hover:text-white
+            "
           >
             Edit
           </button>
@@ -191,21 +249,22 @@ function TodoCard({ todo, onDelete, onToggle, onEdit }) {
           <button
             type="button"
             onClick={() => onDelete(id)}
-            className="rounded-lg bg-red-600 px-3 py-1 text-sm text-white transition hover:bg-red-500"
+            className="
+              rounded-lg px-2.5 py-1.5
+              text-xs font-medium
+              text-red-400
+              transition
+              hover:bg-red-500/10
+            "
           >
             Delete
           </button>
         </div>
       </div>
 
-      {/* Metadata */}
-      <div className="relative mt-5 flex flex-wrap items-center gap-3 border-t border-slate-800 pt-4 text-sm">
-        <span
-          className={`
-            transition-colors duration-500
-            ${completed ? "text-slate-600" : dueDateStatus.color}
-          `}
-        >
+      {/* Mobile metadata */}
+      <div className="relative mt-2 flex items-center gap-2 text-xs sm:hidden">
+        <span className={completed ? "text-slate-600" : dueDateStatus.color}>
           {dueDateStatus.label}
         </span>
 
@@ -217,7 +276,6 @@ function TodoCard({ todo, onDelete, onToggle, onEdit }) {
               {new Date(`${dueDate}T00:00:00`).toLocaleDateString(undefined, {
                 month: "short",
                 day: "numeric",
-                year: "numeric",
               })}
             </span>
           </>
