@@ -14,15 +14,15 @@ that we may add to TaskFlow in future versions.
 - [ ] Add better hover and focus states
 - [ ] Improve responsive/mobile layout
 - [ ] Research a better task creation screen
-- [ ] Add completion animations
+- [x] Task completion animation
 
 ---
 
 ## Task Management
 
 - [x] Task sorting
-- [ ] Due-date status
-- [ ] Task time
+- [x] Due-date status
+- [x] Task time
 - [ ] Priority colors
 - [ ] Priority filtering
 - [ ] Task lists
