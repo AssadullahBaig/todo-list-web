@@ -26,6 +26,34 @@ function TodoPage() {
     priority: "Medium",
   };
 
+  function getResolvedDueDate(dueDate, dueTime) {
+    if (dueDate) {
+      return dueDate;
+    }
+
+    if (!dueTime) {
+      return "";
+    }
+
+    const now = new Date();
+    const [hours, minutes] = dueTime.split(":").map(Number);
+
+    const due = new Date(now);
+    due.setHours(hours, minutes, 0, 0);
+
+    // If the entered time has already passed,
+    // interpret it as tomorrow.
+    if (due <= now) {
+      due.setDate(due.getDate() + 1);
+    }
+
+    const year = due.getFullYear();
+    const month = String(due.getMonth() + 1).padStart(2, "0");
+    const day = String(due.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  }
+
   const [todos, setTodos] = useState(loadTodos);
   const [newTodo, setNewTodo] = useState(emptyTodo);
   const [editingTodoId, setEditingTodoId] = useState(null);
@@ -52,12 +80,18 @@ function TodoPage() {
     }
 
     if (editingTodoId !== null) {
+      const resolvedDueDate = getResolvedDueDate(
+        newTodo.dueDate,
+        newTodo.dueTime,
+      );
+
       setTodos((previousTodos) =>
         previousTodos.map((todo) =>
           todo.id === editingTodoId
             ? {
                 ...todo,
                 ...newTodo,
+                dueDate: resolvedDueDate,
               }
             : todo,
         ),
@@ -72,7 +106,9 @@ function TodoPage() {
     const todo = {
       id: Date.now(),
       ...newTodo,
+      dueDate: getResolvedDueDate(newTodo.dueDate, newTodo.dueTime),
       completed: false,
+      createdAt: new Date().toISOString(),
     };
 
     setTodos((previousTodos) => [...previousTodos, todo]);

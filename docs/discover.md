@@ -24,7 +24,7 @@ that we may add to TaskFlow in future versions.
 - [x] Due-date status
 - [x] Task time
 - [x] Priority colors
-- [ ] Priority filtering
+- [x] Priority filtering
 - [ ] Task lists
 - [ ] Inbox
 - [ ] Custom task ordering
