@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Check } from "lucide-react";
 
-function getDueDateStatus(dueDate) {
+function getDueDateStatus(dueDate, dueTime) {
   if (!dueDate) {
     return {
       label: "No due date",
@@ -9,16 +9,30 @@ function getDueDateStatus(dueDate) {
     };
   }
 
+  const now = new Date();
+
+  const [year, month, day] = dueDate.split("-").map(Number);
+
+  const due = new Date(year, month - 1, day);
+
+  if (dueTime) {
+    const [hours, minutes] = dueTime.split(":").map(Number);
+    due.setHours(hours, minutes, 0, 0);
+  } else {
+    due.setHours(23, 59, 59, 999);
+  }
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const due = new Date(`${dueDate}T00:00:00`);
-  due.setHours(0, 0, 0, 0);
+  const dueDay = new Date(year, month - 1, day);
+  dueDay.setHours(0, 0, 0, 0);
 
-  const differenceInTime = due.getTime() - today.getTime();
+  const differenceInTime = dueDay.getTime() - today.getTime();
   const differenceInDays = Math.round(differenceInTime / (1000 * 60 * 60 * 24));
 
-  if (differenceInDays < 0) {
+  // The actual deadline has passed
+  if (due < now) {
     return {
       label: "Overdue",
       color: "text-red-400",
@@ -51,7 +65,7 @@ function TodoCard({ todo, onDelete, onToggle, onEdit }) {
 
   const [isAnimating, setIsAnimating] = useState(false);
 
-  const dueDateStatus = getDueDateStatus(dueDate);
+  const dueDateStatus = getDueDateStatus(dueDate, dueTime);
 
   useEffect(() => {
     if (!completed) {
