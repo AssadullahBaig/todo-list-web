@@ -7,21 +7,22 @@ function TodoHeader({
   onFilterChange,
   sortBy,
   onSortChange,
+  priorityFilter,
+  onPriorityFilterChange,
 }) {
   return (
-    <section className="p-8">
+    <section className="mb-8 w-full">
       {/* Page Heading */}
-      <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-start">
+      <div className="flex items-start justify-between gap-6">
         <div>
-          <h1 className="text-4xl font-bold tracking-tight text-white">
-            My Tasks
-          </h1>
+          <h1 className="text-4xl font-bold text-white">My Tasks</h1>
 
           <p className="mt-3 text-lg text-slate-400">
             Manage your daily work efficiently.
           </p>
         </div>
 
+        {/* Productivity */}
         <div className="hidden rounded-2xl border border-slate-800 bg-[#111827] px-6 py-4 lg:flex lg:flex-col">
           <span className="text-sm text-slate-400">Productivity</span>
 
@@ -93,6 +94,18 @@ function TodoHeader({
           </button>
 
           {/* Sort */}
+
+          <select
+            value={priorityFilter}
+            onChange={(e) => onPriorityFilterChange(e.target.value)}
+            className="h-10 rounded-xl border border-slate-700 bg-[#111827] px-4 text-sm font-medium text-slate-300 outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
+          >
+            <option value="All">All Priorities</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+
           <select
             value={sortBy}
             onChange={(e) => onSortChange(e.target.value)}

@@ -33,6 +33,7 @@ function TodoPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("All");
   const [sortBy, setSortBy] = useState("newest");
+  const [priorityFilter, setPriorityFilter] = useState("All");
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -141,15 +142,18 @@ function TodoPage() {
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
 
+    const matchesPriority =
+      priorityFilter === "All" || todo.priority === priorityFilter;
+
     if (filter === "Active") {
-      return matchesSearch && !todo.completed;
+      return matchesSearch && matchesPriority && !todo.completed;
     }
 
     if (filter === "Completed") {
-      return matchesSearch && todo.completed;
+      return matchesSearch && matchesPriority && todo.completed;
     }
 
-    return matchesSearch;
+    return matchesSearch && matchesPriority;
   });
 
   const sortedTodos = [...filteredTodos].sort((a, b) => {
@@ -198,6 +202,8 @@ function TodoPage() {
         onFilterChange={setFilter}
         sortBy={sortBy}
         onSortChange={setSortBy}
+        priorityFilter={priorityFilter}
+        onPriorityFilterChange={setPriorityFilter}
       />
 
       {isFormVisible && (

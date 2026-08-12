@@ -23,7 +23,7 @@ that we may add to TaskFlow in future versions.
 - [x] Task sorting
 - [x] Due-date status
 - [x] Task time
-- [ ] Priority colors
+- [x] Priority colors
 - [ ] Priority filtering
 - [ ] Task lists
 - [ ] Inbox

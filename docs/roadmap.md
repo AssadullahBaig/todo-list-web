@@ -117,3 +117,54 @@ Save tasks in the browser so they remain available after refreshing or reopening
 - Local Storage
 - Data Persistence
 - Side Effects in React
+
+---
+
+# Version 5 – Productivity Features
+
+## Objective
+
+Expand the application with additional productivity and usability features while continuing to work mainly on the frontend before introducing the backend and database.
+
+## Work Completed
+
+- Added task sorting.
+- Added sorting options:
+  - Newest
+  - Oldest
+  - Due Date
+  - Priority
+  - A → Z
+  - Z → A
+- Added due times to tasks.
+- Added visual due-date status:
+  - Due today
+  - Due tomorrow
+  - Due in X days
+  - Overdue
+- Added color coding for due-date status.
+- Added color coding for task priorities.
+- Added completion animations.
+- Made task cards smaller and more compact.
+- Added the application version number to the sidebar.
+- Added a `+` icon to the New Task button.
+- Improved the overall Todo page layout and task presentation.
+- Added a GitHub Actions deployment pipeline to automatically build and deploy the application to GitHub Pages when changes are pushed.
+
+## Work Remaining
+
+- Improve the overall UI.
+- Add task lists such as Inbox, Work, Personal, etc.
+- Add labels/tags.
+- Add subtasks.
+- Add comments.
+- Add reminders.
+- Add recurring tasks.
+- Improve task ordering and drag-and-drop functionality.
+- Improve the New Task interface.
+- Research better task creation screens/modals.
+- Add pagination when the number of tasks becomes large.
+- Create the `DISCOVER` file for future feature ideas.
+- Study React Clean Architecture.
+- Separate rendering/UI from application logic.
+- Improve the project structure and code organization.

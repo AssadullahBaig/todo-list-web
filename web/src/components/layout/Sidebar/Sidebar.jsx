@@ -18,6 +18,10 @@ function Sidebar({ onToggleForm }) {
           </h1>
 
           <p className="mt-2 text-sm text-slate-400">Premium Productivity</p>
+
+          <span className="mt-3 inline-block rounded-md bg-slate-800 px-2 py-1 text-xs font-medium text-slate-500">
+            v1.5.0
+          </span>
         </div>
 
         {/* Navigation */}
@@ -48,16 +52,10 @@ function Sidebar({ onToggleForm }) {
       <div className="border-t border-slate-800 p-5">
         <button
           onClick={onToggleForm}
-          style={{
-            width: "100%",
-            background: "#7c3aed",
-            color: "white",
-            padding: "16px",
-            borderRadius: "16px",
-            fontWeight: "700",
-          }}
+          className="flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-violet-700 to-violet-500 px-5 py-4 font-semibold text-white shadow-lg shadow-violet-900/30 transition-all duration-200 hover:scale-[1.02] hover:from-violet-600 hover:to-violet-400 active:scale-[0.98]"
         >
-          New Task
+          <Plus size={22} strokeWidth={2.8} />
+          <span>New Task</span>
         </button>
       </div>
     </aside>
