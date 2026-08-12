@@ -20,7 +20,7 @@ function Sidebar({ onToggleForm }) {
           <p className="mt-2 text-sm text-slate-400">Premium Productivity</p>
 
           <span className="mt-3 inline-block rounded-md bg-slate-800 px-2 py-1 text-xs font-medium text-slate-500">
-            v1.5.0
+            v1.5.0-PIPELINE-TEST
           </span>
         </div>
 
