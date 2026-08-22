@@ -95,6 +95,7 @@ function TodoPage() {
   const [filter, setFilter] = useState("All");
   const [sortBy, setSortBy] = useState("newest");
   const [priorityFilter, setPriorityFilter] = useState("All");
+  const [recentlyDeleted, setRecentlyDeleted] = useState(null);
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -152,6 +153,17 @@ function TodoPage() {
   }
 
   function handleDeleteTodo(id) {
+    const deletedIndex = todos.findIndex((todo) => todo.id === id);
+
+    if (deletedIndex === -1) {
+      return;
+    }
+
+    setRecentlyDeleted({
+      todo: todos[deletedIndex],
+      index: deletedIndex,
+    });
+
     setTodos((previousTodos) => previousTodos.filter((todo) => todo.id !== id));
 
     if (editingTodoId === id) {
@@ -159,6 +171,26 @@ function TodoPage() {
       setNewTodo(emptyTodo);
       setIsFormVisible(false);
     }
+  }
+
+  function handleUndoDelete() {
+    if (!recentlyDeleted) {
+      return;
+    }
+
+    setTodos((previousTodos) => {
+      const restoredTodos = [...previousTodos];
+      const restoreIndex = Math.min(
+        recentlyDeleted.index,
+        restoredTodos.length,
+      );
+
+      restoredTodos.splice(restoreIndex, 0, recentlyDeleted.todo);
+
+      return restoredTodos;
+    });
+
+    setRecentlyDeleted(null);
   }
 
   function handleToggleComplete(id) {
@@ -207,6 +239,18 @@ function TodoPage() {
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
+
+  useEffect(() => {
+    if (!recentlyDeleted) {
+      return;
+    }
+
+    const timeoutId = setTimeout(() => {
+      setRecentlyDeleted(null);
+    }, 5000);
+
+    return () => clearTimeout(timeoutId);
+  }, [recentlyDeleted]);
 
   // Completion progress
   const totalTasks = todos.length;
@@ -322,6 +366,47 @@ function TodoPage() {
         onEdit={handleEditTodo}
         onTogglePinned={handleTogglePinned}
       />
+
+      {recentlyDeleted && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="
+            fixed bottom-5 left-4 right-4 z-50
+            flex items-center justify-between gap-4
+            rounded-xl border border-slate-700
+            bg-[#111827] px-4 py-3
+            shadow-2xl shadow-black/30
+            sm:left-auto sm:right-6 sm:w-[360px]
+          "
+        >
+          <div className="min-w-0">
+            <p className="text-sm font-semibold text-white">Task deleted</p>
+
+            <p className="mt-0.5 truncate text-xs text-slate-400">
+              {recentlyDeleted.todo.title}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleUndoDelete}
+            className="
+              shrink-0 rounded-lg px-3 py-2
+              text-sm font-semibold text-violet-400
+              transition
+              hover:bg-violet-500/10 hover:text-violet-300
+              focus-visible:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-violet-500/60
+              focus-visible:ring-offset-2
+              focus-visible:ring-offset-[#111827]
+            "
+          >
+            Undo
+          </button>
+        </div>
+      )}
     </MainLayout>
   );
 }
