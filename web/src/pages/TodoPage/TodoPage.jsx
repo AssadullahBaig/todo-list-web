@@ -260,10 +260,18 @@ function TodoPage() {
   const completionPercentage =
     totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
 
+  const normalizedSearchTerm = searchTerm.trim().toLowerCase();
+
   const filteredTodos = todos.filter((todo) => {
-    const matchesSearch = todo.title
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
+    const searchableText = [
+      todo.title,
+      todo.description || "",
+      todo.label || "",
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    const matchesSearch = searchableText.includes(normalizedSearchTerm);
 
     const matchesPriority =
       priorityFilter === "All" || todo.priority === priorityFilter;
