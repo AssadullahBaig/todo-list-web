@@ -33,7 +33,7 @@ that we may add to TaskFlow in future versions.
 - [ ] Subtasks
 - [ ] Labels
 - [ ] Comments
-- [ ] Pin/favorite tasks
+- [x] Pin/favorite tasks
 - [ ] Recurring tasks
 - [ ] Reminders
 - [ ] Bulk task actions

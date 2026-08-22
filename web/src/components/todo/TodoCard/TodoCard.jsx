@@ -69,6 +69,7 @@ function TodoCard({ todo, onDelete, onToggle, onEdit, onTogglePinned }) {
     priority,
     completed,
     pinned,
+    label,
   } = todo;
 
   const [isAnimating, setIsAnimating] = useState(false);
@@ -178,6 +179,11 @@ function TodoCard({ todo, onDelete, onToggle, onEdit, onTogglePinned }) {
               {title}
             </h3>
 
+            {label && (
+              <span className="shrink-0 rounded-full bg-violet-500/10 px-2.5 py-0.5 text-xs font-medium text-violet-400">
+                {label}
+              </span>
+            )}
             {/* Priority */}
             <span
               className={`

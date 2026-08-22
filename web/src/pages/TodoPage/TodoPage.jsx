@@ -24,6 +24,7 @@ function TodoPage() {
     dueDate: "",
     dueTime: "",
     priority: "Medium",
+    label: "",
   };
 
   function getResolvedDueDate(dueDate, dueTime) {
@@ -163,6 +164,7 @@ function TodoPage() {
       dueDate: todo.dueDate,
       dueTime: todo.dueTime || "",
       priority: todo.priority,
+      label: todo.label || "",
     });
 
     setIsFormVisible(true);

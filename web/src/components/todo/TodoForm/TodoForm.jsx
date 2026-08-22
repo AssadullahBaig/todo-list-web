@@ -114,6 +114,24 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
             </select>
           </div>
         </div>
+        <div>
+          <label className="mb-2 block text-sm font-medium text-slate-300">
+            Label
+          </label>
+
+          <select
+            name="label"
+            value={newTodo.label}
+            onChange={onInputChange}
+            className="h-11 w-full rounded-xl border border-slate-700 bg-[#111827] px-4 text-sm text-white outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
+          >
+            <option value="">No label</option>
+            <option value="Work">Work</option>
+            <option value="Study">Study</option>
+            <option value="Personal">Personal</option>
+            <option value="Development">Development</option>
+          </select>
+        </div>
 
         {/* Buttons */}
 
