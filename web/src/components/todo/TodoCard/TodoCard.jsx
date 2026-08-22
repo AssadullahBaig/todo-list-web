@@ -29,9 +29,9 @@ function getDueDateStatus(dueDate, dueTime) {
   dueDay.setHours(0, 0, 0, 0);
 
   const differenceInTime = dueDay.getTime() - today.getTime();
+
   const differenceInDays = Math.round(differenceInTime / (1000 * 60 * 60 * 24));
 
-  // The actual deadline has passed
   if (due < now) {
     return {
       label: "Overdue",
@@ -75,6 +75,13 @@ function TodoCard({ todo, onDelete, onToggle, onEdit, onTogglePinned }) {
   const [isAnimating, setIsAnimating] = useState(false);
 
   const dueDateStatus = getDueDateStatus(dueDate, dueTime);
+
+  const displayStatus = completed
+    ? {
+        label: "Completed",
+        color: "text-emerald-400",
+      }
+    : dueDateStatus;
 
   useEffect(() => {
     if (!completed) {
@@ -132,6 +139,11 @@ function TodoCard({ todo, onDelete, onToggle, onEdit, onTogglePinned }) {
             items-center justify-center
             rounded-md border
             transition-all duration-300
+            focus-visible:outline-none
+            focus-visible:ring-2
+            focus-visible:ring-violet-500/60
+            focus-visible:ring-offset-2
+            focus-visible:ring-offset-slate-900
             ${
               completed
                 ? "border-emerald-500 bg-emerald-500"
@@ -164,10 +176,10 @@ function TodoCard({ todo, onDelete, onToggle, onEdit, onTogglePinned }) {
 
         {/* Task content */}
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             <h3
               className={`
-                truncate text-base font-semibold
+                truncate text-[15px] font-semibold leading-5 tracking-tight
                 transition-all duration-500
                 ${
                   completed
@@ -184,6 +196,7 @@ function TodoCard({ todo, onDelete, onToggle, onEdit, onTogglePinned }) {
                 {label}
               </span>
             )}
+
             {/* Priority */}
             <span
               className={`
@@ -207,7 +220,7 @@ function TodoCard({ todo, onDelete, onToggle, onEdit, onTogglePinned }) {
           {description && (
             <p
               className={`
-                mt-0.5 truncate text-sm
+                mt-0.5 truncate text-xs leading-5
                 transition-all duration-500
                 ${completed ? "text-slate-600" : "text-slate-500"}
               `}
@@ -219,13 +232,7 @@ function TodoCard({ todo, onDelete, onToggle, onEdit, onTogglePinned }) {
 
         {/* Due information */}
         <div className="hidden shrink-0 items-center gap-2 text-xs sm:flex">
-          <span
-            className={`
-              ${completed ? "text-slate-600" : dueDateStatus.color}
-            `}
-          >
-            {dueDateStatus.label}
-          </span>
+          <span className={displayStatus.color}>{displayStatus.label}</span>
 
           {dueDate && (
             <>
@@ -257,20 +264,30 @@ function TodoCard({ todo, onDelete, onToggle, onEdit, onTogglePinned }) {
           )}
         </div>
 
-        {/* Actions */}
+        {/* Pin */}
         <button
           type="button"
           onClick={() => onTogglePinned(id)}
           aria-label={pinned ? "Unpin task" : "Pin task"}
-          className={`rounded-lg p-2 transition ${
-            pinned
-              ? "text-yellow-400 hover:bg-yellow-400/10"
-              : "text-slate-500 hover:bg-slate-800 hover:text-yellow-400"
-          }`}
+          className={`
+            rounded-lg p-2
+            transition
+            focus-visible:outline-none
+            focus-visible:ring-2
+            focus-visible:ring-yellow-400/60
+            focus-visible:ring-offset-2
+            focus-visible:ring-offset-slate-900
+            ${
+              pinned
+                ? "text-yellow-400 hover:bg-yellow-400/10"
+                : "text-slate-500 hover:bg-slate-800 hover:text-yellow-400"
+            }
+          `}
         >
           <Star size={18} fill={pinned ? "currentColor" : "none"} />
         </button>
 
+        {/* Actions */}
         <div className="flex shrink-0 items-center gap-1">
           <button
             type="button"
@@ -282,6 +299,11 @@ function TodoCard({ todo, onDelete, onToggle, onEdit, onTogglePinned }) {
               transition
               hover:bg-slate-800
               hover:text-white
+              focus-visible:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-violet-500/60
+              focus-visible:ring-offset-2
+              focus-visible:ring-offset-slate-900
             "
           >
             Edit
@@ -296,6 +318,12 @@ function TodoCard({ todo, onDelete, onToggle, onEdit, onTogglePinned }) {
               text-red-400
               transition
               hover:bg-red-500/10
+              hover:text-red-300
+              focus-visible:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-red-500/60
+              focus-visible:ring-offset-2
+              focus-visible:ring-offset-slate-900
             "
           >
             Delete
@@ -305,9 +333,7 @@ function TodoCard({ todo, onDelete, onToggle, onEdit, onTogglePinned }) {
 
       {/* Mobile metadata */}
       <div className="relative mt-2 flex items-center gap-2 text-xs sm:hidden">
-        <span className={completed ? "text-slate-600" : dueDateStatus.color}>
-          {dueDateStatus.label}
-        </span>
+        <span className={displayStatus.color}>{displayStatus.label}</span>
 
         {dueDate && (
           <>

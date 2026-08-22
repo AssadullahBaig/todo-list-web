@@ -14,21 +14,25 @@ function TodoHeader({
   completionPercentage,
 }) {
   return (
-    <section className="mb-8 w-full">
+    <section className="mb-7 w-full">
       {/* Page Heading */}
       <div className="flex items-start justify-between gap-6">
         <div>
-          <h1 className="text-4xl font-bold text-white">My Tasks</h1>
+          <h1 className="text-4xl font-bold tracking-tight text-white">
+            My Tasks
+          </h1>
 
-          <p className="mt-3 text-lg text-slate-400">
+          <p className="mt-2 text-base leading-relaxed text-slate-400">
             Manage your daily work efficiently.
           </p>
         </div>
 
         {/* Productivity */}
-        <div className="hidden min-w-[220px] rounded-2xl border border-slate-800 bg-[#111827] px-6 py-4 lg:block">
+        <div className="hidden min-w-[220px] rounded-2xl border border-slate-800 bg-[#111827] px-5 py-4 lg:block">
           <div className="flex items-center justify-between gap-6">
-            <span className="text-sm text-slate-400">Productivity</span>
+            <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
+              Productivity
+            </span>
 
             <span className="text-sm font-semibold text-violet-400">
               {completionPercentage}%
@@ -36,9 +40,9 @@ function TodoHeader({
           </div>
 
           <div className="mt-2 flex items-center gap-2">
-            <CheckCircle2 size={20} className="text-emerald-400" />
+            <CheckCircle2 size={19} className="text-emerald-400" />
 
-            <span className="font-semibold text-white">
+            <span className="text-sm font-semibold text-white">
               {completedTasks} of {totalTasks} completed
             </span>
           </div>
@@ -53,7 +57,7 @@ function TodoHeader({
       </div>
 
       {/* Search / Filter / Sort */}
-      <div className="mt-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+      <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         {/* Search */}
         <div className="relative w-full lg:max-w-md">
           <Search
@@ -67,10 +71,11 @@ function TodoHeader({
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Search tasks..."
             className="
-              h-12 w-full rounded-xl
+              h-11 w-full rounded-xl
               border border-slate-700
               bg-[#111827] pl-11 pr-4
-              text-white
+              text-sm text-white
+              placeholder:text-slate-500
               outline-none
               transition
               hover:border-slate-600
@@ -82,11 +87,11 @@ function TodoHeader({
         </div>
 
         {/* Controls */}
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
           <button
             type="button"
             onClick={() => onFilterChange("All")}
-            className={`rounded-xl px-5 py-2 font-medium transition ${
+            className={`rounded-xl px-4 py-2 text-sm font-medium transition ${
               filter === "All"
                 ? "bg-violet-600 text-white hover:bg-violet-500"
                 : "bg-[#111827] text-slate-400 hover:bg-slate-800 hover:text-white"
@@ -98,7 +103,7 @@ function TodoHeader({
           <button
             type="button"
             onClick={() => onFilterChange("Active")}
-            className={`rounded-xl px-5 py-2 font-medium transition ${
+            className={`rounded-xl px-4 py-2 text-sm font-medium transition ${
               filter === "Active"
                 ? "bg-violet-600 text-white hover:bg-violet-500"
                 : "bg-[#111827] text-slate-400 hover:bg-slate-800 hover:text-white"
@@ -110,7 +115,7 @@ function TodoHeader({
           <button
             type="button"
             onClick={() => onFilterChange("Completed")}
-            className={`rounded-xl px-5 py-2 font-medium transition ${
+            className={`rounded-xl px-4 py-2 text-sm font-medium transition ${
               filter === "Completed"
                 ? "bg-violet-600 text-white hover:bg-violet-500"
                 : "bg-[#111827] text-slate-400 hover:bg-slate-800 hover:text-white"
@@ -119,7 +124,6 @@ function TodoHeader({
             Completed
           </button>
 
-          {/* Priority */}
           <select
             value={priorityFilter}
             onChange={(e) => onPriorityFilterChange(e.target.value)}
@@ -142,7 +146,6 @@ function TodoHeader({
             <option value="Low">Low</option>
           </select>
 
-          {/* Sort */}
           <select
             value={sortBy}
             onChange={(e) => onSortChange(e.target.value)}

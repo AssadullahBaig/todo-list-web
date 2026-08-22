@@ -55,6 +55,25 @@ function TodoPage() {
     return `${year}-${month}-${day}`;
   }
 
+  function isTaskOverdue(todo) {
+    if (todo.completed || !todo.dueDate) {
+      return false;
+    }
+
+    const [year, month, day] = todo.dueDate.split("-").map(Number);
+
+    const due = new Date(year, month - 1, day);
+
+    if (todo.dueTime) {
+      const [hours, minutes] = todo.dueTime.split(":").map(Number);
+      due.setHours(hours, minutes, 0, 0);
+    } else {
+      due.setHours(23, 59, 59, 999);
+    }
+
+    return due < new Date();
+  }
+
   function handleTogglePinned(id) {
     setTodos((previousTodos) =>
       previousTodos.map((todo) =>
@@ -217,6 +236,13 @@ function TodoPage() {
   });
 
   const sortedTodos = [...filteredTodos].sort((a, b) => {
+    const aPinned = Boolean(a.pinned);
+    const bPinned = Boolean(b.pinned);
+
+    if (aPinned !== bPinned) {
+      return aPinned ? -1 : 1;
+    }
+
     if (sortBy === "newest") {
       return b.id - a.id;
     }
@@ -253,6 +279,11 @@ function TodoPage() {
     return 0;
   });
 
+  // Split tasks into overdue and regular tasks.
+  const overdueTodos = sortedTodos.filter((todo) => isTaskOverdue(todo));
+
+  const regularTodos = sortedTodos.filter((todo) => !isTaskOverdue(todo));
+
   return (
     <MainLayout onToggleForm={handleToggleForm} isFormVisible={isFormVisible}>
       <TodoHeader
@@ -280,7 +311,8 @@ function TodoPage() {
       )}
 
       <TodoList
-        todos={sortedTodos}
+        todos={regularTodos}
+        overdueTodos={overdueTodos}
         totalTaskCount={todos.length}
         searchTerm={searchTerm}
         filter={filter}

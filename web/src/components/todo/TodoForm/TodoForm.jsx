@@ -1,22 +1,22 @@
 function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
   return (
-    <section className="mb-10 rounded-3xl border border-slate-800 bg-[#111827] p-8 shadow-xl shadow-black/20">
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-white">
+    <section className="mb-8 rounded-3xl border border-slate-800 bg-[#111827] p-7 shadow-xl shadow-black/20">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold tracking-tight text-white">
           {isEditing ? "Edit Task" : "Create New Task"}
         </h2>
 
-        <p className="mt-2 text-slate-400">
+        <p className="mt-1.5 text-sm leading-relaxed text-slate-400">
           Fill in the details below to keep your work organized.
         </p>
       </div>
 
-      <form onSubmit={onSubmit} className="space-y-6">
+      <form onSubmit={onSubmit} className="space-y-5">
         {/* Title */}
         <div>
           <label
             htmlFor="title"
-            className="mb-2 block text-sm font-medium text-slate-300"
+            className="mb-1.5 block text-sm font-medium text-slate-300"
           >
             Title
           </label>
@@ -29,10 +29,11 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
             onChange={onInputChange}
             placeholder="Enter task title..."
             className="
-              h-12 w-full rounded-xl
+              h-11 w-full rounded-xl
               border border-slate-700
               bg-[#1E293B] px-4
-              text-white placeholder:text-slate-500
+              text-sm text-white
+              placeholder:text-slate-500
               outline-none
               transition-all duration-200
               hover:border-slate-600
@@ -47,7 +48,7 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
         <div>
           <label
             htmlFor="description"
-            className="mb-2 block text-sm font-medium text-slate-300"
+            className="mb-1.5 block text-sm font-medium text-slate-300"
           >
             Description
           </label>
@@ -55,7 +56,7 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
           <textarea
             id="description"
             name="description"
-            rows={5}
+            rows={4}
             value={newTodo.description}
             onChange={onInputChange}
             placeholder="Describe your task..."
@@ -63,7 +64,8 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
               w-full resize-none rounded-xl
               border border-slate-700
               bg-[#1E293B] px-4 py-3
-              text-white placeholder:text-slate-500
+              text-sm text-white
+              placeholder:text-slate-500
               outline-none
               transition-all duration-200
               hover:border-slate-600
@@ -75,11 +77,11 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
         </div>
 
         {/* Date + Priority */}
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-3">
           <div>
             <label
               htmlFor="dueDate"
-              className="mb-2 block text-sm font-medium text-slate-300"
+              className="mb-1.5 block text-sm font-medium text-slate-300"
             >
               Due Date
             </label>
@@ -91,10 +93,10 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
               value={newTodo.dueDate}
               onChange={onInputChange}
               className="
-                h-12 w-full rounded-xl
+                h-11 w-full rounded-xl
                 border border-slate-700
                 bg-[#1E293B] px-4
-                text-white
+                text-sm text-white
                 outline-none
                 transition-all duration-200
                 hover:border-slate-600
@@ -108,7 +110,7 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
           <div>
             <label
               htmlFor="dueTime"
-              className="mb-2 block text-sm font-medium text-slate-300"
+              className="mb-1.5 block text-sm font-medium text-slate-300"
             >
               Time
             </label>
@@ -120,10 +122,10 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
               value={newTodo.dueTime}
               onChange={onInputChange}
               className="
-                h-12 w-full rounded-xl
+                h-11 w-full rounded-xl
                 border border-slate-700
                 bg-[#1E293B] px-4
-                text-white
+                text-sm text-white
                 outline-none
                 transition-all duration-200
                 hover:border-slate-600
@@ -137,7 +139,7 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
           <div>
             <label
               htmlFor="priority"
-              className="mb-2 block text-sm font-medium text-slate-300"
+              className="mb-1.5 block text-sm font-medium text-slate-300"
             >
               Priority
             </label>
@@ -148,10 +150,10 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
               value={newTodo.priority}
               onChange={onInputChange}
               className="
-                h-12 w-full rounded-xl
+                h-11 w-full rounded-xl
                 border border-slate-700
                 bg-[#1E293B] px-4
-                text-white
+                text-sm text-white
                 outline-none
                 transition-all duration-200
                 hover:border-slate-600
@@ -171,7 +173,7 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
         <div>
           <label
             htmlFor="label"
-            className="mb-2 block text-sm font-medium text-slate-300"
+            className="mb-1.5 block text-sm font-medium text-slate-300"
           >
             Label
           </label>
@@ -184,7 +186,7 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
             className="
               h-11 w-full rounded-xl
               border border-slate-700
-              bg-[#111827] px-4
+              bg-[#1E293B] px-4
               text-sm text-white
               outline-none
               transition
@@ -203,15 +205,15 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
         </div>
 
         {/* Buttons */}
-        <div className="flex justify-end gap-4 pt-4">
+        <div className="flex justify-end gap-3 pt-2">
           {isEditing && (
             <button
               type="button"
               onClick={onCancel}
               className="
                 rounded-xl border border-slate-700
-                bg-transparent px-6 py-3
-                font-medium text-slate-300
+                bg-transparent px-5 py-2.5
+                text-sm font-medium text-slate-300
                 transition
                 hover:border-slate-600
                 hover:bg-slate-800
@@ -232,8 +234,8 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
             className="
               rounded-xl
               bg-gradient-to-r from-violet-700 to-violet-500
-              px-8 py-3
-              font-semibold text-white
+              px-7 py-2.5
+              text-sm font-semibold text-white
               shadow-lg shadow-violet-900/30
               transition-all duration-200
               hover:scale-[1.02]

@@ -31,7 +31,7 @@ that we may add to TaskFlow in future versions.
 - [ ] Custom task ordering
 - [ ] Drag and drop
 - [ ] Subtasks
-- [ ] Labels
+- [x] Labels
 - [ ] Comments
 - [x] Pin/favorite tasks
 - [ ] Recurring tasks
