@@ -10,7 +10,7 @@ that we may add to TaskFlow in future versions.
 - [ ] Improve overall UI polish
 - [ ] Improve spacing and typography
 - [x] Improve task cards
-- [ ] Add better empty states
+- [x] Add better empty states
 - [x] Add better hover and focus states
 - [ ] Improve responsive/mobile layout
 - [ ] Research a better task creation screen

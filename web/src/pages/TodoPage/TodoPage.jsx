@@ -281,6 +281,10 @@ function TodoPage() {
 
       <TodoList
         todos={sortedTodos}
+        totalTaskCount={todos.length}
+        searchTerm={searchTerm}
+        filter={filter}
+        priorityFilter={priorityFilter}
         onDelete={handleDeleteTodo}
         onToggle={handleToggleComplete}
         onEdit={handleEditTodo}
