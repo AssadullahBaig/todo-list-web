@@ -236,6 +236,12 @@ function TodoPage() {
     setIsFormVisible((previous) => !previous);
   }
 
+  function handleClearFilters() {
+    setSearchTerm("");
+    setFilter("All");
+    setPriorityFilter("All");
+  }
+
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
@@ -369,6 +375,7 @@ function TodoPage() {
         searchTerm={searchTerm}
         filter={filter}
         priorityFilter={priorityFilter}
+        onClearFilters={handleClearFilters}
         onDelete={handleDeleteTodo}
         onToggle={handleToggleComplete}
         onEdit={handleEditTodo}
