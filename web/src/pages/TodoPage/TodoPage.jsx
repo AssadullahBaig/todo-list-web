@@ -54,6 +54,19 @@ function TodoPage() {
     return `${year}-${month}-${day}`;
   }
 
+  function handleTogglePinned(id) {
+    setTodos((previousTodos) =>
+      previousTodos.map((todo) =>
+        todo.id === id
+          ? {
+              ...todo,
+              pinned: !todo.pinned,
+            }
+          : todo,
+      ),
+    );
+  }
+
   const [todos, setTodos] = useState(loadTodos);
   const [newTodo, setNewTodo] = useState(emptyTodo);
   const [editingTodoId, setEditingTodoId] = useState(null);
@@ -108,6 +121,7 @@ function TodoPage() {
       ...newTodo,
       dueDate: getResolvedDueDate(newTodo.dueDate, newTodo.dueTime),
       completed: false,
+      pinned: false,
       createdAt: new Date().toISOString(),
     };
 
@@ -257,6 +271,7 @@ function TodoPage() {
         onDelete={handleDeleteTodo}
         onToggle={handleToggleComplete}
         onEdit={handleEditTodo}
+        onTogglePinned={handleTogglePinned}
       />
     </MainLayout>
   );

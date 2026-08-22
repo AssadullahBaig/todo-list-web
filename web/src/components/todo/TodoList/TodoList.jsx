@@ -1,7 +1,7 @@
 import TodoCard from "../TodoCard";
 import { ClipboardList } from "lucide-react";
 
-function TodoList({ todos, onDelete, onToggle, onEdit }) {
+function TodoList({ todos, onDelete, onToggle, onEdit, onTogglePinned }) {
   if (todos.length === 0) {
     return (
       <section className="rounded-3xl border border-dashed border-slate-700 bg-[#111827] py-20 text-center">
@@ -25,6 +25,7 @@ function TodoList({ todos, onDelete, onToggle, onEdit }) {
           onDelete={onDelete}
           onToggle={onToggle}
           onEdit={onEdit}
+          onTogglePinned={onTogglePinned}
         />
       ))}
     </section>

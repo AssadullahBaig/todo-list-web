@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Check } from "lucide-react";
+import { Check, Star } from "lucide-react";
 
 function getDueDateStatus(dueDate, dueTime) {
   if (!dueDate) {
@@ -59,9 +59,17 @@ function getDueDateStatus(dueDate, dueTime) {
   };
 }
 
-function TodoCard({ todo, onDelete, onToggle, onEdit }) {
-  const { id, title, description, dueDate, dueTime, priority, completed } =
-    todo;
+function TodoCard({ todo, onDelete, onToggle, onEdit, onTogglePinned }) {
+  const {
+    id,
+    title,
+    description,
+    dueDate,
+    dueTime,
+    priority,
+    completed,
+    pinned,
+  } = todo;
 
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -244,6 +252,19 @@ function TodoCard({ todo, onDelete, onToggle, onEdit }) {
         </div>
 
         {/* Actions */}
+        <button
+          type="button"
+          onClick={() => onTogglePinned(id)}
+          aria-label={pinned ? "Unpin task" : "Pin task"}
+          className={`rounded-lg p-2 transition ${
+            pinned
+              ? "text-yellow-400 hover:bg-yellow-400/10"
+              : "text-slate-500 hover:bg-slate-800 hover:text-yellow-400"
+          }`}
+        >
+          <Star size={18} fill={pinned ? "currentColor" : "none"} />
+        </button>
+
         <div className="flex shrink-0 items-center gap-1">
           <button
             type="button"
