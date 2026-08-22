@@ -26,22 +26,72 @@ function Sidebar({ onToggleForm }) {
 
         {/* Navigation */}
         <nav className="space-y-2 px-4 py-8">
-          <button className="flex w-full items-center gap-4 rounded-xl px-5 py-3 text-slate-400 transition-all duration-200 hover:bg-slate-800 hover:text-white">
+          <button
+            className="
+              flex w-full items-center gap-4 rounded-xl px-5 py-3
+              text-slate-400
+              transition-all duration-200
+              hover:bg-slate-800 hover:text-white
+              focus-visible:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-violet-500/60
+              focus-visible:ring-offset-2
+              focus-visible:ring-offset-[#0F172A]
+            "
+          >
             <LayoutDashboard size={20} />
             <span>Dashboard</span>
           </button>
 
-          <button className="flex w-full items-center gap-4 rounded-xl bg-gradient-to-r from-violet-700 to-violet-600 px-5 py-3 font-semibold text-white shadow-lg shadow-violet-900/30">
+          <button
+            className="
+              flex w-full items-center gap-4 rounded-xl
+              bg-gradient-to-r from-violet-700 to-violet-600
+              px-5 py-3 font-semibold text-white
+              shadow-lg shadow-violet-900/30
+              transition-all duration-200
+              hover:from-violet-600 hover:to-violet-500
+              focus-visible:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-violet-400/70
+              focus-visible:ring-offset-2
+              focus-visible:ring-offset-[#0F172A]
+            "
+          >
             <CheckSquare size={20} />
             <span>Todo</span>
           </button>
 
-          <button className="flex w-full items-center gap-4 rounded-xl px-5 py-3 text-slate-400 transition-all duration-200 hover:bg-slate-800 hover:text-white">
+          <button
+            className="
+              flex w-full items-center gap-4 rounded-xl px-5 py-3
+              text-slate-400
+              transition-all duration-200
+              hover:bg-slate-800 hover:text-white
+              focus-visible:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-violet-500/60
+              focus-visible:ring-offset-2
+              focus-visible:ring-offset-[#0F172A]
+            "
+          >
             <Settings size={20} />
             <span>Settings</span>
           </button>
 
-          <button className="flex w-full items-center gap-4 rounded-xl px-5 py-3 text-slate-400 transition-all duration-200 hover:bg-slate-800 hover:text-white">
+          <button
+            className="
+              flex w-full items-center gap-4 rounded-xl px-5 py-3
+              text-slate-400
+              transition-all duration-200
+              hover:bg-slate-800 hover:text-white
+              focus-visible:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-violet-500/60
+              focus-visible:ring-offset-2
+              focus-visible:ring-offset-[#0F172A]
+            "
+          >
             <Info size={20} />
             <span>About</span>
           </button>
@@ -52,7 +102,22 @@ function Sidebar({ onToggleForm }) {
       <div className="border-t border-slate-800 p-5">
         <button
           onClick={onToggleForm}
-          className="flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-violet-700 to-violet-500 px-5 py-4 font-semibold text-white shadow-lg shadow-violet-900/30 transition-all duration-200 hover:scale-[1.02] hover:from-violet-600 hover:to-violet-400 active:scale-[0.98]"
+          className="
+            flex w-full items-center justify-center gap-3
+            rounded-2xl
+            bg-gradient-to-r from-violet-700 to-violet-500
+            px-5 py-4 font-semibold text-white
+            shadow-lg shadow-violet-900/30
+            transition-all duration-200
+            hover:scale-[1.02]
+            hover:from-violet-600 hover:to-violet-400
+            active:scale-[0.98]
+            focus-visible:outline-none
+            focus-visible:ring-2
+            focus-visible:ring-violet-400/70
+            focus-visible:ring-offset-2
+            focus-visible:ring-offset-[#0F172A]
+          "
         >
           <Plus size={22} strokeWidth={2.8} />
           <span>New Task</span>

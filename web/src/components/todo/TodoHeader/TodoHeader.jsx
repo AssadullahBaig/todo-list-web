@@ -66,21 +66,31 @@ function TodoHeader({
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Search tasks..."
-            className="h-12 w-full rounded-xl border border-slate-700 bg-[#111827] pl-11 pr-4 text-white outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
+            className="
+              h-12 w-full rounded-xl
+              border border-slate-700
+              bg-[#111827] pl-11 pr-4
+              text-white
+              outline-none
+              transition
+              hover:border-slate-600
+              focus:border-violet-500
+              focus:ring-2
+              focus:ring-violet-500/20
+            "
           />
         </div>
 
         {/* Controls */}
         <div className="flex flex-wrap items-center gap-3">
-          {/* Filter */}
           <button
             type="button"
             onClick={() => onFilterChange("All")}
             className={`rounded-xl px-5 py-2 font-medium transition ${
               filter === "All"
-                ? "bg-violet-600 text-white"
-                : "bg-[#111827] text-slate-400 hover:bg-slate-800"
-            }`}
+                ? "bg-violet-600 text-white hover:bg-violet-500"
+                : "bg-[#111827] text-slate-400 hover:bg-slate-800 hover:text-white"
+            } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070B1A]`}
           >
             All
           </button>
@@ -90,9 +100,9 @@ function TodoHeader({
             onClick={() => onFilterChange("Active")}
             className={`rounded-xl px-5 py-2 font-medium transition ${
               filter === "Active"
-                ? "bg-violet-600 text-white"
-                : "bg-[#111827] text-slate-400 hover:bg-slate-800"
-            }`}
+                ? "bg-violet-600 text-white hover:bg-violet-500"
+                : "bg-[#111827] text-slate-400 hover:bg-slate-800 hover:text-white"
+            } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070B1A]`}
           >
             Active
           </button>
@@ -102,9 +112,9 @@ function TodoHeader({
             onClick={() => onFilterChange("Completed")}
             className={`rounded-xl px-5 py-2 font-medium transition ${
               filter === "Completed"
-                ? "bg-violet-600 text-white"
-                : "bg-[#111827] text-slate-400 hover:bg-slate-800"
-            }`}
+                ? "bg-violet-600 text-white hover:bg-violet-500"
+                : "bg-[#111827] text-slate-400 hover:bg-slate-800 hover:text-white"
+            } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070B1A]`}
           >
             Completed
           </button>
@@ -113,7 +123,18 @@ function TodoHeader({
           <select
             value={priorityFilter}
             onChange={(e) => onPriorityFilterChange(e.target.value)}
-            className="h-10 rounded-xl border border-slate-700 bg-[#111827] px-4 text-sm font-medium text-slate-300 outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
+            className="
+              h-10 rounded-xl
+              border border-slate-700
+              bg-[#111827] px-4
+              text-sm font-medium text-slate-300
+              outline-none
+              transition
+              hover:border-slate-600
+              focus:border-violet-500
+              focus:ring-2
+              focus:ring-violet-500/20
+            "
           >
             <option value="All">All Priorities</option>
             <option value="High">High</option>
@@ -125,7 +146,18 @@ function TodoHeader({
           <select
             value={sortBy}
             onChange={(e) => onSortChange(e.target.value)}
-            className="h-10 rounded-xl border border-slate-700 bg-[#111827] px-4 text-sm font-medium text-slate-300 outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
+            className="
+              h-10 rounded-xl
+              border border-slate-700
+              bg-[#111827] px-4
+              text-sm font-medium text-slate-300
+              outline-none
+              transition
+              hover:border-slate-600
+              focus:border-violet-500
+              focus:ring-2
+              focus:ring-violet-500/20
+            "
           >
             <option value="newest">Newest</option>
             <option value="oldest">Oldest</option>

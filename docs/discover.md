@@ -11,7 +11,7 @@ that we may add to TaskFlow in future versions.
 - [ ] Improve spacing and typography
 - [x] Improve task cards
 - [ ] Add better empty states
-- [ ] Add better hover and focus states
+- [x] Add better hover and focus states
 - [ ] Improve responsive/mobile layout
 - [ ] Research a better task creation screen
 - [x] Task completion animation
@@ -60,7 +60,7 @@ Possible lists:
 - [ ] Overdue task section
 - [ ] Upcoming tasks
 - [ ] Task statistics
-- [ ] Completion progress
+- [x] Completion progress
 - [ ] Recurring task system
 - [ ] Reminders and notifications
 
