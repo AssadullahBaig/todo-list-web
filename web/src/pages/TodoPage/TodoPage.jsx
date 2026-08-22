@@ -189,6 +189,14 @@ function TodoPage() {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
+  // Completion progress
+  const totalTasks = todos.length;
+
+  const completedTasks = todos.filter((todo) => todo.completed).length;
+
+  const completionPercentage =
+    totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
+
   const filteredTodos = todos.filter((todo) => {
     const matchesSearch = todo.title
       .toLowerCase()
@@ -256,6 +264,9 @@ function TodoPage() {
         onSortChange={setSortBy}
         priorityFilter={priorityFilter}
         onPriorityFilterChange={setPriorityFilter}
+        totalTasks={totalTasks}
+        completedTasks={completedTasks}
+        completionPercentage={completionPercentage}
       />
 
       {isFormVisible && (

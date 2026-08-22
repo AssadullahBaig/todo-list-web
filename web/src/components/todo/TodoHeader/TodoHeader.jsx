@@ -9,6 +9,9 @@ function TodoHeader({
   onSortChange,
   priorityFilter,
   onPriorityFilterChange,
+  totalTasks,
+  completedTasks,
+  completionPercentage,
 }) {
   return (
     <section className="mb-8 w-full">
@@ -23,15 +26,28 @@ function TodoHeader({
         </div>
 
         {/* Productivity */}
-        <div className="hidden rounded-2xl border border-slate-800 bg-[#111827] px-6 py-4 lg:flex lg:flex-col">
-          <span className="text-sm text-slate-400">Productivity</span>
+        <div className="hidden min-w-[220px] rounded-2xl border border-slate-800 bg-[#111827] px-6 py-4 lg:block">
+          <div className="flex items-center justify-between gap-6">
+            <span className="text-sm text-slate-400">Productivity</span>
+
+            <span className="text-sm font-semibold text-violet-400">
+              {completionPercentage}%
+            </span>
+          </div>
 
           <div className="mt-2 flex items-center gap-2">
             <CheckCircle2 size={20} className="text-emerald-400" />
 
-            <span className="text-lg font-semibold text-white">
-              Stay Organized
+            <span className="font-semibold text-white">
+              {completedTasks} of {totalTasks} completed
             </span>
+          </div>
+
+          <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-800">
+            <div
+              className="h-full rounded-full bg-violet-600 transition-all duration-500"
+              style={{ width: `${completionPercentage}%` }}
+            />
           </div>
         </div>
       </div>
@@ -93,8 +109,7 @@ function TodoHeader({
             Completed
           </button>
 
-          {/* Sort */}
-
+          {/* Priority */}
           <select
             value={priorityFilter}
             onChange={(e) => onPriorityFilterChange(e.target.value)}
@@ -106,6 +121,7 @@ function TodoHeader({
             <option value="Low">Low</option>
           </select>
 
+          {/* Sort */}
           <select
             value={sortBy}
             onChange={(e) => onSortChange(e.target.value)}
