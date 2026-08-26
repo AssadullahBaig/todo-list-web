@@ -96,7 +96,16 @@ function getRecurrenceLabel(recurrence, dueDate) {
   return "";
 }
 
-function TodoCard({ todo, onDelete, onToggle, onEdit, onTogglePinned }) {
+function TodoCard({
+  todo,
+  onDelete,
+  onToggle,
+  onEdit,
+  onTogglePinned,
+  isSelectionMode,
+  isSelected,
+  onToggleSelection,
+}) {
   const {
     id,
     title,
@@ -167,6 +176,39 @@ function TodoCard({ todo, onDelete, onToggle, onEdit, onTogglePinned }) {
       />
 
       <div className="relative flex items-center gap-3">
+        {/* Bulk selection checkbox */}
+        {isSelectionMode && (
+          <button
+            type="button"
+            onClick={() => onToggleSelection(id)}
+            aria-label={isSelected ? "Unselect task" : "Select task"}
+            className={`
+            flex h-5 w-5 shrink-0
+            items-center justify-center
+            rounded-md border
+            transition-all duration-200
+            focus-visible:outline-none
+            focus-visible:ring-2
+            focus-visible:ring-violet-500/60
+            focus-visible:ring-offset-2
+            focus-visible:ring-offset-slate-900
+            ${
+              isSelected
+                ? "border-violet-500 bg-violet-600"
+                : "border-slate-600 hover:border-violet-500 hover:bg-violet-500/10"
+            }
+      `}
+          >
+            <Check
+              size={13}
+              strokeWidth={3}
+              className={`text-white transition ${
+                isSelected ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          </button>
+        )}
+
         {/* Animated checkbox */}
         <button
           type="button"
