@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Check, Star } from "lucide-react";
+import { Check, Repeat2, Star } from "lucide-react";
 
 function getDueDateStatus(dueDate, dueTime) {
   if (!dueDate) {
@@ -59,6 +59,43 @@ function getDueDateStatus(dueDate, dueTime) {
   };
 }
 
+function getRecurrenceLabel(recurrence, dueDate) {
+  if (!recurrence || recurrence === "none") {
+    return "";
+  }
+
+  if (recurrence === "daily") {
+    return "Every day";
+  }
+
+  if (recurrence === "weekly") {
+    if (!dueDate) {
+      return "Every week";
+    }
+
+    const dayName = new Date(`${dueDate}T00:00:00`).toLocaleDateString(
+      undefined,
+      {
+        weekday: "long",
+      },
+    );
+
+    return `Every ${dayName}`;
+  }
+
+  if (recurrence === "monthly") {
+    if (!dueDate) {
+      return "Every month";
+    }
+
+    const day = Number(dueDate.split("-")[2]);
+
+    return `Every month on day ${day}`;
+  }
+
+  return "";
+}
+
 function TodoCard({ todo, onDelete, onToggle, onEdit, onTogglePinned }) {
   const {
     id,
@@ -70,11 +107,14 @@ function TodoCard({ todo, onDelete, onToggle, onEdit, onTogglePinned }) {
     completed,
     pinned,
     label,
+    recurrence,
   } = todo;
 
   const [isAnimating, setIsAnimating] = useState(false);
 
   const dueDateStatus = getDueDateStatus(dueDate, dueTime);
+
+  const recurrenceLabel = getRecurrenceLabel(recurrence, dueDate);
 
   const displayStatus = completed
     ? {
@@ -262,6 +302,16 @@ function TodoCard({ todo, onDelete, onToggle, onEdit, onTogglePinned }) {
               </span>
             </>
           )}
+          {recurrenceLabel && (
+            <>
+              <span className="text-slate-700">•</span>
+
+              <span className="flex items-center gap-1 text-violet-400">
+                <Repeat2 size={13} />
+                {recurrenceLabel}
+              </span>
+            </>
+          )}
         </div>
 
         {/* Pin */}
@@ -357,6 +407,16 @@ function TodoCard({ todo, onDelete, onToggle, onEdit, onTogglePinned }) {
                 hour: "numeric",
                 minute: "2-digit",
               })}
+            </span>
+          </>
+        )}
+        {recurrenceLabel && (
+          <>
+            <span className="text-slate-700">•</span>
+
+            <span className="flex items-center gap-1 text-violet-400">
+              <Repeat2 size={13} />
+              {recurrenceLabel}
             </span>
           </>
         )}

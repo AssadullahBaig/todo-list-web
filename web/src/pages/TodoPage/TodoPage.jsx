@@ -25,6 +25,7 @@ function TodoPage() {
     dueTime: "",
     priority: "Medium",
     label: "",
+    recurrence: "None",
   };
 
   function getResolvedDueDate(dueDate, dueTime) {
@@ -216,6 +217,7 @@ function TodoPage() {
       dueTime: todo.dueTime || "",
       priority: todo.priority,
       label: todo.label || "",
+      recurrence: todo.recurrence || "None",
     });
 
     setIsFormVisible(true);
