@@ -1,4 +1,4 @@
-import { CheckCircle2, Search } from "lucide-react";
+import { CheckCircle2, ListChecks, Search } from "lucide-react";
 
 function TodoHeader({
   searchTerm,
@@ -12,6 +12,8 @@ function TodoHeader({
   totalTasks,
   completedTasks,
   completionPercentage,
+  isSelectionMode,
+  onToggleSelectionMode,
 }) {
   return (
     <section className="mb-7 w-full">
@@ -88,6 +90,19 @@ function TodoHeader({
 
         {/* Controls */}
         <div className="flex flex-wrap items-center gap-2.5">
+          <button
+            type="button"
+            onClick={onToggleSelectionMode}
+            className={`flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition ${
+              isSelectionMode
+                ? "bg-violet-600 text-white hover:bg-violet-500"
+                : "bg-[#111827] text-slate-400 hover:bg-slate-800 hover:text-white"
+            } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070B1A]`}
+          >
+            <ListChecks size={16} />
+            {isSelectionMode ? "Done" : "Select"}
+          </button>
+
           <button
             type="button"
             onClick={() => onFilterChange("All")}

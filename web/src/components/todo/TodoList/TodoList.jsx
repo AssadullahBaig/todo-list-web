@@ -13,6 +13,9 @@ function TodoList({
   onToggle,
   onEdit,
   onTogglePinned,
+  isSelectionMode,
+  selectedTodoIds,
+  onToggleSelection,
 }) {
   const hasNoVisibleTasks = todos.length === 0 && overdueTodos.length === 0;
 
@@ -109,6 +112,9 @@ function TodoList({
                 onToggle={onToggle}
                 onEdit={onEdit}
                 onTogglePinned={onTogglePinned}
+                isSelectionMode={isSelectionMode}
+                isSelected={selectedTodoIds.includes(todo.id)}
+                onToggleSelection={onToggleSelection}
               />
             ))}
           </div>
@@ -135,6 +141,9 @@ function TodoList({
                 onToggle={onToggle}
                 onEdit={onEdit}
                 onTogglePinned={onTogglePinned}
+                isSelectionMode={isSelectionMode}
+                isSelected={selectedTodoIds.includes(todo.id)}
+                onToggleSelection={onToggleSelection}
               />
             ))}
           </div>

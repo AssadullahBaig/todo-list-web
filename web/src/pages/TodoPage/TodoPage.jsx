@@ -25,7 +25,7 @@ function TodoPage() {
     dueTime: "",
     priority: "Medium",
     label: "",
-    recurrence: "None",
+    recurrence: "none",
   };
 
   function getResolvedDueDate(dueDate, dueTime) {
@@ -52,6 +52,69 @@ function TodoPage() {
     const year = due.getFullYear();
     const month = String(due.getMonth() + 1).padStart(2, "0");
     const day = String(due.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  }
+
+  function getNextRecurringDueDate(todo) {
+    const recurrence = (todo.recurrence || "none").toLowerCase();
+
+    if (!["daily", "weekly", "monthly"].includes(recurrence)) {
+      return todo.dueDate || "";
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let nextDate;
+
+    if (todo.dueDate) {
+      const [year, month, day] = todo.dueDate.split("-").map(Number);
+      nextDate = new Date(year, month - 1, day);
+    } else {
+      nextDate = new Date(today);
+    }
+
+    const monthlyAnchorDay = nextDate.getDate();
+
+    function moveToNextOccurrence(date) {
+      const next = new Date(date);
+
+      if (recurrence === "daily") {
+        next.setDate(next.getDate() + 1);
+        return next;
+      }
+
+      if (recurrence === "weekly") {
+        next.setDate(next.getDate() + 7);
+        return next;
+      }
+
+      const targetMonth = next.getMonth() + 1;
+      const targetYear = next.getFullYear() + Math.floor(targetMonth / 12);
+
+      const normalizedMonth = targetMonth % 12;
+
+      const lastDayOfTargetMonth = new Date(
+        targetYear,
+        normalizedMonth + 1,
+        0,
+      ).getDate();
+
+      return new Date(
+        targetYear,
+        normalizedMonth,
+        Math.min(monthlyAnchorDay, lastDayOfTargetMonth),
+      );
+    }
+
+    do {
+      nextDate = moveToNextOccurrence(nextDate);
+    } while (nextDate <= today);
+
+    const year = nextDate.getFullYear();
+    const month = String(nextDate.getMonth() + 1).padStart(2, "0");
+    const day = String(nextDate.getDate()).padStart(2, "0");
 
     return `${year}-${month}-${day}`;
   }
@@ -97,6 +160,24 @@ function TodoPage() {
   const [sortBy, setSortBy] = useState("newest");
   const [priorityFilter, setPriorityFilter] = useState("All");
   const [recentlyDeleted, setRecentlyDeleted] = useState(null);
+  const [isSelectionMode, setIsSelectionMode] = useState(false);
+  const [selectedTodoIds, setSelectedTodoIds] = useState([]);
+
+  function handleToggleSelectionMode() {
+    if (isSelectionMode) {
+      setSelectedTodoIds([]);
+    }
+
+    setIsSelectionMode((previous) => !previous);
+  }
+
+  function handleToggleTodoSelection(id) {
+    setSelectedTodoIds((previousIds) =>
+      previousIds.includes(id)
+        ? previousIds.filter((todoId) => todoId !== id)
+        : [...previousIds, id],
+    );
+  }
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -196,14 +277,40 @@ function TodoPage() {
 
   function handleToggleComplete(id) {
     setTodos((previousTodos) =>
-      previousTodos.map((todo) =>
-        todo.id === id
-          ? {
-              ...todo,
-              completed: !todo.completed,
-            }
-          : todo,
-      ),
+      previousTodos.map((todo) => {
+        if (todo.id !== id) {
+          return todo;
+        }
+
+        const recurrence = (todo.recurrence || "none").toLowerCase();
+
+        const isRecurring = ["daily", "weekly", "monthly"].includes(recurrence);
+
+        if (!todo.completed && isRecurring) {
+          const today = new Date();
+
+          const todayDate = [
+            today.getFullYear(),
+            String(today.getMonth() + 1).padStart(2, "0"),
+            String(today.getDate()).padStart(2, "0"),
+          ].join("-");
+
+          if (todo.dueDate && todo.dueDate > todayDate) {
+            return todo;
+          }
+
+          return {
+            ...todo,
+            dueDate: getNextRecurringDueDate(todo),
+            completed: false,
+          };
+        }
+
+        return {
+          ...todo,
+          completed: !todo.completed,
+        };
+      }),
     );
   }
 
@@ -217,7 +324,7 @@ function TodoPage() {
       dueTime: todo.dueTime || "",
       priority: todo.priority,
       label: todo.label || "",
-      recurrence: todo.recurrence || "None",
+      recurrence: todo.recurrence || "none",
     });
 
     setIsFormVisible(true);
@@ -358,6 +465,8 @@ function TodoPage() {
         totalTasks={totalTasks}
         completedTasks={completedTasks}
         completionPercentage={completionPercentage}
+        isSelectionMode={isSelectionMode}
+        onToggleSelectionMode={handleToggleSelectionMode}
       />
 
       {isFormVisible && (
@@ -382,6 +491,9 @@ function TodoPage() {
         onToggle={handleToggleComplete}
         onEdit={handleEditTodo}
         onTogglePinned={handleTogglePinned}
+        isSelectionMode={isSelectionMode}
+        selectedTodoIds={selectedTodoIds}
+        onToggleSelection={handleToggleTodoSelection}
       />
 
       {recentlyDeleted && (
