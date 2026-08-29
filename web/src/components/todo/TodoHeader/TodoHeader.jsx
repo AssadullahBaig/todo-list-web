@@ -14,6 +14,8 @@ function TodoHeader({
   completionPercentage,
   isSelectionMode,
   onToggleSelectionMode,
+  selectedCount,
+  onCompleteSelected,
 }) {
   return (
     <section className="mb-7 w-full">
@@ -186,6 +188,35 @@ function TodoHeader({
           </select>
         </div>
       </div>
+      {isSelectionMode && (
+        <div className="mt-4 flex items-center justify-between rounded-xl border border-violet-500/20 bg-violet-500/5 px-4 py-3">
+          <p className="text-sm font-medium text-slate-300">
+            {selectedCount} {selectedCount === 1 ? "task" : "tasks"} selected
+          </p>
+
+          <button
+            type="button"
+            onClick={onCompleteSelected}
+            disabled={selectedCount === 0}
+            className="
+            flex items-center gap-2 rounded-lg
+            bg-emerald-600 px-4 py-2
+            text-sm font-semibold text-white
+            transition
+            hover:bg-emerald-500
+            disabled:cursor-not-allowed
+            disabled:opacity-40
+            disabled:hover:bg-emerald-600
+            focus-visible:outline-none
+            focus-visible:ring-2
+            focus-visible:ring-emerald-500/60
+          "
+          >
+            <CheckCircle2 size={16} />
+            Complete selected
+          </button>
+        </div>
+      )}
     </section>
   );
 }

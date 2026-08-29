@@ -139,27 +139,6 @@ function TodoCard({
   }, [completed]);
 
   function handleToggle() {
-    const normalizedRecurrence = (recurrence || "none").toLowerCase();
-
-    const isRecurring = ["daily", "weekly", "monthly"].includes(
-      normalizedRecurrence,
-    );
-
-    if (!completed && isRecurring && dueDate) {
-      const today = new Date();
-
-      const todayDate = [
-        today.getFullYear(),
-        String(today.getMonth() + 1).padStart(2, "0"),
-        String(today.getDate()).padStart(2, "0"),
-      ].join("-");
-
-      // A future recurring occurrence cannot be completed early.
-      if (dueDate > todayDate) {
-        return;
-      }
-    }
-
     if (!completed) {
       setIsAnimating(true);
 
@@ -184,6 +163,11 @@ function TodoCard({
             : "border-slate-800 hover:border-slate-700 hover:shadow-lg"
         }
         ${isAnimating ? "scale-[1.01] shadow-emerald-500/20" : ""}
+        ${
+          isSelectionMode && isSelected
+            ? "border-violet-500/60 bg-violet-500/5"
+            : ""
+        }
       `}
     >
       {/* Completion flash */}
@@ -197,85 +181,84 @@ function TodoCard({
       />
 
       <div className="relative flex items-center gap-3">
-        {/* Bulk selection checkbox */}
-        {isSelectionMode && (
+        {/* Single checkbox */}
+        {isSelectionMode ? (
           <button
             type="button"
             onClick={() => onToggleSelection(id)}
             aria-label={isSelected ? "Unselect task" : "Select task"}
             className={`
-            flex h-5 w-5 shrink-0
-            items-center justify-center
-            rounded-md border
-            transition-all duration-200
-            focus-visible:outline-none
-            focus-visible:ring-2
-            focus-visible:ring-violet-500/60
-            focus-visible:ring-offset-2
-            focus-visible:ring-offset-slate-900
-            ${
-              isSelected
-                ? "border-violet-500 bg-violet-600"
-                : "border-slate-600 hover:border-violet-500 hover:bg-violet-500/10"
-            }
-      `}
+              flex h-5 w-5 shrink-0
+              items-center justify-center
+              rounded-md border
+              transition-all duration-200
+              focus-visible:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-violet-500/60
+              focus-visible:ring-offset-2
+              focus-visible:ring-offset-slate-900
+              ${
+                isSelected
+                  ? "border-violet-500 bg-violet-600"
+                  : "border-slate-600 bg-transparent hover:border-violet-500 hover:bg-violet-500/10"
+              }
+            `}
           >
             <Check
               size={13}
               strokeWidth={3}
-              className={`text-white transition ${
-                isSelected ? "opacity-100" : "opacity-0"
+              className={`text-white transition-all duration-200 ${
+                isSelected ? "scale-100 opacity-100" : "scale-50 opacity-0"
               }`}
             />
           </button>
-        )}
-
-        {/* Animated checkbox */}
-        <button
-          type="button"
-          onClick={handleToggle}
-          aria-label={
-            completed ? "Mark task as incomplete" : "Mark task as complete"
-          }
-          className={`
-            relative flex h-5 w-5 shrink-0
-            items-center justify-center
-            rounded-md border
-            transition-all duration-300
-            focus-visible:outline-none
-            focus-visible:ring-2
-            focus-visible:ring-violet-500/60
-            focus-visible:ring-offset-2
-            focus-visible:ring-offset-slate-900
-            ${
-              completed
-                ? "border-emerald-500 bg-emerald-500"
-                : "border-slate-600 bg-transparent hover:border-violet-500 hover:bg-violet-500/10"
+        ) : (
+          <button
+            type="button"
+            onClick={handleToggle}
+            aria-label={
+              completed ? "Mark task as incomplete" : "Mark task as complete"
             }
-            ${isAnimating ? "scale-125" : ""}
-          `}
-        >
-          {/* Glow */}
-          <span
             className={`
-              absolute inset-0 rounded-md
-              bg-emerald-400
-              transition-all duration-500
-              ${isAnimating ? "scale-150 opacity-30" : "scale-100 opacity-0"}
-            `}
-          />
-
-          {/* Checkmark */}
-          <Check
-            size={13}
-            strokeWidth={3}
-            className={`
-              relative z-10 text-white
+              relative flex h-5 w-5 shrink-0
+              items-center justify-center
+              rounded-md border
               transition-all duration-300
-              ${completed ? "scale-100 opacity-100" : "scale-50 opacity-0"}
+              focus-visible:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-violet-500/60
+              focus-visible:ring-offset-2
+              focus-visible:ring-offset-slate-900
+              ${
+                completed
+                  ? "border-emerald-500 bg-emerald-500"
+                  : "border-slate-600 bg-transparent hover:border-violet-500 hover:bg-violet-500/10"
+              }
+              ${isAnimating ? "scale-125" : ""}
             `}
-          />
-        </button>
+          >
+            {/* Glow */}
+            <span
+              className={`
+                absolute inset-0 rounded-md
+                bg-emerald-400
+                transition-all duration-500
+                ${isAnimating ? "scale-150 opacity-30" : "scale-100 opacity-0"}
+              `}
+            />
+
+            {/* Checkmark */}
+            <Check
+              size={13}
+              strokeWidth={3}
+              className={`
+                relative z-10 text-white
+                transition-all duration-300
+                ${completed ? "scale-100 opacity-100" : "scale-50 opacity-0"}
+              `}
+            />
+          </button>
+        )}
 
         {/* Task content */}
         <div className="min-w-0 flex-1">
@@ -365,6 +348,7 @@ function TodoCard({
               </span>
             </>
           )}
+
           {recurrenceLabel && (
             <>
               <span className="text-slate-700">•</span>
@@ -377,71 +361,76 @@ function TodoCard({
           )}
         </div>
 
-        {/* Pin */}
-        <button
-          type="button"
-          onClick={() => onTogglePinned(id)}
-          aria-label={pinned ? "Unpin task" : "Pin task"}
-          className={`
-            rounded-lg p-2
-            transition
-            focus-visible:outline-none
-            focus-visible:ring-2
-            focus-visible:ring-yellow-400/60
-            focus-visible:ring-offset-2
-            focus-visible:ring-offset-slate-900
-            ${
-              pinned
-                ? "text-yellow-400 hover:bg-yellow-400/10"
-                : "text-slate-500 hover:bg-slate-800 hover:text-yellow-400"
-            }
-          `}
-        >
-          <Star size={18} fill={pinned ? "currentColor" : "none"} />
-        </button>
+        {/* Individual task actions */}
+        {!isSelectionMode && (
+          <>
+            {/* Pin */}
+            <button
+              type="button"
+              onClick={() => onTogglePinned(id)}
+              aria-label={pinned ? "Unpin task" : "Pin task"}
+              className={`
+                rounded-lg p-2
+                transition
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-yellow-400/60
+                focus-visible:ring-offset-2
+                focus-visible:ring-offset-slate-900
+                ${
+                  pinned
+                    ? "text-yellow-400 hover:bg-yellow-400/10"
+                    : "text-slate-500 hover:bg-slate-800 hover:text-yellow-400"
+                }
+              `}
+            >
+              <Star size={18} fill={pinned ? "currentColor" : "none"} />
+            </button>
 
-        {/* Actions */}
-        <div className="flex shrink-0 items-center gap-1">
-          <button
-            type="button"
-            onClick={() => onEdit(todo)}
-            className="
-              rounded-lg px-2.5 py-1.5
-              text-xs font-medium
-              text-slate-400
-              transition
-              hover:bg-slate-800
-              hover:text-white
-              focus-visible:outline-none
-              focus-visible:ring-2
-              focus-visible:ring-violet-500/60
-              focus-visible:ring-offset-2
-              focus-visible:ring-offset-slate-900
-            "
-          >
-            Edit
-          </button>
+            {/* Actions */}
+            <div className="flex shrink-0 items-center gap-1">
+              <button
+                type="button"
+                onClick={() => onEdit(todo)}
+                className="
+                  rounded-lg px-2.5 py-1.5
+                  text-xs font-medium
+                  text-slate-400
+                  transition
+                  hover:bg-slate-800
+                  hover:text-white
+                  focus-visible:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-violet-500/60
+                  focus-visible:ring-offset-2
+                  focus-visible:ring-offset-slate-900
+                "
+              >
+                Edit
+              </button>
 
-          <button
-            type="button"
-            onClick={() => onDelete(id)}
-            className="
-              rounded-lg px-2.5 py-1.5
-              text-xs font-medium
-              text-red-400
-              transition
-              hover:bg-red-500/10
-              hover:text-red-300
-              focus-visible:outline-none
-              focus-visible:ring-2
-              focus-visible:ring-red-500/60
-              focus-visible:ring-offset-2
-              focus-visible:ring-offset-slate-900
-            "
-          >
-            Delete
-          </button>
-        </div>
+              <button
+                type="button"
+                onClick={() => onDelete(id)}
+                className="
+                  rounded-lg px-2.5 py-1.5
+                  text-xs font-medium
+                  text-red-400
+                  transition
+                  hover:bg-red-500/10
+                  hover:text-red-300
+                  focus-visible:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-red-500/60
+                  focus-visible:ring-offset-2
+                  focus-visible:ring-offset-slate-900
+                "
+              >
+                Delete
+              </button>
+            </div>
+          </>
+        )}
       </div>
 
       {/* Mobile metadata */}
@@ -473,6 +462,7 @@ function TodoCard({
             </span>
           </>
         )}
+
         {recurrenceLabel && (
           <>
             <span className="text-slate-700">•</span>

@@ -179,6 +179,48 @@ function TodoPage() {
     );
   }
 
+  function handleCompleteSelectedTodos() {
+    const today = new Date();
+
+    const todayDate = [
+      today.getFullYear(),
+      String(today.getMonth() + 1).padStart(2, "0"),
+      String(today.getDate()).padStart(2, "0"),
+    ].join("-");
+
+    setTodos((previousTodos) =>
+      previousTodos.map((todo) => {
+        if (!selectedTodoIds.includes(todo.id) || todo.completed) {
+          return todo;
+        }
+
+        const recurrence = (todo.recurrence || "none").toLowerCase();
+
+        const isRecurring = ["daily", "weekly", "monthly"].includes(recurrence);
+
+        if (isRecurring) {
+          if (todo.lastRecurringCompletionDate === todayDate) {
+            return todo;
+          }
+
+          return {
+            ...todo,
+            dueDate: getNextRecurringDueDate(todo),
+            completed: false,
+            lastRecurringCompletionDate: todayDate,
+          };
+        }
+
+        return {
+          ...todo,
+          completed: true,
+        };
+      }),
+    );
+
+    setSelectedTodoIds([]);
+  }
+
   function handleInputChange(event) {
     const { name, value } = event.target;
 
@@ -470,6 +512,8 @@ function TodoPage() {
         completionPercentage={completionPercentage}
         isSelectionMode={isSelectionMode}
         onToggleSelectionMode={handleToggleSelectionMode}
+        selectedCount={selectedTodoIds.length}
+        onCompleteSelected={handleCompleteSelectedTodos}
       />
 
       {isFormVisible && (
