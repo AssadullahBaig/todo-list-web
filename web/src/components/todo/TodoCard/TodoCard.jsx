@@ -139,6 +139,27 @@ function TodoCard({
   }, [completed]);
 
   function handleToggle() {
+    const normalizedRecurrence = (recurrence || "none").toLowerCase();
+
+    const isRecurring = ["daily", "weekly", "monthly"].includes(
+      normalizedRecurrence,
+    );
+
+    if (!completed && isRecurring && dueDate) {
+      const today = new Date();
+
+      const todayDate = [
+        today.getFullYear(),
+        String(today.getMonth() + 1).padStart(2, "0"),
+        String(today.getDate()).padStart(2, "0"),
+      ].join("-");
+
+      // A future recurring occurrence cannot be completed early.
+      if (dueDate > todayDate) {
+        return;
+      }
+    }
+
     if (!completed) {
       setIsAnimating(true);
 
