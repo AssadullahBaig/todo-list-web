@@ -295,7 +295,9 @@ function TodoPage() {
             String(today.getDate()).padStart(2, "0"),
           ].join("-");
 
-          if (todo.dueDate && todo.dueDate > todayDate) {
+          // Prevent the same recurring task from advancing
+          // more than once on the same calendar day.
+          if (todo.lastRecurringCompletionDate === todayDate) {
             return todo;
           }
 
@@ -303,6 +305,7 @@ function TodoPage() {
             ...todo,
             dueDate: getNextRecurringDueDate(todo),
             completed: false,
+            lastRecurringCompletionDate: todayDate,
           };
         }
 
