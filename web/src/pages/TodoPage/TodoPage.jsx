@@ -320,8 +320,12 @@ function TodoPage() {
     }
 
     setRecentlyDeleted({
-      todo: todos[deletedIndex],
-      index: deletedIndex,
+      items: [
+        {
+          todo: todos[deletedIndex],
+          index: deletedIndex,
+        },
+      ],
     });
 
     setTodos((previousTodos) => previousTodos.filter((todo) => todo.id !== id));
@@ -333,19 +337,56 @@ function TodoPage() {
     }
   }
 
+  function handleDeleteSelectedTodos() {
+    if (selectedTodoIds.length === 0) {
+      return;
+    }
+
+    const deletedItems = todos
+      .map((todo, index) => ({
+        todo,
+        index,
+      }))
+      .filter(({ todo }) => selectedTodoIds.includes(todo.id));
+
+    if (deletedItems.length === 0) {
+      return;
+    }
+
+    setRecentlyDeleted({
+      items: deletedItems,
+    });
+
+    setTodos((previousTodos) =>
+      previousTodos.filter((todo) => !selectedTodoIds.includes(todo.id)),
+    );
+
+    if (editingTodoId !== null && selectedTodoIds.includes(editingTodoId)) {
+      setEditingTodoId(null);
+      setNewTodo(emptyTodo);
+      setIsFormVisible(false);
+    }
+
+    setSelectedTodoIds([]);
+  }
+
   function handleUndoDelete() {
-    if (!recentlyDeleted) {
+    if (!recentlyDeleted || recentlyDeleted.items.length === 0) {
       return;
     }
 
     setTodos((previousTodos) => {
       const restoredTodos = [...previousTodos];
-      const restoreIndex = Math.min(
-        recentlyDeleted.index,
-        restoredTodos.length,
+
+      const deletedItems = [...recentlyDeleted.items].sort(
+        (a, b) => a.index - b.index,
       );
 
-      restoredTodos.splice(restoreIndex, 0, recentlyDeleted.todo);
+      deletedItems.forEach(({ todo, index }) => {
+        const restoreIndex = Math.min(index, restoredTodos.length);
+
+        restoredTodos.splice(restoreIndex, 0, todo);
+      });
 
       return restoredTodos;
     });
@@ -552,6 +593,7 @@ function TodoPage() {
         onCompleteSelected={handleCompleteSelectedTodos}
         onEditSelected={handleEditSelectedTodo}
         onPinSelected={handlePinSelectedTodos}
+        onDeleteSelected={handleDeleteSelectedTodos}
       />
 
       {isFormVisible && (
@@ -595,10 +637,16 @@ function TodoPage() {
           "
         >
           <div className="min-w-0">
-            <p className="text-sm font-semibold text-white">Task deleted</p>
+            <p className="text-sm font-semibold text-white">
+              {recentlyDeleted.items.length === 1
+                ? "Task deleted"
+                : `${recentlyDeleted.items.length} tasks deleted`}
+            </p>
 
             <p className="mt-0.5 truncate text-xs text-slate-400">
-              {recentlyDeleted.todo.title}
+              {recentlyDeleted.items.length === 1
+                ? recentlyDeleted.items[0].todo.title
+                : "Selected tasks were removed"}
             </p>
           </div>
 

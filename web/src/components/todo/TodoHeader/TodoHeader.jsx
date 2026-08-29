@@ -1,4 +1,11 @@
-import { CheckCircle2, ListChecks, Pencil, Search, Star } from "lucide-react";
+import {
+  CheckCircle2,
+  ListChecks,
+  Pencil,
+  Search,
+  Star,
+  Trash2,
+} from "lucide-react";
 
 function TodoHeader({
   searchTerm,
@@ -18,6 +25,7 @@ function TodoHeader({
   onCompleteSelected,
   onEditSelected,
   onPinSelected,
+  onDeleteSelected,
 }) {
   return (
     <section className="mb-7 w-full">
@@ -262,6 +270,28 @@ function TodoHeader({
             >
               <Star size={15} />
               Pin
+            </button>
+            <button
+              type="button"
+              onClick={onDeleteSelected}
+              disabled={selectedCount === 0}
+              className="
+                flex items-center gap-2 rounded-lg
+                bg-red-500/10 px-3.5 py-2
+                text-sm font-medium text-red-400
+                transition
+                hover:bg-red-500/20 hover:text-red-300
+                disabled:cursor-not-allowed
+                disabled:opacity-40
+                disabled:hover:bg-red-500/10
+                disabled:hover:text-red-400
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-red-500/60
+              "
+            >
+              <Trash2 size={15} />
+              Delete
             </button>
           </div>
         </div>
