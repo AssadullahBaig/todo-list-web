@@ -221,6 +221,42 @@ function TodoPage() {
     setSelectedTodoIds([]);
   }
 
+  function handleEditSelectedTodo() {
+    if (selectedTodoIds.length !== 1) {
+      return;
+    }
+
+    const selectedTodo = todos.find((todo) => todo.id === selectedTodoIds[0]);
+
+    if (!selectedTodo) {
+      return;
+    }
+
+    setSelectedTodoIds([]);
+    setIsSelectionMode(false);
+
+    handleEditTodo(selectedTodo);
+  }
+
+  function handlePinSelectedTodos() {
+    if (selectedTodoIds.length === 0) {
+      return;
+    }
+
+    setTodos((previousTodos) =>
+      previousTodos.map((todo) =>
+        selectedTodoIds.includes(todo.id)
+          ? {
+              ...todo,
+              pinned: true,
+            }
+          : todo,
+      ),
+    );
+
+    setSelectedTodoIds([]);
+  }
+
   function handleInputChange(event) {
     const { name, value } = event.target;
 
@@ -514,6 +550,8 @@ function TodoPage() {
         onToggleSelectionMode={handleToggleSelectionMode}
         selectedCount={selectedTodoIds.length}
         onCompleteSelected={handleCompleteSelectedTodos}
+        onEditSelected={handleEditSelectedTodo}
+        onPinSelected={handlePinSelectedTodos}
       />
 
       {isFormVisible && (

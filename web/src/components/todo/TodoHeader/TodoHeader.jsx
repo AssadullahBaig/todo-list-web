@@ -1,4 +1,4 @@
-import { CheckCircle2, ListChecks, Search } from "lucide-react";
+import { CheckCircle2, ListChecks, Pencil, Search, Star } from "lucide-react";
 
 function TodoHeader({
   searchTerm,
@@ -16,6 +16,8 @@ function TodoHeader({
   onToggleSelectionMode,
   selectedCount,
   onCompleteSelected,
+  onEditSelected,
+  onPinSelected,
 }) {
   return (
     <section className="mb-7 w-full">
@@ -189,32 +191,79 @@ function TodoHeader({
         </div>
       </div>
       {isSelectionMode && (
-        <div className="mt-4 flex items-center justify-between rounded-xl border border-violet-500/20 bg-violet-500/5 px-4 py-3">
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-violet-500/20 bg-violet-500/5 px-4 py-3">
           <p className="text-sm font-medium text-slate-300">
             {selectedCount} {selectedCount === 1 ? "task" : "tasks"} selected
           </p>
 
-          <button
-            type="button"
-            onClick={onCompleteSelected}
-            disabled={selectedCount === 0}
-            className="
-            flex items-center gap-2 rounded-lg
-            bg-emerald-600 px-4 py-2
-            text-sm font-semibold text-white
-            transition
-            hover:bg-emerald-500
-            disabled:cursor-not-allowed
-            disabled:opacity-40
-            disabled:hover:bg-emerald-600
-            focus-visible:outline-none
-            focus-visible:ring-2
-            focus-visible:ring-emerald-500/60
-          "
-          >
-            <CheckCircle2 size={16} />
-            Complete selected
-          </button>
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={onEditSelected}
+              disabled={selectedCount !== 1}
+              className="
+          flex items-center gap-2 rounded-lg
+          bg-[#111827] px-3.5 py-2
+          text-sm font-medium text-slate-300
+          transition
+          hover:bg-slate-800 hover:text-white
+          disabled:cursor-not-allowed
+          disabled:opacity-40
+          disabled:hover:bg-[#111827]
+          disabled:hover:text-slate-300
+          focus-visible:outline-none
+          focus-visible:ring-2
+          focus-visible:ring-violet-500/60
+        "
+            >
+              <Pencil size={15} />
+              Edit
+            </button>
+
+            <button
+              type="button"
+              onClick={onCompleteSelected}
+              disabled={selectedCount === 0}
+              className="
+          flex items-center gap-2 rounded-lg
+          bg-emerald-600 px-3.5 py-2
+          text-sm font-semibold text-white
+          transition
+          hover:bg-emerald-500
+          disabled:cursor-not-allowed
+          disabled:opacity-40
+          disabled:hover:bg-emerald-600
+          focus-visible:outline-none
+          focus-visible:ring-2
+          focus-visible:ring-emerald-500/60
+        "
+            >
+              <CheckCircle2 size={15} />
+              Complete
+            </button>
+
+            <button
+              type="button"
+              onClick={onPinSelected}
+              disabled={selectedCount === 0}
+              className="
+          flex items-center gap-2 rounded-lg
+          bg-[#111827] px-3.5 py-2
+          text-sm font-medium text-yellow-400
+          transition
+          hover:bg-yellow-400/10
+          disabled:cursor-not-allowed
+          disabled:opacity-40
+          disabled:hover:bg-[#111827]
+          focus-visible:outline-none
+          focus-visible:ring-2
+          focus-visible:ring-yellow-400/60
+        "
+            >
+              <Star size={15} />
+              Pin
+            </button>
+          </div>
         </div>
       )}
     </section>
