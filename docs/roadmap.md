@@ -1,93 +1,150 @@
-# Project Roadmap
+# Version 7 – Subtasks & Task Details
 
-## 1. Overview
-
-The Todo List Full-Stack Application will be developed incrementally through multiple versions. Each version introduces new technologies and software engineering concepts while expanding the application's functionality.
-
-This approach ensures that every stage builds upon the previous one, allowing the project to evolve from a simple frontend application into a complete production-ready full-stack web application.
-
----
-
-Version 1 – React Basics Completed
+**Status:** Planned
 
 ## Objective
 
-Create the first version of the application and become familiar with the basics of React.
+Allow larger tasks to be broken into smaller pieces.
 
-## Work Completed
+## Planned Work
 
-- Set up the project using Vite.
-- Configured Tailwind CSS.
-- Created a clean project folder structure.
-- Built the main application layout.
-- Created reusable components:
-  - MainLayout
-  - Sidebar
-  - Header
-  - Todo Header
-  - Todo Card
-  - Todo List
-- Displayed hardcoded tasks.
-- Deployed the project to GitHub Pages.
+- Add subtasks.
+- Allow subtasks to be completed independently.
+- Add simple task comments or notes.
 
-## Concepts Learned
+## Concepts to Learn
 
-- JSX
-- Components
-- Props
-- Project Structure
+- Nested Data
+- Updating Nested State
+- Parent / Child Task Relationships
 
 ---
 
-# Version 2 – Task Management Completed
+# Version 6 – Recurring Tasks & Bulk Task Actions
+
+**Status:** In Progress
 
 ## Objective
 
-Allow users to fully manage their tasks using React state.
+Make TaskFlow better for repeated work and managing multiple tasks at once.
 
 ## Work Completed
 
-- Implemented `useState` to manage tasks.
-- Converted the form into a controlled component.
-- Added new tasks.
-- Deleted existing tasks.
-- Marked tasks as completed.
-- Edited existing tasks.
+- Added recurring task options:
+  - Does not repeat
+  - Daily
+  - Weekly
+  - Monthly
+- Added recurrence information to task cards.
+- Made recurring tasks move to their next occurrence when completed.
+- Prevented the same recurring task from repeatedly advancing on the same day.
+- Added task selection mode.
+- Added selected-task count.
+- Added bulk task completion.
+- Added bulk edit and pin actions.
+- Added bulk task deletion.
+- Added multi-task Undo for bulk deletion.
+- Updated delete feedback for single and multiple deleted tasks.
+- Simplified task cards while selection mode is active.
 
 ## Work Remaining
 
-- Open and close the task form using the sidebar button.
-- Improve form validation.
-- Add task search.
-- Add task filters.
-- Improve the overall user interface.
+- Add Select All / Select Visible.
+- Add Clear Selection.
+- Polish recurring-task edge cases where necessary.
 
 ## Concepts Learned
 
-- `useState`
-- Event Handling
-- Controlled Components
-- Updating arrays and objects in state
+- Managing Multiple Selected Items
+- Array-Based State Updates
+- Date Calculations
+- Recurring Task Logic
+- Bulk State Updates
+- Undoing Batch Operations
+- Conditional Interfaces
 
-# Version 3 – User Experience Improvements In Progress
+# Version 5 – Productivity Features
+
+**Status:** Completed
 
 ## Objective
 
-Improve the overall user experience by making the interface cleaner and easier to interact with.
+Turn the basic Todo application into a more useful productivity tool.
 
 ## Work Completed
 
-- Connected the sidebar **New Task** button to show and hide the task form.
-- Automatically closed the form after adding a task.
+- Added task sorting:
+  - Newest
+  - Oldest
+  - Due Date
+  - Priority
+  - A → Z
+  - Z → A
+- Added due times.
+- Added due-date statuses:
+  - Due today
+  - Due tomorrow
+  - Due in X days
+  - Overdue
+- Added an overdue task section.
+- Added priority colors and priority filtering.
+- Added labels.
+- Added pin / favorite tasks with pinned-first ordering.
+- Added task completion animations.
+- Added productivity completion progress.
+- Improved empty states, focus states, spacing, and compact task cards.
+- Added GitHub Actions deployment to GitHub Pages.
+
+## Concepts Learned
+
+- Sorting Arrays
+- Date Handling
+- Derived State
+- Filtering
+- UI State
+- Deployment Automation
+
+---
+
+# Version 4 – Local Storage
+
+**Status:** Completed
+
+## Objective
+
+Keep tasks available after refreshing or reopening the application.
+
+## Work Completed
+
+- Saved todos to Local Storage.
+- Loaded saved todos when TaskFlow starts.
+- Updated Local Storage whenever todo state changes.
+
+## Concepts Learned
+
+- `useEffect`
+- Local Storage
+- Data Persistence
+- Side Effects
+
+---
+
+# Version 3 – User Experience Improvements
+
+**Status:** Completed
+
+## Objective
+
+Improve the task management experience and make tasks easier to find.
+
+## Work Completed
+
+- Connected the sidebar New Task button to the task form.
+- Automatically closed the form after creating a task.
 - Automatically opened the form when editing a task.
-- Added a search bar to search tasks by title.
-- Added task filters (All, Active, Completed).
-
-## Work Remaining
-
-- Improve form validation.
-- Display better feedback for invalid input.
-- Disable submission when required fields are empty.
+- Added task search.
+- Added All, Active, and Completed filters.
+- Added clearer empty states and filter feedback.
 
 ## Concepts Learned
 
@@ -99,72 +156,60 @@ Improve the overall user experience by making the interface cleaner and easier t
 
 ---
 
-# Version 4 – Local Storage
+# Version 2 – Task Management
+
+**Status:** Completed
 
 ## Objective
 
-Save tasks in the browser so they remain available after refreshing or reopening the application.
-
-## Planned Work
-
-- Save todos to Local Storage.
-- Load saved todos when the application starts.
-- Update Local Storage whenever tasks change.
-
-## Concepts to Learn
-
-- useEffect
-- Local Storage
-- Data Persistence
-- Side Effects in React
-
----
-
-# Version 5 – Productivity Features
-
-## Objective
-
-Expand the application with additional productivity and usability features while continuing to work mainly on the frontend before introducing the backend and database.
+Allow users to manage tasks using React state.
 
 ## Work Completed
 
-- Added task sorting.
-- Added sorting options:
-  - Newest
-  - Oldest
-  - Due Date
-  - Priority
-  - A → Z
-  - Z → A
-- Added due times to tasks.
-- Added visual due-date status:
-  - Due today
-  - Due tomorrow
-  - Due in X days
-  - Overdue
-- Added color coding for due-date status.
-- Added color coding for task priorities.
-- Added completion animations.
-- Made task cards smaller and more compact.
-- Added the application version number to the sidebar.
-- Added a `+` icon to the New Task button.
-- Improved the overall Todo page layout and task presentation.
-- Added a GitHub Actions deployment pipeline to automatically build and deploy the application to GitHub Pages when changes are pushed.
+- Added React state for tasks.
+- Converted the task form into a controlled component.
+- Added new tasks.
+- Edited existing tasks.
+- Deleted tasks.
+- Added Undo after deleting a task.
+- Completed and uncompleted tasks.
 
-## Work Remaining
+## Concepts Learned
 
-- Improve the overall UI.
-- Add task lists such as Inbox, Work, Personal, etc.
-- Add labels/tags.
-- Add subtasks.
-- Add comments.
-- Add reminders.
-- Add recurring tasks.
-- Improve task ordering and drag-and-drop functionality.
-- Improve the New Task interface.
-- Research better task creation screens/modals.
-- Add pagination when the number of tasks becomes large.
-- Create the `DISCOVER` file for future feature ideas.
-- Study React Clean Architecture.
-- Separate rendering/UI from application logic.
-- Improve the project structure and code organization.
+- `useState`
+- Event Handling
+- Controlled Components
+- Updating Arrays and Objects
+
+---
+
+# Version 1 – React Basics
+
+**Status:** Completed
+
+## Objective
+
+Create the first working version of TaskFlow and learn the basic React workflow.
+
+## Work Completed
+
+- Set up the project with Vite.
+- Configured Tailwind CSS.
+- Created the initial project structure.
+- Built the main application layout.
+- Created reusable components:
+  - MainLayout
+  - Sidebar
+  - Header
+  - TodoHeader
+  - TodoCard
+  - TodoList
+- Displayed the first hardcoded tasks.
+- Deployed the project to GitHub Pages.
+
+## Concepts Learned
+
+- JSX
+- Components
+- Props
+- Basic Project Structure

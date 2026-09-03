@@ -11,7 +11,12 @@ function loadTodos() {
   const savedTodos = localStorage.getItem("todos");
 
   if (savedTodos) {
-    return JSON.parse(savedTodos);
+    const parsedTodos = JSON.parse(savedTodos);
+
+    return parsedTodos.map((todo) => ({
+      ...todo,
+      subtasks: todo.subtasks || [],
+    }));
   }
 
   return initialTodos;
@@ -26,6 +31,7 @@ function TodoPage() {
     priority: "Medium",
     label: "",
     recurrence: "none",
+    subtasks: [],
   };
 
   function getResolvedDueDate(dueDate, dueTime) {
@@ -119,6 +125,13 @@ function TodoPage() {
     return `${year}-${month}-${day}`;
   }
 
+  function resetSubtasks(subtasks = []) {
+    return subtasks.map((subtask) => ({
+      ...subtask,
+      completed: false,
+    }));
+  }
+
   function isTaskOverdue(todo) {
     if (todo.completed || !todo.dueDate) {
       return false;
@@ -207,6 +220,7 @@ function TodoPage() {
             ...todo,
             dueDate: getNextRecurringDueDate(todo),
             completed: false,
+            subtasks: resetSubtasks(todo.subtasks),
             lastRecurringCompletionDate: todayDate,
           };
         }
@@ -266,12 +280,54 @@ function TodoPage() {
     }));
   }
 
+  function handleAddSubtask() {
+    setNewTodo((previousTodo) => ({
+      ...previousTodo,
+      subtasks: [
+        ...previousTodo.subtasks,
+        {
+          id: Date.now(),
+          title: "",
+          completed: false,
+        },
+      ],
+    }));
+  }
+
+  function handleSubtaskChange(id, value) {
+    setNewTodo((previousTodo) => ({
+      ...previousTodo,
+      subtasks: previousTodo.subtasks.map((subtask) =>
+        subtask.id === id
+          ? {
+              ...subtask,
+              title: value,
+            }
+          : subtask,
+      ),
+    }));
+  }
+
+  function handleRemoveSubtask(id) {
+    setNewTodo((previousTodo) => ({
+      ...previousTodo,
+      subtasks: previousTodo.subtasks.filter((subtask) => subtask.id !== id),
+    }));
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
 
     if (newTodo.title.trim() === "") {
       return;
     }
+
+    const cleanSubtasks = newTodo.subtasks
+      .filter((subtask) => subtask.title.trim() !== "")
+      .map((subtask) => ({
+        ...subtask,
+        title: subtask.title.trim(),
+      }));
 
     if (editingTodoId !== null) {
       const resolvedDueDate = getResolvedDueDate(
@@ -286,6 +342,7 @@ function TodoPage() {
                 ...todo,
                 ...newTodo,
                 dueDate: resolvedDueDate,
+                subtasks: cleanSubtasks,
               }
             : todo,
         ),
@@ -301,6 +358,7 @@ function TodoPage() {
       id: Date.now(),
       ...newTodo,
       dueDate: getResolvedDueDate(newTodo.dueDate, newTodo.dueTime),
+      subtasks: cleanSubtasks,
       completed: false,
       pinned: false,
       createdAt: new Date().toISOString(),
@@ -424,6 +482,7 @@ function TodoPage() {
             ...todo,
             dueDate: getNextRecurringDueDate(todo),
             completed: false,
+            subtasks: resetSubtasks(todo.subtasks),
             lastRecurringCompletionDate: todayDate,
           };
         }
@@ -433,6 +492,26 @@ function TodoPage() {
           completed: !todo.completed,
         };
       }),
+    );
+  }
+
+  function handleToggleSubtask(todoId, subtaskId) {
+    setTodos((previousTodos) =>
+      previousTodos.map((todo) =>
+        todo.id === todoId
+          ? {
+              ...todo,
+              subtasks: (todo.subtasks || []).map((subtask) =>
+                subtask.id === subtaskId
+                  ? {
+                      ...subtask,
+                      completed: !subtask.completed,
+                    }
+                  : subtask,
+              ),
+            }
+          : todo,
+      ),
     );
   }
 
@@ -447,6 +526,7 @@ function TodoPage() {
       priority: todo.priority,
       label: todo.label || "",
       recurrence: todo.recurrence || "none",
+      subtasks: todo.subtasks || [],
     });
 
     setIsFormVisible(true);
@@ -504,6 +584,7 @@ function TodoPage() {
       todo.title,
       todo.description || "",
       todo.label || "",
+      ...(todo.subtasks || []).map((subtask) => subtask.title),
     ]
       .join(" ")
       .toLowerCase();
@@ -600,6 +681,9 @@ function TodoPage() {
         <TodoForm
           newTodo={newTodo}
           onInputChange={handleInputChange}
+          onAddSubtask={handleAddSubtask}
+          onSubtaskChange={handleSubtaskChange}
+          onRemoveSubtask={handleRemoveSubtask}
           onSubmit={handleSubmit}
           isEditing={editingTodoId !== null}
           onCancel={handleCancelEdit}
@@ -621,6 +705,7 @@ function TodoPage() {
         isSelectionMode={isSelectionMode}
         selectedTodoIds={selectedTodoIds}
         onToggleSelection={handleToggleTodoSelection}
+        onToggleSubtask={handleToggleSubtask}
       />
 
       {recentlyDeleted && (

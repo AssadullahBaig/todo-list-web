@@ -16,6 +16,7 @@ function TodoList({
   isSelectionMode,
   selectedTodoIds,
   onToggleSelection,
+  onToggleSubtask,
 }) {
   const hasNoVisibleTasks = todos.length === 0 && overdueTodos.length === 0;
 
@@ -115,6 +116,7 @@ function TodoList({
                 isSelectionMode={isSelectionMode}
                 isSelected={selectedTodoIds.includes(todo.id)}
                 onToggleSelection={onToggleSelection}
+                onToggleSubtask={onToggleSubtask}
               />
             ))}
           </div>
@@ -144,6 +146,7 @@ function TodoList({
                 isSelectionMode={isSelectionMode}
                 isSelected={selectedTodoIds.includes(todo.id)}
                 onToggleSelection={onToggleSelection}
+                onToggleSubtask={onToggleSubtask}
               />
             ))}
           </div>

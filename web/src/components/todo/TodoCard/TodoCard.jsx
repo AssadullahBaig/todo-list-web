@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Check, Repeat2, Star } from "lucide-react";
+import { Check, ChevronDown, ListChecks, Repeat2, Star } from "lucide-react";
 
 function getDueDateStatus(dueDate, dueTime) {
   if (!dueDate) {
@@ -105,6 +105,7 @@ function TodoCard({
   isSelectionMode,
   isSelected,
   onToggleSelection,
+  onToggleSubtask,
 }) {
   const {
     id,
@@ -120,6 +121,18 @@ function TodoCard({
   } = todo;
 
   const [isAnimating, setIsAnimating] = useState(false);
+  const [areSubtasksVisible, setAreSubtasksVisible] = useState(false);
+
+  const subtasks = todo.subtasks || [];
+
+  const completedSubtasks = subtasks.filter(
+    (subtask) => subtask.completed,
+  ).length;
+
+  const subtaskPercentage =
+    subtasks.length === 0
+      ? 0
+      : Math.round((completedSubtasks / subtasks.length) * 100);
 
   const dueDateStatus = getDueDateStatus(dueDate, dueTime);
 
@@ -474,6 +487,100 @@ function TodoCard({
           </>
         )}
       </div>
+
+      {/* Subtasks */}
+      {!isSelectionMode && subtasks.length > 0 && (
+        <div className="relative mt-3 border-t border-slate-800 pt-3">
+          <button
+            type="button"
+            onClick={() => setAreSubtasksVisible((previous) => !previous)}
+            className="
+              flex w-full items-center justify-between gap-4
+              rounded-lg px-1 py-1
+              text-left
+              transition
+              hover:text-white
+              focus-visible:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-violet-500/60
+            "
+          >
+            <div className="flex min-w-0 flex-1 items-center gap-2">
+              <ListChecks size={15} className="shrink-0 text-violet-400" />
+
+              <span className="text-xs font-medium text-slate-400">
+                {completedSubtasks} of {subtasks.length} subtasks
+              </span>
+
+              <div className="h-1.5 min-w-[60px] flex-1 overflow-hidden rounded-full bg-slate-800">
+                <div
+                  className="h-full rounded-full bg-violet-600 transition-all duration-300"
+                  style={{ width: `${subtaskPercentage}%` }}
+                />
+              </div>
+            </div>
+
+            <ChevronDown
+              size={16}
+              className={`shrink-0 text-slate-500 transition-transform duration-200 ${
+                areSubtasksVisible ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+
+          {areSubtasksVisible && (
+            <div className="mt-3 space-y-2">
+              {subtasks.map((subtask) => (
+                <div
+                  key={subtask.id}
+                  className="flex items-center gap-3 rounded-lg bg-slate-950/40 px-3 py-2"
+                >
+                  <button
+                    type="button"
+                    onClick={() => onToggleSubtask(id, subtask.id)}
+                    aria-label={
+                      subtask.completed
+                        ? "Mark subtask as incomplete"
+                        : "Mark subtask as complete"
+                    }
+                    className={`
+                      flex h-4 w-4 shrink-0 items-center justify-center
+                      rounded border
+                      transition
+                      focus-visible:outline-none
+                      focus-visible:ring-2
+                      focus-visible:ring-violet-500/60
+                      ${
+                        subtask.completed
+                          ? "border-emerald-500 bg-emerald-500"
+                          : "border-slate-600 hover:border-violet-500"
+                      }
+                    `}
+                  >
+                    <Check
+                      size={11}
+                      strokeWidth={3}
+                      className={`text-white ${
+                        subtask.completed ? "opacity-100" : "opacity-0"
+                      }`}
+                    />
+                  </button>
+
+                  <span
+                    className={`min-w-0 truncate text-xs ${
+                      subtask.completed
+                        ? "text-slate-600 line-through"
+                        : "text-slate-400"
+                    }`}
+                  >
+                    {subtask.title}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </article>
   );
 }

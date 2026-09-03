@@ -1,4 +1,15 @@
-function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
+import { Plus, Trash2 } from "lucide-react";
+
+function TodoForm({
+  newTodo,
+  onInputChange,
+  onAddSubtask,
+  onSubtaskChange,
+  onRemoveSubtask,
+  onSubmit,
+  isEditing,
+  onCancel,
+}) {
   return (
     <section className="mb-8 rounded-3xl border border-slate-800 bg-[#111827] p-7 shadow-xl shadow-black/20">
       <div className="mb-6">
@@ -74,6 +85,98 @@ function TodoForm({ newTodo, onInputChange, onSubmit, isEditing, onCancel }) {
               focus:ring-violet-500/20
             "
           />
+        </div>
+
+        {/* Subtasks */}
+        <div>
+          <div className="mb-3 flex items-center justify-between gap-4">
+            <div>
+              <h3 className="text-sm font-medium text-slate-300">Subtasks</h3>
+
+              <p className="mt-1 text-xs text-slate-500">
+                Break this task into smaller steps.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={onAddSubtask}
+              className="
+                flex shrink-0 items-center gap-2
+                rounded-xl border border-slate-700
+                bg-slate-900 px-3.5 py-2
+                text-sm font-medium text-slate-300
+                transition
+                hover:border-violet-500/50
+                hover:bg-violet-500/10
+                hover:text-violet-300
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-violet-500/60
+                focus-visible:ring-offset-2
+                focus-visible:ring-offset-[#111827]
+              "
+            >
+              <Plus size={16} />
+              Add Subtask
+            </button>
+          </div>
+
+          {newTodo.subtasks.length > 0 ? (
+            <div className="space-y-2.5">
+              {newTodo.subtasks.map((subtask, index) => (
+                <div key={subtask.id} className="flex items-center gap-2.5">
+                  <input
+                    type="text"
+                    value={subtask.title}
+                    onChange={(event) =>
+                      onSubtaskChange(subtask.id, event.target.value)
+                    }
+                    placeholder={`Subtask ${index + 1}`}
+                    className="
+                      h-10 min-w-0 flex-1 rounded-xl
+                      border border-slate-700
+                      bg-[#1E293B] px-4
+                      text-sm text-white
+                      placeholder:text-slate-500
+                      outline-none
+                      transition-all duration-200
+                      hover:border-slate-600
+                      focus:border-violet-500
+                      focus:ring-2
+                      focus:ring-violet-500/20
+                    "
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => onRemoveSubtask(subtask.id)}
+                    aria-label="Remove subtask"
+                    className="
+                      flex h-10 w-10 shrink-0 items-center justify-center
+                      rounded-xl border border-slate-700
+                      text-slate-500
+                      transition
+                      hover:border-red-500/40
+                      hover:bg-red-500/10
+                      hover:text-red-400
+                      focus-visible:outline-none
+                      focus-visible:ring-2
+                      focus-visible:ring-red-500/60
+                      focus-visible:ring-offset-2
+                      focus-visible:ring-offset-[#111827]
+                    "
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-xl border border-dashed border-slate-700 px-4 py-3">
+              <p className="text-xs text-slate-500">No subtasks added yet.</p>
+            </div>
+          )}
         </div>
 
         {/* Date + Priority */}

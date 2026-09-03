@@ -30,13 +30,13 @@ that we may add to TaskFlow in future versions.
 - [ ] Inbox
 - [ ] Custom task ordering
 - [ ] Drag and drop
-- [ ] Subtasks
+- [x] Subtasks
 - [x] Labels
 - [ ] Comments
 - [x] Pin/favorite tasks
-- [ ] Recurring tasks
+- [x] Recurring tasks
 - [ ] Reminders
-- [ ] Bulk task actions
+- [x] Bulk task actions
 - [ ] Pagination for large task collections
 
 ---

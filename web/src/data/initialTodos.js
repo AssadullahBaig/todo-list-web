@@ -6,6 +6,7 @@ const initialTodos = [
     dueDate: "2026-07-20",
     priority: "High",
     completed: false,
+    subtasks: [],
   },
   {
     id: 2,
@@ -14,6 +15,7 @@ const initialTodos = [
     dueDate: "2026-07-22",
     priority: "Medium",
     completed: false,
+    subtasks: [],
   },
   {
     id: 3,
@@ -22,6 +24,7 @@ const initialTodos = [
     dueDate: "2026-07-18",
     priority: "Low",
     completed: true,
+    subtasks: [],
   },
 ];
 
