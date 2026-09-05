@@ -87,6 +87,38 @@ function TodoForm({
           />
         </div>
 
+        {/* Notes */}
+        <div>
+          <label
+            htmlFor="notes"
+            className="mb-1.5 block text-sm font-medium text-slate-300"
+          >
+            Notes
+          </label>
+
+          <textarea
+            id="notes"
+            name="notes"
+            rows={3}
+            value={newTodo.notes}
+            onChange={onInputChange}
+            placeholder="Add extra details, reminders, or context..."
+            className="
+              w-full resize-none rounded-xl
+              border border-slate-700
+              bg-[#1E293B] px-4 py-3
+              text-sm text-white
+              placeholder:text-slate-500
+              outline-none
+              transition-all duration-200
+              hover:border-slate-600
+              focus:border-violet-500
+              focus:ring-2
+              focus:ring-violet-500/20
+            "
+          />
+        </div>
+
         {/* Subtasks */}
         <div>
           <div className="mb-3 flex items-center justify-between gap-4">

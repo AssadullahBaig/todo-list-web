@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { Check, ChevronDown, ListChecks, Repeat2, Star } from "lucide-react";
+import {
+  Check,
+  ChevronDown,
+  ListChecks,
+  NotebookPen,
+  Repeat2,
+  Star,
+} from "lucide-react";
 
 function getDueDateStatus(dueDate, dueTime) {
   if (!dueDate) {
@@ -111,6 +118,7 @@ function TodoCard({
     id,
     title,
     description,
+    notes,
     dueDate,
     dueTime,
     priority,
@@ -121,6 +129,7 @@ function TodoCard({
   } = todo;
 
   const [isAnimating, setIsAnimating] = useState(false);
+  const [areNotesVisible, setAreNotesVisible] = useState(false);
   const [areSubtasksVisible, setAreSubtasksVisible] = useState(false);
 
   const subtasks = todo.subtasks || [];
@@ -487,6 +496,53 @@ function TodoCard({
           </>
         )}
       </div>
+
+      {/* Notes */}
+      {!isSelectionMode && notes && (
+        <div className="relative mt-3 border-t border-slate-800 pt-3">
+          <button
+            type="button"
+            onClick={() => setAreNotesVisible((previous) => !previous)}
+            className="
+              flex w-full items-center justify-between gap-4
+              rounded-lg px-1 py-1
+              text-left
+              transition
+              hover:text-white
+              focus-visible:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-violet-500/60
+            "
+          >
+            <div className="flex min-w-0 items-center gap-2">
+              <NotebookPen size={15} className="shrink-0 text-violet-400" />
+
+              <span className="text-xs font-medium text-slate-400">
+                Task notes
+              </span>
+            </div>
+
+            <ChevronDown
+              size={16}
+              className={`shrink-0 text-slate-500 transition-transform duration-200 ${
+                areNotesVisible ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+
+          {areNotesVisible && (
+            <div className="mt-3 rounded-lg bg-slate-950/40 px-3 py-2.5">
+              <p
+                className={`whitespace-pre-wrap text-xs leading-5 ${
+                  completed ? "text-slate-600" : "text-slate-400"
+                }`}
+              >
+                {notes}
+              </p>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Subtasks */}
       {!isSelectionMode && subtasks.length > 0 && (

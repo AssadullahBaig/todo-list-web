@@ -15,6 +15,7 @@ function loadTodos() {
 
     return parsedTodos.map((todo) => ({
       ...todo,
+      notes: todo.notes || "",
       subtasks: todo.subtasks || [],
     }));
   }
@@ -26,6 +27,7 @@ function TodoPage() {
   const emptyTodo = {
     title: "",
     description: "",
+    notes: "",
     dueDate: "",
     dueTime: "",
     priority: "Medium",
@@ -329,6 +331,8 @@ function TodoPage() {
         title: subtask.title.trim(),
       }));
 
+    const cleanNotes = newTodo.notes.trim();
+
     if (editingTodoId !== null) {
       const resolvedDueDate = getResolvedDueDate(
         newTodo.dueDate,
@@ -342,6 +346,7 @@ function TodoPage() {
                 ...todo,
                 ...newTodo,
                 dueDate: resolvedDueDate,
+                notes: cleanNotes,
                 subtasks: cleanSubtasks,
               }
             : todo,
@@ -358,6 +363,7 @@ function TodoPage() {
       id: Date.now(),
       ...newTodo,
       dueDate: getResolvedDueDate(newTodo.dueDate, newTodo.dueTime),
+      notes: cleanNotes,
       subtasks: cleanSubtasks,
       completed: false,
       pinned: false,
@@ -521,6 +527,7 @@ function TodoPage() {
     setNewTodo({
       title: todo.title,
       description: todo.description,
+      notes: todo.notes || "",
       dueDate: todo.dueDate,
       dueTime: todo.dueTime || "",
       priority: todo.priority,
@@ -583,6 +590,7 @@ function TodoPage() {
     const searchableText = [
       todo.title,
       todo.description || "",
+      todo.notes || "",
       todo.label || "",
       ...(todo.subtasks || []).map((subtask) => subtask.title),
     ]
