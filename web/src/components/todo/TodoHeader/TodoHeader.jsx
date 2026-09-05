@@ -1,10 +1,12 @@
 import {
   CheckCircle2,
+  CheckSquare,
   ListChecks,
   Pencil,
   Search,
   Star,
   Trash2,
+  X,
 } from "lucide-react";
 
 function TodoHeader({
@@ -22,6 +24,9 @@ function TodoHeader({
   isSelectionMode,
   onToggleSelectionMode,
   selectedCount,
+  visibleTaskCount,
+  onSelectVisible,
+  onClearSelection,
   onCompleteSelected,
   onEditSelected,
   onPinSelected,
@@ -205,6 +210,51 @@ function TodoHeader({
           </p>
 
           <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={onSelectVisible}
+              disabled={visibleTaskCount === 0}
+              className="
+                flex items-center gap-2 rounded-lg
+                bg-[#111827] px-3.5 py-2
+                text-sm font-medium text-violet-300
+                transition
+                hover:bg-violet-500/10 hover:text-violet-200
+                disabled:cursor-not-allowed
+                disabled:opacity-40
+                disabled:hover:bg-[#111827]
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-violet-500/60
+              "
+            >
+              <CheckSquare size={15} />
+              Select Visible
+            </button>
+
+            <button
+              type="button"
+              onClick={onClearSelection}
+              disabled={selectedCount === 0}
+              className="
+                flex items-center gap-2 rounded-lg
+                bg-[#111827] px-3.5 py-2
+                text-sm font-medium text-slate-400
+                transition
+                hover:bg-slate-800 hover:text-white
+                disabled:cursor-not-allowed
+                disabled:opacity-40
+                disabled:hover:bg-[#111827]
+                disabled:hover:text-slate-400
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-slate-500/60
+              "
+            >
+              <X size={15} />
+              Clear
+            </button>
+
             <button
               type="button"
               onClick={onEditSelected}

@@ -215,6 +215,7 @@ function TodoPage() {
 
     setSelectedTodoIds([]);
   }
+
   function handleEditSelectedTodo() {
     if (selectedTodoIds.length !== 1) {
       return;
@@ -625,6 +626,16 @@ function TodoPage() {
 
   const regularTodos = sortedTodos.filter((todo) => !isTaskOverdue(todo));
 
+  function handleSelectVisibleTodos() {
+    const visibleTodoIds = sortedTodos.map((todo) => todo.id);
+
+    setSelectedTodoIds(visibleTodoIds);
+  }
+
+  function handleClearSelection() {
+    setSelectedTodoIds([]);
+  }
+
   return (
     <MainLayout onToggleForm={handleToggleForm} isFormVisible={isFormVisible}>
       <TodoHeader
@@ -642,6 +653,9 @@ function TodoPage() {
         isSelectionMode={isSelectionMode}
         onToggleSelectionMode={handleToggleSelectionMode}
         selectedCount={selectedTodoIds.length}
+        visibleTaskCount={sortedTodos.length}
+        onSelectVisible={handleSelectVisibleTodos}
+        onClearSelection={handleClearSelection}
         onCompleteSelected={handleCompleteSelectedTodos}
         onEditSelected={handleEditSelectedTodo}
         onPinSelected={handlePinSelectedTodos}
