@@ -18,6 +18,8 @@ function TodoHeader({
   onSortChange,
   priorityFilter,
   onPriorityFilterChange,
+  taskView,
+  onTaskViewChange,
   totalTasks,
   completedTasks,
   completionPercentage,
@@ -75,8 +77,47 @@ function TodoHeader({
         </div>
       </div>
 
+      {/* Task Views */}
+      <div className="mt-6 flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          onClick={() => onTaskViewChange("all")}
+          className={`rounded-xl border px-4 py-2 text-sm font-medium transition ${
+            taskView === "all"
+              ? "border-violet-500 bg-violet-600 text-white"
+              : "border-slate-800 bg-[#111827] text-slate-400 hover:border-slate-700 hover:text-white"
+          } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60`}
+        >
+          All Tasks
+        </button>
+
+        <button
+          type="button"
+          onClick={() => onTaskViewChange("today")}
+          className={`rounded-xl border px-4 py-2 text-sm font-medium transition ${
+            taskView === "today"
+              ? "border-violet-500 bg-violet-600 text-white"
+              : "border-slate-800 bg-[#111827] text-slate-400 hover:border-slate-700 hover:text-white"
+          } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60`}
+        >
+          Today
+        </button>
+
+        <button
+          type="button"
+          onClick={() => onTaskViewChange("upcoming")}
+          className={`rounded-xl border px-4 py-2 text-sm font-medium transition ${
+            taskView === "upcoming"
+              ? "border-violet-500 bg-violet-600 text-white"
+              : "border-slate-800 bg-[#111827] text-slate-400 hover:border-slate-700 hover:text-white"
+          } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60`}
+        >
+          Upcoming
+        </button>
+      </div>
+
       {/* Search / Filter / Sort */}
-      <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+      <div className="mt-5 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         {/* Search */}
         <div className="relative w-full lg:max-w-md">
           <Search

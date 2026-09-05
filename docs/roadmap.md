@@ -1,67 +1,54 @@
 # Version 7 – Subtasks & Task Details
 
-**Status:** Planned
+**Status:** Completed
 
 ## Objective
 
-Allow larger tasks to be broken into smaller pieces.
+Make bigger tasks easier to manage.
 
-## Planned Work
+## Work Completed
 
-- Add subtasks.
-- Allow subtasks to be completed independently.
-- Add simple task comments or notes.
-
-## Concepts to Learn
-
-- Nested Data
-- Updating Nested State
-- Parent / Child Task Relationships
+- Added subtasks.
+- Added subtask editing and deleting.
+- Added independent subtask completion.
+- Added subtask progress.
+- Added expand/collapse for subtasks.
+- Added subtask search.
+- Added task notes/details.
+- Added notes to create and edit.
+- Added notes to search.
+- Kept subtasks working with recurring tasks.
+- Kept subtasks and notes saved in LocalStorage.
 
 ---
 
 # Version 6 – Recurring Tasks & Bulk Task Actions
 
-**Status:** In Progress
+**Status:** Completed
 
 ## Objective
 
-Make TaskFlow better for repeated work and managing multiple tasks at once.
+Make repeated tasks and managing multiple tasks easier.
 
 ## Work Completed
 
-- Added recurring task options:
-  - Does not repeat
+- Added recurring tasks:
   - Daily
   - Weekly
   - Monthly
-- Added recurrence information to task cards.
-- Made recurring tasks move to their next occurrence when completed.
-- Prevented the same recurring task from repeatedly advancing on the same day.
+- Added recurrence info to task cards.
+- Made recurring tasks move forward when completed.
 - Added task selection mode.
-- Added selected-task count.
-- Added bulk task completion.
-- Added bulk edit and pin actions.
-- Added bulk task deletion.
-- Added multi-task Undo for bulk deletion.
-- Updated delete feedback for single and multiple deleted tasks.
-- Simplified task cards while selection mode is active.
+- Added selected task count.
+- Added bulk complete.
+- Added bulk edit.
+- Added bulk pin.
+- Added bulk delete.
+- Added Undo for bulk delete.
+- Added Select Visible.
+- Added Clear Selection.
 
-## Work Remaining
-
-- Add Select All / Select Visible.
-- Add Clear Selection.
-- Polish recurring-task edge cases where necessary.
-
-## Concepts Learned
-
-- Managing Multiple Selected Items
-- Array-Based State Updates
-- Date Calculations
-- Recurring Task Logic
-- Bulk State Updates
-- Undoing Batch Operations
-- Conditional Interfaces
+---
 
 # Version 5 – Productivity Features
 

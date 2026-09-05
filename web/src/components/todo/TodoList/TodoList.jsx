@@ -8,6 +8,7 @@ function TodoList({
   searchTerm,
   filter,
   priorityFilter,
+  taskView,
   onClearFilters,
   onDelete,
   onToggle,
@@ -21,7 +22,10 @@ function TodoList({
   const hasNoVisibleTasks = todos.length === 0 && overdueTodos.length === 0;
 
   const hasActiveFilters =
-    searchTerm.trim() !== "" || filter !== "All" || priorityFilter !== "All";
+    searchTerm.trim() !== "" ||
+    filter !== "All" ||
+    priorityFilter !== "All" ||
+    taskView !== "all";
 
   if (hasNoVisibleTasks) {
     let title = "No Tasks Found";
@@ -48,6 +52,12 @@ function TodoList({
     } else if (priorityFilter !== "All") {
       title = `No ${priorityFilter} Priority Tasks`;
       message = "No tasks match the selected priority.";
+    } else if (taskView === "today") {
+      title = "No Tasks Due Today";
+      message = "You have no tasks due today.";
+    } else if (taskView === "upcoming") {
+      title = "No Upcoming Tasks";
+      message = "You have no future tasks scheduled.";
     }
 
     return (

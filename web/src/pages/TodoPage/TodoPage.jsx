@@ -166,6 +166,7 @@ function TodoPage() {
   const [filter, setFilter] = useState("All");
   const [sortBy, setSortBy] = useState("newest");
   const [priorityFilter, setPriorityFilter] = useState("All");
+  const [taskView, setTaskView] = useState("all");
   const [recentlyDeleted, setRecentlyDeleted] = useState(null);
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [selectedTodoIds, setSelectedTodoIds] = useState([]);
@@ -522,6 +523,7 @@ function TodoPage() {
     setSearchTerm("");
     setFilter("All");
     setPriorityFilter("All");
+    setTaskView("all");
   }
 
   useEffect(() => {
@@ -550,6 +552,13 @@ function TodoPage() {
 
   const normalizedSearchTerm = searchTerm.trim().toLowerCase();
 
+  const today = new Date();
+  const todayDate = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, "0"),
+    String(today.getDate()).padStart(2, "0"),
+  ].join("-");
+
   const filteredTodos = todos.filter((todo) => {
     const searchableText = [
       todo.title,
@@ -566,15 +575,26 @@ function TodoPage() {
     const matchesPriority =
       priorityFilter === "All" || todo.priority === priorityFilter;
 
+    const matchesTaskView =
+      taskView === "today"
+        ? todo.dueDate === todayDate
+        : taskView === "upcoming"
+          ? Boolean(todo.dueDate) && todo.dueDate > todayDate
+          : true;
+
     if (filter === "Active") {
-      return matchesSearch && matchesPriority && !todo.completed;
+      return (
+        matchesSearch && matchesPriority && matchesTaskView && !todo.completed
+      );
     }
 
     if (filter === "Completed") {
-      return matchesSearch && matchesPriority && todo.completed;
+      return (
+        matchesSearch && matchesPriority && matchesTaskView && todo.completed
+      );
     }
 
-    return matchesSearch && matchesPriority;
+    return matchesSearch && matchesPriority && matchesTaskView;
   });
 
   const sortedTodos = [...filteredTodos].sort((a, b) => {
@@ -647,6 +667,8 @@ function TodoPage() {
         onSortChange={setSortBy}
         priorityFilter={priorityFilter}
         onPriorityFilterChange={setPriorityFilter}
+        taskView={taskView}
+        onTaskViewChange={setTaskView}
         totalTasks={totalTasks}
         completedTasks={completedTasks}
         completionPercentage={completionPercentage}
@@ -682,6 +704,7 @@ function TodoPage() {
         searchTerm={searchTerm}
         filter={filter}
         priorityFilter={priorityFilter}
+        taskView={taskView}
         onClearFilters={handleClearFilters}
         onDelete={handleDeleteTodo}
         onToggle={handleToggleComplete}
