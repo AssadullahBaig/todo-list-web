@@ -85,21 +85,17 @@ function TodoPage() {
 
     const monthlyAnchorDay = nextDate.getDate();
 
-    function moveToNextOccurrence(date) {
-      const next = new Date(date);
+    if (recurrence === "daily") {
+      nextDate.setDate(nextDate.getDate() + 1);
+    }
 
-      if (recurrence === "daily") {
-        next.setDate(next.getDate() + 1);
-        return next;
-      }
+    if (recurrence === "weekly") {
+      nextDate.setDate(nextDate.getDate() + 7);
+    }
 
-      if (recurrence === "weekly") {
-        next.setDate(next.getDate() + 7);
-        return next;
-      }
-
-      const targetMonth = next.getMonth() + 1;
-      const targetYear = next.getFullYear() + Math.floor(targetMonth / 12);
+    if (recurrence === "monthly") {
+      const targetMonth = nextDate.getMonth() + 1;
+      const targetYear = nextDate.getFullYear() + Math.floor(targetMonth / 12);
 
       const normalizedMonth = targetMonth % 12;
 
@@ -109,16 +105,12 @@ function TodoPage() {
         0,
       ).getDate();
 
-      return new Date(
+      nextDate = new Date(
         targetYear,
         normalizedMonth,
         Math.min(monthlyAnchorDay, lastDayOfTargetMonth),
       );
     }
-
-    do {
-      nextDate = moveToNextOccurrence(nextDate);
-    } while (nextDate <= today);
 
     const year = nextDate.getFullYear();
     const month = String(nextDate.getMonth() + 1).padStart(2, "0");
@@ -195,14 +187,6 @@ function TodoPage() {
   }
 
   function handleCompleteSelectedTodos() {
-    const today = new Date();
-
-    const todayDate = [
-      today.getFullYear(),
-      String(today.getMonth() + 1).padStart(2, "0"),
-      String(today.getDate()).padStart(2, "0"),
-    ].join("-");
-
     setTodos((previousTodos) =>
       previousTodos.map((todo) => {
         if (!selectedTodoIds.includes(todo.id) || todo.completed) {
@@ -214,16 +198,11 @@ function TodoPage() {
         const isRecurring = ["daily", "weekly", "monthly"].includes(recurrence);
 
         if (isRecurring) {
-          if (todo.lastRecurringCompletionDate === todayDate) {
-            return todo;
-          }
-
           return {
             ...todo,
             dueDate: getNextRecurringDueDate(todo),
             completed: false,
             subtasks: resetSubtasks(todo.subtasks),
-            lastRecurringCompletionDate: todayDate,
           };
         }
 
@@ -236,7 +215,6 @@ function TodoPage() {
 
     setSelectedTodoIds([]);
   }
-
   function handleEditSelectedTodo() {
     if (selectedTodoIds.length !== 1) {
       return;
@@ -470,26 +448,11 @@ function TodoPage() {
         const isRecurring = ["daily", "weekly", "monthly"].includes(recurrence);
 
         if (!todo.completed && isRecurring) {
-          const today = new Date();
-
-          const todayDate = [
-            today.getFullYear(),
-            String(today.getMonth() + 1).padStart(2, "0"),
-            String(today.getDate()).padStart(2, "0"),
-          ].join("-");
-
-          // Prevent the same recurring task from advancing
-          // more than once on the same calendar day.
-          if (todo.lastRecurringCompletionDate === todayDate) {
-            return todo;
-          }
-
           return {
             ...todo,
             dueDate: getNextRecurringDueDate(todo),
             completed: false,
             subtasks: resetSubtasks(todo.subtasks),
-            lastRecurringCompletionDate: todayDate,
           };
         }
 
