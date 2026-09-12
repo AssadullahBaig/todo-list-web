@@ -339,6 +339,7 @@ function TodoForm({
         </div>
 
         {/* Label */}
+
         <div>
           <label
             htmlFor="label"
@@ -347,30 +348,35 @@ function TodoForm({
             Label
           </label>
 
-          <select
+          <input
             id="label"
             name="label"
+            type="text"
+            list="label-options"
             value={newTodo.label}
             onChange={onInputChange}
+            placeholder="Add a label..."
             className="
-              h-11 w-full rounded-xl
-              border border-slate-700
-              bg-[#1E293B] px-4
-              text-sm text-white
-              outline-none
-              transition
-              hover:border-slate-600
-              focus:border-violet-500
-              focus:ring-2
-              focus:ring-violet-500/20
-            "
-          >
-            <option value="">No label</option>
-            <option value="Work">Work</option>
-            <option value="Study">Study</option>
-            <option value="Personal">Personal</option>
-            <option value="Development">Development</option>
-          </select>
+            h-11 w-full rounded-xl
+            border border-slate-700
+            bg-[#1E293B] px-4
+            text-sm text-white
+            placeholder:text-slate-500
+            outline-none
+            transition
+            hover:border-slate-600
+            focus:border-violet-500
+            focus:ring-2
+            focus:ring-violet-500/20
+          "
+          />
+
+          <datalist id="label-options">
+            <option value="Development" />
+            <option value="University" />
+            <option value="Shopping" />
+            <option value="Health" />
+          </datalist>
         </div>
 
         {/* Recurrence */}

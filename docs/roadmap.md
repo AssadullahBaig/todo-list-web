@@ -15,6 +15,7 @@ Organize tasks into simple lists.
 - Made existing tasks default to Inbox.
 - Kept task lists working with search, filters, Today, Upcoming, and bulk selection.
 - Kept task lists saved in LocalStorage.
+- Added custom task labels.
 
 ## Concepts Learned
 
