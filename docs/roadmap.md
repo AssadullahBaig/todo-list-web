@@ -1,3 +1,58 @@
+# Version 9 – Task Lists & Inbox
+
+**Status:** Completed
+
+## Objective
+
+Organize tasks into simple lists.
+
+## Work Completed
+
+- Added Inbox, Work, Study, and Personal task lists.
+- Added task list selection when creating and editing tasks.
+- Added task list filtering from the sidebar.
+- Added task list badges to task cards.
+- Made existing tasks default to Inbox.
+- Kept task lists working with search, filters, Today, Upcoming, and bulk selection.
+- Kept task lists saved in LocalStorage.
+
+## Concepts Learned
+
+- Adding new properties to existing data
+- Derived filtering
+- Passing state through props
+- Reusing controlled form inputs
+- LocalStorage backward compatibility
+
+---
+
+# Version 8 – Today & Upcoming Task Views
+
+**Status:** Completed
+
+## Objective
+
+Make it easier to focus on tasks due today and tasks coming up later.
+
+## Work Completed
+
+- Added All Tasks, Today, and Upcoming task views.
+- Added filtering for tasks due today.
+- Added filtering for future tasks.
+- Kept overdue tasks separate from Upcoming.
+- Kept Today and Upcoming working with search, priority filters, and task status filters.
+- Updated Select Visible to respect the current task view.
+- Added empty states for Today and Upcoming.
+- Updated Clear Filters to return to All Tasks.
+
+## Concepts Learned
+
+- Derived State
+- Date Filtering
+- Combining Multiple Filters
+- Reusing Existing State Logic
+- Conditional Rendering
+
 # Version 7 – Subtasks & Task Details
 
 **Status:** Completed

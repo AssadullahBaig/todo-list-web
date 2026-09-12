@@ -16,6 +16,7 @@ function loadTodos() {
     return parsedTodos.map((todo) => ({
       ...todo,
       notes: todo.notes || "",
+      list: todo.list || "Inbox",
       subtasks: todo.subtasks || [],
     }));
   }
@@ -28,6 +29,7 @@ function TodoPage() {
     title: "",
     description: "",
     notes: "",
+    list: "Inbox",
     dueDate: "",
     dueTime: "",
     priority: "Medium",
@@ -167,6 +169,7 @@ function TodoPage() {
   const [sortBy, setSortBy] = useState("newest");
   const [priorityFilter, setPriorityFilter] = useState("All");
   const [taskView, setTaskView] = useState("all");
+  const [listFilter, setListFilter] = useState("All");
   const [recentlyDeleted, setRecentlyDeleted] = useState(null);
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [selectedTodoIds, setSelectedTodoIds] = useState([]);
@@ -493,6 +496,7 @@ function TodoPage() {
       title: todo.title,
       description: todo.description,
       notes: todo.notes || "",
+      list: todo.list || "Inbox",
       dueDate: todo.dueDate,
       dueTime: todo.dueTime || "",
       priority: todo.priority,
@@ -516,6 +520,13 @@ function TodoPage() {
       return;
     }
 
+    if (!isFormVisible) {
+      setNewTodo({
+        ...emptyTodo,
+        list: listFilter === "All" ? "Inbox" : listFilter,
+      });
+    }
+
     setIsFormVisible((previous) => !previous);
   }
 
@@ -524,6 +535,7 @@ function TodoPage() {
     setFilter("All");
     setPriorityFilter("All");
     setTaskView("all");
+    setListFilter("All");
   }
 
   useEffect(() => {
@@ -564,6 +576,7 @@ function TodoPage() {
       todo.title,
       todo.description || "",
       todo.notes || "",
+      todo.list || "Inbox",
       todo.label || "",
       ...(todo.subtasks || []).map((subtask) => subtask.title),
     ]
@@ -575,6 +588,9 @@ function TodoPage() {
     const matchesPriority =
       priorityFilter === "All" || todo.priority === priorityFilter;
 
+    const matchesList =
+      listFilter === "All" || (todo.list || "Inbox") === listFilter;
+
     const matchesTaskView =
       taskView === "today"
         ? todo.dueDate === todayDate
@@ -584,17 +600,25 @@ function TodoPage() {
 
     if (filter === "Active") {
       return (
-        matchesSearch && matchesPriority && matchesTaskView && !todo.completed
+        matchesSearch &&
+        matchesPriority &&
+        matchesList &&
+        matchesTaskView &&
+        !todo.completed
       );
     }
 
     if (filter === "Completed") {
       return (
-        matchesSearch && matchesPriority && matchesTaskView && todo.completed
+        matchesSearch &&
+        matchesPriority &&
+        matchesList &&
+        matchesTaskView &&
+        todo.completed
       );
     }
 
-    return matchesSearch && matchesPriority && matchesTaskView;
+    return matchesSearch && matchesPriority && matchesList && matchesTaskView;
   });
 
   const sortedTodos = [...filteredTodos].sort((a, b) => {
@@ -657,7 +681,12 @@ function TodoPage() {
   }
 
   return (
-    <MainLayout onToggleForm={handleToggleForm} isFormVisible={isFormVisible}>
+    <MainLayout
+      onToggleForm={handleToggleForm}
+      isFormVisible={isFormVisible}
+      listFilter={listFilter}
+      onListFilterChange={setListFilter}
+    >
       <TodoHeader
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
@@ -705,6 +734,7 @@ function TodoPage() {
         filter={filter}
         priorityFilter={priorityFilter}
         taskView={taskView}
+        listFilter={listFilter}
         onClearFilters={handleClearFilters}
         onDelete={handleDeleteTodo}
         onToggle={handleToggleComplete}

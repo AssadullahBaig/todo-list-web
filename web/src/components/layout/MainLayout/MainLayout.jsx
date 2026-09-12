@@ -1,11 +1,22 @@
 import Header from "../Header";
 import Sidebar from "../Sidebar";
 
-function MainLayout({ children, onToggleForm, isFormVisible }) {
+function MainLayout({
+  children,
+  onToggleForm,
+  isFormVisible,
+  listFilter,
+  onListFilterChange,
+}) {
   return (
     <div className="flex min-h-screen bg-[#0B1120] text-white">
       {/* Sidebar */}
-      <Sidebar onToggleForm={onToggleForm} isFormVisible={isFormVisible} />
+      <Sidebar
+        onToggleForm={onToggleForm}
+        isFormVisible={isFormVisible}
+        listFilter={listFilter}
+        onListFilterChange={onListFilterChange}
+      />
 
       {/* Main Content */}
       <div className="ml-[260px] flex min-h-screen flex-1 flex-col">

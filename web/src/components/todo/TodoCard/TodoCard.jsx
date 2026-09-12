@@ -124,6 +124,7 @@ function TodoCard({
     priority,
     completed,
     pinned,
+    list,
     label,
     recurrence,
   } = todo;
@@ -298,6 +299,10 @@ function TodoCard({
             >
               {title}
             </h3>
+
+            <span className="shrink-0 rounded-full bg-slate-800 px-2.5 py-0.5 text-xs font-medium text-slate-400">
+              {list || "Inbox"}
+            </span>
 
             {label && (
               <span className="shrink-0 rounded-full bg-violet-500/10 px-2.5 py-0.5 text-xs font-medium text-violet-400">

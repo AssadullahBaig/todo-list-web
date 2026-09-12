@@ -15,7 +15,7 @@ that we may add to TaskFlow in future versions.
 - [ ] Improve responsive/mobile layout
 - [ ] Research a better task creation screen
 - [x] Task completion animation
-- [] Make the ui responsive
+- [ ] Make the ui responsive
 
 ---
 
@@ -26,10 +26,10 @@ that we may add to TaskFlow in future versions.
 - [x] Task time
 - [x] Priority colors
 - [x] Priority filtering
-- [ ] Task lists
-- [ ] Inbox
+- [x] Task lists
+- [x] Inbox
 - [ ] Custom task ordering
-- [ ] Drag and drop
+- [ ] Custom labels
 - [x] Subtasks
 - [x] Labels
 - [ ] Comments

@@ -9,6 +9,7 @@ function TodoList({
   filter,
   priorityFilter,
   taskView,
+  listFilter,
   onClearFilters,
   onDelete,
   onToggle,
@@ -25,7 +26,8 @@ function TodoList({
     searchTerm.trim() !== "" ||
     filter !== "All" ||
     priorityFilter !== "All" ||
-    taskView !== "all";
+    taskView !== "all" ||
+    listFilter !== "All";
 
   if (hasNoVisibleTasks) {
     let title = "No Tasks Found";
@@ -58,6 +60,9 @@ function TodoList({
     } else if (taskView === "upcoming") {
       title = "No Upcoming Tasks";
       message = "You have no future tasks scheduled.";
+    } else if (listFilter !== "All") {
+      title = `No ${listFilter} Tasks`;
+      message = `No tasks are assigned to ${listFilter}.`;
     }
 
     return (

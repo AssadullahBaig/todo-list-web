@@ -4,13 +4,26 @@ import {
   Settings,
   Info,
   Plus,
+  List,
+  Inbox,
+  Briefcase,
+  BookOpen,
+  User,
 } from "lucide-react";
 
-function Sidebar({ onToggleForm }) {
+const taskLists = [
+  { name: "All", label: "All Tasks", icon: List },
+  { name: "Inbox", label: "Inbox", icon: Inbox },
+  { name: "Work", label: "Work", icon: Briefcase },
+  { name: "Study", label: "Study", icon: BookOpen },
+  { name: "Personal", label: "Personal", icon: User },
+];
+
+function Sidebar({ onToggleForm, listFilter, onListFilterChange }) {
   return (
     <aside className="fixed left-0 top-0 flex h-screen w-[260px] flex-col justify-between border-r border-slate-800 bg-[#0F172A]">
       {/* Top Section */}
-      <div>
+      <div className="min-h-0 flex-1 overflow-y-auto">
         {/* Logo */}
         <div className="border-b border-slate-800 px-8 py-8">
           <h1 className="text-4xl font-bold tracking-tight text-violet-500">
@@ -20,7 +33,7 @@ function Sidebar({ onToggleForm }) {
           <p className="mt-2 text-sm text-slate-400">Premium Productivity</p>
 
           <span className="mt-3 inline-block rounded-md bg-slate-800 px-2 py-1 text-xs font-medium text-slate-500">
-            v1.8.0
+            v1.9.0
           </span>
         </div>
 
@@ -96,6 +109,36 @@ function Sidebar({ onToggleForm }) {
             <span>About</span>
           </button>
         </nav>
+
+        {/* Task Lists */}
+        <div className="px-4 pb-6">
+          <p className="mb-3 px-3 text-xs font-semibold uppercase tracking-wider text-slate-600">
+            Lists
+          </p>
+
+          <div className="space-y-1">
+            {taskLists.map((taskList) => {
+              const Icon = taskList.icon;
+              const isActive = listFilter === taskList.name;
+
+              return (
+                <button
+                  key={taskList.name}
+                  type="button"
+                  onClick={() => onListFilterChange(taskList.name)}
+                  className={`flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-sm transition ${
+                    isActive
+                      ? "bg-violet-500/10 font-medium text-violet-300"
+                      : "text-slate-500 hover:bg-slate-800 hover:text-slate-200"
+                  } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60`}
+                >
+                  <Icon size={17} />
+                  <span>{taskList.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       {/* Bottom Section */}

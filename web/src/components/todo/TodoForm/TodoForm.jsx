@@ -304,6 +304,40 @@ function TodoForm({
           </div>
         </div>
 
+        {/* Task List */}
+        <div>
+          <label
+            htmlFor="list"
+            className="mb-1.5 block text-sm font-medium text-slate-300"
+          >
+            Task List
+          </label>
+
+          <select
+            id="list"
+            name="list"
+            value={newTodo.list}
+            onChange={onInputChange}
+            className="
+              h-11 w-full rounded-xl
+              border border-slate-700
+              bg-[#1E293B] px-4
+              text-sm text-white
+              outline-none
+              transition
+              hover:border-slate-600
+              focus:border-violet-500
+              focus:ring-2
+              focus:ring-violet-500/20
+            "
+          >
+            <option value="Inbox">Inbox</option>
+            <option value="Work">Work</option>
+            <option value="Study">Study</option>
+            <option value="Personal">Personal</option>
+          </select>
+        </div>
+
         {/* Label */}
         <div>
           <label
