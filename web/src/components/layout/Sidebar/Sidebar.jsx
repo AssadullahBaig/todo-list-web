@@ -33,7 +33,7 @@ function Sidebar({ onToggleForm, listFilter, onListFilterChange }) {
           <p className="mt-2 text-sm text-slate-400">Premium Productivity</p>
 
           <span className="mt-3 inline-block rounded-md bg-slate-800 px-2 py-1 text-xs font-medium text-slate-500">
-            v1.9.0
+            v1.10.0
           </span>
         </div>
 
@@ -126,11 +126,10 @@ function Sidebar({ onToggleForm, listFilter, onListFilterChange }) {
                   key={taskList.name}
                   type="button"
                   onClick={() => onListFilterChange(taskList.name)}
-                  className={`flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-sm transition ${
-                    isActive
-                      ? "bg-violet-500/10 font-medium text-violet-300"
-                      : "text-slate-500 hover:bg-slate-800 hover:text-slate-200"
-                  } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60`}
+                  className={`flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-sm transition ${isActive
+                    ? "bg-violet-500/10 font-medium text-violet-300"
+                    : "text-slate-500 hover:bg-slate-800 hover:text-slate-200"
+                    } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60`}
                 >
                   <Icon size={17} />
                   <span>{taskList.label}</span>
