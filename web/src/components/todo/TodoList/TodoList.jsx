@@ -25,7 +25,7 @@ function TodoList({
   const hasActiveFilters =
     searchTerm.trim() !== "" ||
     filter !== "All" ||
-    priorityFilter !== "All" ||
+    (priorityFilter && priorityFilter !== "All") ||
     taskView !== "all" ||
     listFilter !== "All";
 
@@ -39,21 +39,12 @@ function TodoList({
     } else if (searchTerm.trim() !== "") {
       title = "No Matching Tasks";
       message = `No tasks match "${searchTerm.trim()}".`;
-    } else if (filter === "Active" && priorityFilter !== "All") {
-      title = `No Active ${priorityFilter} Priority Tasks`;
-      message = "No active tasks match the selected priority.";
-    } else if (filter === "Completed" && priorityFilter !== "All") {
-      title = `No Completed ${priorityFilter} Priority Tasks`;
-      message = "No completed tasks match the selected priority.";
     } else if (filter === "Active") {
       title = "No Active Tasks";
-      message = "You're all caught up.";
+      message = "You're all caught up!";
     } else if (filter === "Completed") {
       title = "No Completed Tasks";
       message = "Complete a task and it will appear here.";
-    } else if (priorityFilter !== "All") {
-      title = `No ${priorityFilter} Priority Tasks`;
-      message = "No tasks match the selected priority.";
     } else if (taskView === "today") {
       title = "No Tasks Due Today";
       message = "You have no tasks due today.";
@@ -66,31 +57,20 @@ function TodoList({
     }
 
     return (
-      <section className="rounded-3xl border border-dashed border-slate-700 bg-[#111827] py-16 text-center">
-        <ClipboardList size={52} className="mx-auto mb-5 text-slate-500" />
+      <section className="rounded-2xl border border-dashed border-[#27272a] bg-[#18181b] py-16 text-center">
+        <ClipboardList size={44} className="mx-auto mb-4 text-zinc-500" />
 
-        <h2 className="text-xl font-semibold tracking-tight text-white">
+        <h2 className="text-lg font-semibold tracking-tight text-white">
           {title}
         </h2>
 
-        <p className="mt-2 text-sm text-slate-400">{message}</p>
+        <p className="mt-1.5 text-xs text-zinc-400">{message}</p>
 
         {totalTaskCount > 0 && hasActiveFilters && (
           <button
             type="button"
             onClick={onClearFilters}
-            className="
-              mt-6 rounded-xl
-              bg-violet-600 px-4 py-2
-              text-sm font-semibold text-white
-              transition
-              hover:bg-violet-500
-              focus-visible:outline-none
-              focus-visible:ring-2
-              focus-visible:ring-violet-500/60
-              focus-visible:ring-offset-2
-              focus-visible:ring-offset-[#111827]
-            "
+            className="mt-5 rounded-lg bg-white px-4 py-2 text-xs font-semibold text-zinc-950 transition hover:bg-zinc-200"
           >
             Clear Filters
           </button>
@@ -100,26 +80,25 @@ function TodoList({
   }
 
   return (
-    <section className="space-y-8">
-      {/* Overdue Tasks */}
+    <section className="space-y-6">
+      {/* Overdue Tasks Banner */}
       {overdueTodos.length > 0 && (
         <div>
-          <div className="mb-3 flex items-center justify-between">
+          <div className="mb-2.5 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <AlertTriangle size={18} className="text-red-400" />
-
-              <h2 className="text-sm font-semibold uppercase tracking-wide text-red-400">
+              <AlertTriangle size={15} className="text-rose-400" />
+              <h2 className="text-xs font-bold uppercase tracking-wider text-rose-400">
                 Overdue
               </h2>
             </div>
 
-            <span className="text-xs text-slate-500">
+            <span className="text-[11px] text-zinc-500">
               {overdueTodos.length}{" "}
-              {overdueTodos.length === 1 ? "task" : "tasks"} need attention
+              {overdueTodos.length === 1 ? "task needs" : "tasks need"} attention
             </span>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-2.5">
             {overdueTodos.map((todo) => (
               <TodoCard
                 key={todo.id}
@@ -138,33 +117,23 @@ function TodoList({
         </div>
       )}
 
-      {/* Regular Tasks */}
+      {/* Regular Tasks List */}
       {todos.length > 0 && (
-        <div>
-          {overdueTodos.length > 0 && (
-            <div className="mb-3">
-              <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
-                Other Tasks
-              </h2>
-            </div>
-          )}
-
-          <div className="space-y-4">
-            {todos.map((todo) => (
-              <TodoCard
-                key={todo.id}
-                todo={todo}
-                onDelete={onDelete}
-                onToggle={onToggle}
-                onEdit={onEdit}
-                onTogglePinned={onTogglePinned}
-                isSelectionMode={isSelectionMode}
-                isSelected={selectedTodoIds.includes(todo.id)}
-                onToggleSelection={onToggleSelection}
-                onToggleSubtask={onToggleSubtask}
-              />
-            ))}
-          </div>
+        <div className="space-y-2.5">
+          {todos.map((todo) => (
+            <TodoCard
+              key={todo.id}
+              todo={todo}
+              onDelete={onDelete}
+              onToggle={onToggle}
+              onEdit={onEdit}
+              onTogglePinned={onTogglePinned}
+              isSelectionMode={isSelectionMode}
+              isSelected={selectedTodoIds.includes(todo.id)}
+              onToggleSelection={onToggleSelection}
+              onToggleSubtask={onToggleSubtask}
+            />
+          ))}
         </div>
       )}
     </section>

@@ -70,89 +70,66 @@ function Sidebar({
   }
 
   return (
-    <aside className="fixed left-0 top-0 flex h-screen w-[260px] flex-col justify-between border-r border-slate-800 bg-[#0F172A]">
+    <aside className="fixed left-0 top-16 z-40 flex h-[calc(100vh-64px)] w-[260px] flex-col justify-between border-r border-[#27272a] bg-[#0e0e11] p-4 font-sans">
       {/* Top Section */}
-      <div className="min-h-0 flex-1 overflow-y-auto">
-        {/* Logo */}
-        <div className="border-b border-slate-800 px-8 py-8">
-          <h1 className="text-4xl font-bold tracking-tight text-violet-500">
+      <div className="min-h-0 flex-1 overflow-y-auto custom-scrollbar">
+        {/* Brand / Subtitle Header */}
+        <div className="mb-6 px-3">
+          <h2 className="text-lg font-bold tracking-tight text-white">
             TaskFlow
-          </h1>
-
-          <p className="mt-2 text-sm text-slate-400">Premium Productivity</p>
-
-          <span className="mt-3 inline-block rounded-md bg-slate-800 px-2 py-1 text-xs font-medium text-slate-500">
-            v1.10.0
-          </span>
+          </h2>
+          <p className="text-xs text-zinc-400">Linear Slate &amp; Zinc</p>
         </div>
 
         {/* Navigation */}
-        <nav className="space-y-2 px-4 py-8">
+        <nav className="space-y-1.5">
           <button
             type="button"
             onClick={() => onViewChange && onViewChange("dashboard")}
-            className={`flex w-full items-center gap-4 rounded-xl px-5 py-3 transition-all duration-200 ${
+            className={`flex w-full items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all ${
               activeView === "dashboard"
-                ? "bg-gradient-to-r from-violet-700 to-violet-600 font-semibold text-white shadow-lg shadow-violet-900/30"
-                : "text-slate-400 hover:bg-slate-800 hover:text-white"
-            } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]`}
+                ? "bg-white text-zinc-950 shadow-sm"
+                : "text-zinc-400 hover:bg-zinc-800/60 hover:text-white"
+            }`}
           >
-            <LayoutDashboard size={20} />
+            <LayoutDashboard size={18} />
             <span>Dashboard</span>
           </button>
 
           <button
             type="button"
             onClick={() => onViewChange && onViewChange("todo")}
-            className={`flex w-full items-center gap-4 rounded-xl px-5 py-3 transition-all duration-200 ${
+            className={`flex w-full items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all ${
               activeView === "todo"
-                ? "bg-gradient-to-r from-violet-700 to-violet-600 font-semibold text-white shadow-lg shadow-violet-900/30"
-                : "text-slate-400 hover:bg-slate-800 hover:text-white"
-            } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]`}
+                ? "bg-white text-zinc-950 shadow-sm"
+                : "text-zinc-400 hover:bg-zinc-800/60 hover:text-white"
+            }`}
           >
-            <CheckSquare size={20} />
+            <CheckSquare size={18} />
             <span>Todo</span>
           </button>
 
           <button
-            className="
-              flex w-full items-center gap-4 rounded-xl px-5 py-3
-              text-slate-400
-              transition-all duration-200
-              hover:bg-slate-800 hover:text-white
-              focus-visible:outline-none
-              focus-visible:ring-2
-              focus-visible:ring-violet-500/60
-              focus-visible:ring-offset-2
-              focus-visible:ring-offset-[#0F172A]
-            "
+            type="button"
+            className="flex w-full items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-medium text-zinc-400 transition-all hover:bg-zinc-800/60 hover:text-white"
           >
-            <Settings size={20} />
+            <Settings size={18} />
             <span>Settings</span>
           </button>
 
           <button
-            className="
-              flex w-full items-center gap-4 rounded-xl px-5 py-3
-              text-slate-400
-              transition-all duration-200
-              hover:bg-slate-800 hover:text-white
-              focus-visible:outline-none
-              focus-visible:ring-2
-              focus-visible:ring-violet-500/60
-              focus-visible:ring-offset-2
-              focus-visible:ring-offset-[#0F172A]
-            "
+            type="button"
+            className="flex w-full items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-medium text-zinc-400 transition-all hover:bg-zinc-800/60 hover:text-white"
           >
-            <Info size={20} />
+            <Info size={18} />
             <span>About</span>
           </button>
         </nav>
 
-        {/* Task Lists */}
-        <div className="px-4 pb-6">
+        {/* Task Lists Section */}
+        <div className="mt-8 border-t border-[#27272a] pt-5">
           <div className="mb-3 flex items-center justify-between px-3">
-            <p className="text-xs font-semibold uppercase tracking-wider text-slate-600">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
               Lists
             </p>
             <button
@@ -161,19 +138,19 @@ function Sidebar({
                 setIsAddingList((prev) => !prev);
                 setErrorMessage("");
               }}
-              className="rounded-lg p-1 text-slate-400 transition hover:bg-slate-800 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60"
+              className="rounded p-1 text-zinc-400 transition hover:bg-zinc-800 hover:text-white"
               title="Add new list"
               aria-label="Add new list"
             >
-              <Plus size={15} />
+              <Plus size={14} />
             </button>
           </div>
 
           {/* Inline List Creator */}
           {isAddingList && (
             <form onSubmit={handleCreateList} className="mb-3 px-1">
-              <div className="flex items-center gap-1.5 rounded-xl border border-violet-500/50 bg-[#1E293B] px-3 py-1.5 shadow-sm">
-                <FolderPlus size={15} className="shrink-0 text-violet-400" />
+              <div className="flex items-center gap-1.5 rounded-lg border border-zinc-700 bg-[#18181b] px-3 py-1.5 shadow-sm">
+                <FolderPlus size={15} className="shrink-0 text-zinc-400" />
                 <input
                   type="text"
                   autoFocus
@@ -183,14 +160,14 @@ function Sidebar({
                     if (errorMessage) setErrorMessage("");
                   }}
                   placeholder="New list..."
-                  className="w-full bg-transparent text-sm text-white placeholder:text-slate-500 outline-none"
+                  className="w-full bg-transparent text-xs text-white placeholder:text-zinc-500 outline-none"
                 />
                 <button
                   type="submit"
-                  className="rounded p-1 text-violet-400 transition hover:bg-violet-500/20 hover:text-violet-300"
+                  className="rounded p-1 text-emerald-400 hover:text-emerald-300"
                   title="Save list"
                 >
-                  <Check size={14} />
+                  <Check size={13} />
                 </button>
                 <button
                   type="button"
@@ -199,14 +176,14 @@ function Sidebar({
                     setNewListName("");
                     setErrorMessage("");
                   }}
-                  className="rounded p-1 text-slate-400 transition hover:bg-slate-700 hover:text-white"
+                  className="rounded p-1 text-zinc-400 hover:text-white"
                   title="Cancel"
                 >
-                  <X size={14} />
+                  <X size={13} />
                 </button>
               </div>
               {errorMessage && (
-                <p className="mt-1 px-1 text-xs text-red-400">{errorMessage}</p>
+                <p className="mt-1 px-1 text-[11px] text-rose-400">{errorMessage}</p>
               )}
             </form>
           )}
@@ -226,23 +203,23 @@ function Sidebar({
                   key={taskList.name}
                   type="button"
                   onClick={() => handleListClick(taskList.name)}
-                  className={`group flex w-full items-center justify-between rounded-xl px-4 py-2.5 text-sm transition ${
+                  className={`group flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition ${
                     isActive
-                      ? "bg-violet-500/10 font-medium text-violet-300"
-                      : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
-                  } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60`}
+                      ? "bg-zinc-800 text-white font-semibold"
+                      : "text-zinc-400 hover:bg-zinc-800/50 hover:text-white"
+                  }`}
                 >
-                  <div className="flex items-center gap-3 truncate">
-                    <Icon size={17} className="shrink-0" />
+                  <div className="flex items-center gap-2.5 truncate">
+                    <Icon size={15} className="shrink-0 text-zinc-400" />
                     <span className="truncate">{taskList.label}</span>
                   </div>
 
                   {count > 0 && (
                     <span
-                      className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
+                      className={`rounded-full px-1.5 py-0.2 text-[10px] font-medium ${
                         isActive
-                          ? "bg-violet-500/20 text-violet-300"
-                          : "bg-slate-800 text-slate-400 group-hover:text-slate-300"
+                          ? "bg-zinc-700 text-white"
+                          : "bg-[#18181b] text-zinc-400 group-hover:text-zinc-300"
                       }`}
                     >
                       {count}
@@ -260,28 +237,28 @@ function Sidebar({
               return (
                 <div
                   key={customName}
-                  className={`group flex w-full items-center justify-between rounded-xl px-4 py-2 text-sm transition ${
+                  className={`group flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition ${
                     isActive
-                      ? "bg-violet-500/10 font-medium text-violet-300"
-                      : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                      ? "bg-zinc-800 text-white font-semibold"
+                      : "text-zinc-400 hover:bg-zinc-800/50 hover:text-white"
                   }`}
                 >
                   <button
                     type="button"
                     onClick={() => handleListClick(customName)}
-                    className="flex min-w-0 flex-1 items-center gap-3 text-left focus-visible:outline-none"
+                    className="flex min-w-0 flex-1 items-center gap-2.5 text-left outline-none"
                   >
-                    <Folder size={17} className="shrink-0 text-violet-400" />
+                    <Folder size={15} className="shrink-0 text-zinc-400" />
                     <span className="truncate">{customName}</span>
                   </button>
 
                   <div className="flex items-center gap-1.5">
                     {count > 0 && (
                       <span
-                        className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
+                        className={`rounded-full px-1.5 py-0.2 text-[10px] font-medium ${
                           isActive
-                            ? "bg-violet-500/20 text-violet-300"
-                            : "bg-slate-800 text-slate-400 group-hover:text-slate-300"
+                            ? "bg-zinc-700 text-white"
+                            : "bg-[#18181b] text-zinc-400 group-hover:text-zinc-300"
                         }`}
                       >
                         {count}
@@ -300,11 +277,11 @@ function Sidebar({
                           onDeleteCustomList(customName);
                         }
                       }}
-                      className="rounded p-1 text-slate-500 opacity-0 transition hover:bg-red-500/20 hover:text-red-400 group-hover:opacity-100"
+                      className="rounded p-1 text-zinc-500 opacity-0 transition hover:text-rose-400 group-hover:opacity-100"
                       title={`Delete "${customName}" list`}
                       aria-label={`Delete "${customName}" list`}
                     >
-                      <Trash2 size={13} />
+                      <Trash2 size={12} />
                     </button>
                   </div>
                 </div>
@@ -314,28 +291,13 @@ function Sidebar({
         </div>
       </div>
 
-      {/* Bottom Section */}
-      <div className="border-t border-slate-800 p-5">
+      {/* Bottom Section: New Task Button matching Stitch */}
+      <div className="border-t border-[#27272a] pt-4">
         <button
           onClick={onToggleForm}
-          className="
-            flex w-full items-center justify-center gap-3
-            rounded-2xl
-            bg-gradient-to-r from-violet-700 to-violet-500
-            px-5 py-4 font-semibold text-white
-            shadow-lg shadow-violet-900/30
-            transition-all duration-200
-            hover:scale-[1.02]
-            hover:from-violet-600 hover:to-violet-400
-            active:scale-[0.98]
-            focus-visible:outline-none
-            focus-visible:ring-2
-            focus-visible:ring-violet-400/70
-            focus-visible:ring-offset-2
-            focus-visible:ring-offset-[#0F172A]
-          "
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-zinc-700/60 bg-white px-4 py-3 text-sm font-semibold text-zinc-950 shadow transition-all hover:bg-zinc-200 active:scale-[0.98]"
         >
-          <Plus size={22} strokeWidth={2.8} />
+          <Plus size={18} strokeWidth={2.5} />
           <span>New Task</span>
         </button>
       </div>

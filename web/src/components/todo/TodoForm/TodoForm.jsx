@@ -12,23 +12,23 @@ function TodoForm({
   availableLists = ["Inbox", "Work", "Study", "Personal"],
 }) {
   return (
-    <section className="mb-8 rounded-3xl border border-slate-800 bg-[#111827] p-7 shadow-xl shadow-black/20">
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold tracking-tight text-white">
+    <section className="mb-6 rounded-2xl border border-[#27272a] bg-[#18181b] p-6 shadow-xl">
+      <div className="mb-5">
+        <h2 className="text-xl font-bold tracking-tight text-white">
           {isEditing ? "Edit Task" : "Create New Task"}
         </h2>
 
-        <p className="mt-1.5 text-sm leading-relaxed text-slate-400">
-          Fill in the details below to keep your work organized.
+        <p className="mt-1 text-xs text-zinc-400">
+          Fill in the details below to keep your work organized in Linear Zinc style.
         </p>
       </div>
 
-      <form onSubmit={onSubmit} className="space-y-5">
+      <form onSubmit={onSubmit} className="space-y-4">
         {/* Title */}
         <div>
           <label
             htmlFor="title"
-            className="mb-1.5 block text-sm font-medium text-slate-300"
+            className="mb-1 block text-xs font-medium text-zinc-300"
           >
             Title
           </label>
@@ -40,19 +40,7 @@ function TodoForm({
             value={newTodo.title}
             onChange={onInputChange}
             placeholder="Enter task title..."
-            className="
-              h-11 w-full rounded-xl
-              border border-slate-700
-              bg-[#1E293B] px-4
-              text-sm text-white
-              placeholder:text-slate-500
-              outline-none
-              transition-all duration-200
-              hover:border-slate-600
-              focus:border-violet-500
-              focus:ring-2
-              focus:ring-violet-500/20
-            "
+            className="h-10 w-full rounded-lg border border-[#27272a] bg-[#131316] px-3.5 text-sm text-white placeholder:text-zinc-500 outline-none transition-colors focus:border-zinc-500 focus:ring-1 focus:ring-zinc-500"
           />
         </div>
 
@@ -60,7 +48,7 @@ function TodoForm({
         <div>
           <label
             htmlFor="description"
-            className="mb-1.5 block text-sm font-medium text-slate-300"
+            className="mb-1 block text-xs font-medium text-zinc-300"
           >
             Description
           </label>
@@ -68,23 +56,11 @@ function TodoForm({
           <textarea
             id="description"
             name="description"
-            rows={4}
+            rows={3}
             value={newTodo.description}
             onChange={onInputChange}
             placeholder="Describe your task..."
-            className="
-              w-full resize-none rounded-xl
-              border border-slate-700
-              bg-[#1E293B] px-4 py-3
-              text-sm text-white
-              placeholder:text-slate-500
-              outline-none
-              transition-all duration-200
-              hover:border-slate-600
-              focus:border-violet-500
-              focus:ring-2
-              focus:ring-violet-500/20
-            "
+            className="w-full resize-none rounded-lg border border-[#27272a] bg-[#131316] px-3.5 py-2.5 text-sm text-white placeholder:text-zinc-500 outline-none transition-colors focus:border-zinc-500 focus:ring-1 focus:ring-zinc-500"
           />
         </div>
 
@@ -92,373 +68,196 @@ function TodoForm({
         <div>
           <label
             htmlFor="notes"
-            className="mb-1.5 block text-sm font-medium text-slate-300"
+            className="mb-1 block text-xs font-medium text-zinc-300"
           >
-            Notes
+            Notes / Context
           </label>
 
           <textarea
             id="notes"
             name="notes"
-            rows={3}
+            rows={2}
             value={newTodo.notes}
             onChange={onInputChange}
             placeholder="Add extra details, reminders, or context..."
-            className="
-              w-full resize-none rounded-xl
-              border border-slate-700
-              bg-[#1E293B] px-4 py-3
-              text-sm text-white
-              placeholder:text-slate-500
-              outline-none
-              transition-all duration-200
-              hover:border-slate-600
-              focus:border-violet-500
-              focus:ring-2
-              focus:ring-violet-500/20
-            "
+            className="w-full resize-none rounded-lg border border-[#27272a] bg-[#131316] px-3.5 py-2 text-sm text-white placeholder:text-zinc-500 outline-none transition-colors focus:border-zinc-500 focus:ring-1 focus:ring-zinc-500"
           />
         </div>
 
         {/* Subtasks */}
         <div>
-          <div className="mb-3 flex items-center justify-between gap-4">
+          <div className="mb-2 flex items-center justify-between">
             <div>
-              <h3 className="text-sm font-medium text-slate-300">Subtasks</h3>
-
-              <p className="mt-1 text-xs text-slate-500">
-                Break this task into smaller steps.
-              </p>
+              <p className="text-xs font-medium text-zinc-300">Subtasks</p>
+              <p className="text-[11px] text-zinc-500">Break this task into smaller steps.</p>
             </div>
 
             <button
               type="button"
               onClick={onAddSubtask}
-              className="
-                flex shrink-0 items-center gap-2
-                rounded-xl border border-slate-700
-                bg-slate-900 px-3.5 py-2
-                text-sm font-medium text-slate-300
-                transition
-                hover:border-violet-500/50
-                hover:bg-violet-500/10
-                hover:text-violet-300
-                focus-visible:outline-none
-                focus-visible:ring-2
-                focus-visible:ring-violet-500/60
-                focus-visible:ring-offset-2
-                focus-visible:ring-offset-[#111827]
-              "
+              className="flex items-center gap-1.5 rounded-lg border border-[#27272a] bg-[#131316] px-3 py-1 text-xs font-medium text-zinc-300 transition-colors hover:bg-zinc-800 hover:text-white"
             >
-              <Plus size={16} />
-              Add Subtask
+              <Plus size={14} />
+              <span>Add Subtask</span>
             </button>
           </div>
 
-          {newTodo.subtasks.length > 0 ? (
-            <div className="space-y-2.5">
-              {newTodo.subtasks.map((subtask, index) => (
-                <div key={subtask.id} className="flex items-center gap-2.5">
-                  <input
-                    type="text"
-                    value={subtask.title}
-                    onChange={(event) =>
-                      onSubtaskChange(subtask.id, event.target.value)
-                    }
-                    placeholder={`Subtask ${index + 1}`}
-                    className="
-                      h-10 min-w-0 flex-1 rounded-xl
-                      border border-slate-700
-                      bg-[#1E293B] px-4
-                      text-sm text-white
-                      placeholder:text-slate-500
-                      outline-none
-                      transition-all duration-200
-                      hover:border-slate-600
-                      focus:border-violet-500
-                      focus:ring-2
-                      focus:ring-violet-500/20
-                    "
-                  />
-
-                  <button
-                    type="button"
-                    onClick={() => onRemoveSubtask(subtask.id)}
-                    aria-label="Remove subtask"
-                    className="
-                      flex h-10 w-10 shrink-0 items-center justify-center
-                      rounded-xl border border-slate-700
-                      text-slate-500
-                      transition
-                      hover:border-red-500/40
-                      hover:bg-red-500/10
-                      hover:text-red-400
-                      focus-visible:outline-none
-                      focus-visible:ring-2
-                      focus-visible:ring-red-500/60
-                      focus-visible:ring-offset-2
-                      focus-visible:ring-offset-[#111827]
-                    "
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="rounded-xl border border-dashed border-slate-700 px-4 py-3">
-              <p className="text-xs text-slate-500">No subtasks added yet.</p>
-            </div>
-          )}
+          <div className="space-y-2">
+            {(newTodo.subtasks || []).map((subtask, index) => (
+              <div key={subtask.id} className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={subtask.title}
+                  onChange={(e) => onSubtaskChange(subtask.id, e.target.value)}
+                  placeholder={`Step ${index + 1}...`}
+                  className="h-9 w-full rounded-lg border border-[#27272a] bg-[#131316] px-3 text-xs text-white placeholder:text-zinc-500 outline-none focus:border-zinc-500"
+                />
+                <button
+                  type="button"
+                  onClick={() => onRemoveSubtask(subtask.id)}
+                  className="rounded p-2 text-zinc-500 transition-colors hover:text-rose-400"
+                >
+                  <Trash2 size={14} />
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Date + Priority */}
-        <div className="grid gap-5 md:grid-cols-3">
+        {/* Date, Time, Priority */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div>
             <label
               htmlFor="dueDate"
-              className="mb-1.5 block text-sm font-medium text-slate-300"
+              className="mb-1 block text-xs font-medium text-zinc-300"
             >
               Due Date
             </label>
-
             <input
               id="dueDate"
               name="dueDate"
               type="date"
               value={newTodo.dueDate}
               onChange={onInputChange}
-              className="
-                h-11 w-full rounded-xl
-                border border-slate-700
-                bg-[#1E293B] px-4
-                text-sm text-white
-                outline-none
-                transition-all duration-200
-                hover:border-slate-600
-                focus:border-violet-500
-                focus:ring-2
-                focus:ring-violet-500/20
-              "
+              className="h-10 w-full rounded-lg border border-[#27272a] bg-[#131316] px-3 text-xs text-white outline-none focus:border-zinc-500"
             />
           </div>
 
           <div>
             <label
               htmlFor="dueTime"
-              className="mb-1.5 block text-sm font-medium text-slate-300"
+              className="mb-1 block text-xs font-medium text-zinc-300"
             >
               Time
             </label>
-
             <input
               id="dueTime"
               name="dueTime"
               type="time"
               value={newTodo.dueTime}
               onChange={onInputChange}
-              className="
-                h-11 w-full rounded-xl
-                border border-slate-700
-                bg-[#1E293B] px-4
-                text-sm text-white
-                outline-none
-                transition-all duration-200
-                hover:border-slate-600
-                focus:border-violet-500
-                focus:ring-2
-                focus:ring-violet-500/20
-              "
+              className="h-10 w-full rounded-lg border border-[#27272a] bg-[#131316] px-3 text-xs text-white outline-none focus:border-zinc-500"
             />
           </div>
 
           <div>
             <label
               htmlFor="priority"
-              className="mb-1.5 block text-sm font-medium text-slate-300"
+              className="mb-1 block text-xs font-medium text-zinc-300"
             >
               Priority
             </label>
-
             <select
               id="priority"
               name="priority"
               value={newTodo.priority}
               onChange={onInputChange}
-              className="
-                h-11 w-full rounded-xl
-                border border-slate-700
-                bg-[#1E293B] px-4
-                text-sm text-white
-                outline-none
-                transition-all duration-200
-                hover:border-slate-600
-                focus:border-violet-500
-                focus:ring-2
-                focus:ring-violet-500/20
-              "
+              className="h-10 w-full rounded-lg border border-[#27272a] bg-[#131316] px-3 text-xs text-white outline-none focus:border-zinc-500"
             >
-              <option>High</option>
-              <option>Medium</option>
-              <option>Low</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
             </select>
           </div>
         </div>
 
-        {/* Task List */}
-        <div>
-          <label
-            htmlFor="list"
-            className="mb-1.5 block text-sm font-medium text-slate-300"
-          >
-            Task List
-          </label>
-
-          <select
-            id="list"
-            name="list"
-            value={newTodo.list}
-            onChange={onInputChange}
-            className="
-              h-11 w-full rounded-xl
-              border border-slate-700
-              bg-[#1E293B] px-4
-              text-sm text-white
-              outline-none
-              transition
-              hover:border-slate-600
-              focus:border-violet-500
-              focus:ring-2
-              focus:ring-violet-500/20
-            "
-          >
-            {availableLists.map((listName) => (
-              <option key={listName} value={listName}>
-                {listName}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Label */}
-
-        <div>
-          <label
-            htmlFor="label"
-            className="mb-1.5 block text-sm font-medium text-slate-300"
-          >
-            Label
-          </label>
-
-          <input
-            id="label"
-            name="label"
-            type="text"
-            list="label-options"
-            value={newTodo.label}
-            onChange={onInputChange}
-            placeholder="Add a label..."
-            className="
-            h-11 w-full rounded-xl
-            border border-slate-700
-            bg-[#1E293B] px-4
-            text-sm text-white
-            placeholder:text-slate-500
-            outline-none
-            transition
-            hover:border-slate-600
-            focus:border-violet-500
-            focus:ring-2
-            focus:ring-violet-500/20
-          "
-          />
-
-          <datalist id="label-options">
-            <option value="Development" />
-            <option value="University" />
-            <option value="Shopping" />
-            <option value="Health" />
-          </datalist>
-        </div>
-
-        {/* Recurrence */}
-        <div>
-          <label
-            htmlFor="recurrence"
-            className="mb-1.5 block text-sm font-medium text-slate-300"
-          >
-            Repeat
-          </label>
-
-          <select
-            id="recurrence"
-            name="recurrence"
-            value={newTodo.recurrence}
-            onChange={onInputChange}
-            className="
-            h-11 w-full rounded-xl
-            border border-slate-700
-            bg-[#1E293B] px-4
-            text-sm text-white
-            outline-none
-            transition
-            hover:border-slate-600
-            focus:border-violet-500
-            focus:ring-2
-            focus:ring-violet-500/20
-          "
-          >
-            <option value="none">Does not repeat</option>
-            <option value="daily">Daily</option>
-            <option value="weekly">Weekly</option>
-            <option value="monthly">Monthly</option>
-          </select>
-        </div>
-
-        {/* Buttons */}
-        <div className="flex justify-end gap-3 pt-2">
-          {isEditing && (
-            <button
-              type="button"
-              onClick={onCancel}
-              className="
-                rounded-xl border border-slate-700
-                bg-transparent px-5 py-2.5
-                text-sm font-medium text-slate-300
-                transition
-                hover:border-slate-600
-                hover:bg-slate-800
-                hover:text-white
-                focus-visible:outline-none
-                focus-visible:ring-2
-                focus-visible:ring-violet-500/60
-                focus-visible:ring-offset-2
-                focus-visible:ring-offset-[#111827]
-              "
+        {/* Task List, Label & Repeat */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div>
+            <label
+              htmlFor="list"
+              className="mb-1 block text-xs font-medium text-zinc-300"
             >
-              Cancel
-            </button>
-          )}
+              Task List
+            </label>
+            <select
+              id="list"
+              name="list"
+              value={newTodo.list}
+              onChange={onInputChange}
+              className="h-10 w-full rounded-lg border border-[#27272a] bg-[#131316] px-3 text-xs text-white outline-none focus:border-zinc-500"
+            >
+              {availableLists.map((listName) => (
+                <option key={listName} value={listName}>
+                  {listName}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label
+              htmlFor="label"
+              className="mb-1 block text-xs font-medium text-zinc-300"
+            >
+              Label / Tag
+            </label>
+            <input
+              id="label"
+              name="label"
+              type="text"
+              value={newTodo.label}
+              onChange={onInputChange}
+              placeholder="e.g. Frontend, API..."
+              className="h-10 w-full rounded-lg border border-[#27272a] bg-[#131316] px-3 text-xs text-white placeholder:text-zinc-500 outline-none focus:border-zinc-500"
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="recurrence"
+              className="mb-1 block text-xs font-medium text-zinc-300"
+            >
+              Repeat
+            </label>
+            <select
+              id="recurrence"
+              name="recurrence"
+              value={newTodo.recurrence || "none"}
+              onChange={onInputChange}
+              className="h-10 w-full rounded-lg border border-[#27272a] bg-[#131316] px-3 text-xs text-white outline-none focus:border-zinc-500"
+            >
+              <option value="none">Does not repeat</option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Form Actions */}
+        <div className="flex justify-end gap-3 pt-3">
+          <button
+            type="button"
+            onClick={onCancel}
+            className="rounded-lg border border-[#27272a] bg-transparent px-5 py-2 text-xs font-medium text-zinc-300 transition-colors hover:bg-zinc-800 hover:text-white"
+          >
+            Cancel
+          </button>
 
           <button
             type="submit"
-            className="
-              rounded-xl
-              bg-gradient-to-r from-violet-700 to-violet-500
-              px-7 py-2.5
-              text-sm font-semibold text-white
-              shadow-lg shadow-violet-900/30
-              transition-all duration-200
-              hover:scale-[1.02]
-              hover:from-violet-600
-              hover:to-violet-400
-              active:scale-[0.98]
-              focus-visible:outline-none
-              focus-visible:ring-2
-              focus-visible:ring-violet-400/70
-              focus-visible:ring-offset-2
-              focus-visible:ring-offset-[#111827]
-            "
+            className="rounded-lg bg-white px-6 py-2 text-xs font-semibold text-zinc-950 transition-all hover:bg-zinc-200 active:scale-[0.98]"
           >
             {isEditing ? "Save Changes" : "Create Task"}
           </button>

@@ -571,6 +571,19 @@ function TodoPage() {
     setIsFormVisible(false);
   }
 
+  function handleQuickAddTask(title) {
+    if (!title.trim()) return;
+
+    const newTodoItem = {
+      ...emptyTodo,
+      id: Date.now(),
+      title: title.trim(),
+      list: listFilter === "All" ? "Inbox" : listFilter,
+    };
+
+    setTodos((previousTodos) => [newTodoItem, ...previousTodos]);
+  }
+
   function handleToggleForm() {
     if (activeView !== "todo") {
       setActiveView("todo");
@@ -641,6 +654,10 @@ function TodoPage() {
     String(today.getMonth() + 1).padStart(2, "0"),
     String(today.getDate()).padStart(2, "0"),
   ].join("-");
+
+  const todayCount = todos.filter(
+    (t) => !t.completed && t.dueDate === todayDate
+  ).length;
 
   const filteredTodos = todos.filter((todo) => {
     const searchableText = [
@@ -764,6 +781,8 @@ function TodoPage() {
       totalTasks={totalTasks}
       activeView={activeView}
       onViewChange={setActiveView}
+      searchTerm={searchTerm}
+      onSearchChange={setSearchTerm}
     >
       {activeView === "dashboard" ? (
         <DashboardView
@@ -785,8 +804,6 @@ function TodoPage() {
             onFilterChange={setFilter}
             sortBy={sortBy}
             onSortChange={setSortBy}
-            priorityFilter={priorityFilter}
-            onPriorityFilterChange={setPriorityFilter}
             taskView={taskView}
             onTaskViewChange={setTaskView}
             totalTasks={totalTasks}
@@ -795,7 +812,6 @@ function TodoPage() {
             isSelectionMode={isSelectionMode}
             onToggleSelectionMode={handleToggleSelectionMode}
             selectedCount={selectedTodoIds.length}
-            visibleTaskCount={sortedTodos.length}
             onSelectVisible={handleSelectVisibleTodos}
             onClearSelection={handleClearSelection}
             onCompleteSelected={handleCompleteSelectedTodos}
@@ -803,6 +819,10 @@ function TodoPage() {
             onPinSelected={handlePinSelectedTodos}
             onDeleteSelected={handleDeleteSelectedTodos}
             onOpenDashboard={() => setActiveView("dashboard")}
+            onToggleForm={handleToggleForm}
+            onQuickAddTask={handleQuickAddTask}
+            listFilter={listFilter}
+            todayCount={todayCount}
           />
 
           {isFormVisible && (

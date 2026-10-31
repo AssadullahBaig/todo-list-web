@@ -69,106 +69,103 @@ function DashboardView({
   });
 
   return (
-    <div className="space-y-8 animate-fadeIn">
+    <div className="space-y-6">
       {/* Welcome Banner */}
-      <div className="relative overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-r from-violet-950/40 via-[#111827] to-[#111827] p-8 shadow-2xl">
-        <div className="relative z-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+      <div className="rounded-2xl border border-[#27272a] bg-[#18181b] p-6 shadow-sm">
+        <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-violet-500/10 px-3 py-1 text-xs font-semibold text-violet-400">
-              <SparklesIcon size={14} /> Productivity Analytics
+            <div className="inline-flex items-center gap-2 rounded border border-[#27272a] bg-[#131316] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-zinc-400">
+              Productivity Overview
             </div>
-            <h1 className="mt-3 text-3xl font-bold tracking-tight text-white md:text-4xl">
-              Welcome to Your Dashboard
+            <h1 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+              Workspace Analytics
             </h1>
-            <p className="mt-2 text-base text-slate-400">
+            <p className="mt-1 text-sm text-zinc-400">
               {activeTasks === 0
-                ? "All caught up! Excellent job clearing your tasks."
+                ? "All caught up! Excellent job clearing your sprint backlog."
                 : `You have ${activeTasks} active task${activeTasks === 1 ? "" : "s"} across ${allLists.length} lists.`}
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2.5">
             <button
               type="button"
               onClick={onNavigateToTasks}
-              className="flex items-center gap-2 rounded-xl bg-slate-800 px-5 py-3 text-sm font-medium text-slate-200 transition hover:bg-slate-700 hover:text-white"
+              className="flex items-center gap-1.5 rounded-lg border border-[#27272a] bg-[#131316] px-4 py-2 text-xs font-medium text-zinc-300 transition-colors hover:bg-zinc-800 hover:text-white"
             >
-              <ListTodo size={17} />
-              <span>View All Tasks</span>
-              <ArrowRight size={15} />
+              <ListTodo size={14} />
+              <span>View Tasks</span>
+              <ArrowRight size={13} />
             </button>
 
             <button
               type="button"
               onClick={onOpenNewTask}
-              className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-violet-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-900/30 transition hover:from-violet-500 hover:to-violet-400"
+              className="flex items-center gap-1.5 rounded-lg bg-white px-4 py-2 text-xs font-semibold text-zinc-950 transition-all hover:bg-zinc-200 active:scale-[0.98]"
             >
-              <Plus size={17} strokeWidth={2.5} />
+              <Plus size={15} strokeWidth={2.5} />
               <span>Create Task</span>
             </button>
           </div>
         </div>
-
-        {/* Ambient background glow */}
-        <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-violet-600/10 blur-3xl pointer-events-none" />
       </div>
 
       {/* Top 4 KPI Metrics */}
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {/* Total Tasks */}
-        <div className="rounded-2xl border border-slate-800 bg-[#111827] p-6 shadow-sm transition hover:border-slate-700">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-slate-400">Total Tasks</span>
-            <div className="rounded-xl bg-violet-500/10 p-2.5 text-violet-400">
-              <ListTodo size={20} />
+        <div className="rounded-xl border border-[#27272a] bg-[#18181b] p-5 transition hover:border-zinc-700">
+          <div className="flex items-center justify-between text-zinc-400">
+            <span className="text-xs font-medium">Total Tasks</span>
+            <div className="rounded-lg bg-zinc-800 p-2 text-zinc-300">
+              <ListTodo size={16} />
             </div>
           </div>
-          <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-3xl font-bold text-white">{totalTasks}</span>
-            <span className="text-xs text-slate-500">recorded</span>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-2xl font-bold text-white">{totalTasks}</span>
+            <span className="text-[11px] text-zinc-500">recorded</span>
           </div>
-          <div className="mt-3 flex items-center gap-2 text-xs text-slate-400">
-            <CheckSquare size={13} className="text-violet-400" />
-            <span>Across all lists & categories</span>
+          <div className="mt-2 flex items-center gap-1.5 text-[11px] text-zinc-400">
+            <CheckSquare size={12} className="text-zinc-500" />
+            <span>Across all lists</span>
           </div>
         </div>
 
         {/* Active Tasks */}
-        <div className="rounded-2xl border border-slate-800 bg-[#111827] p-6 shadow-sm transition hover:border-slate-700">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-slate-400">In Progress</span>
-            <div className="rounded-xl bg-blue-500/10 p-2.5 text-blue-400">
-              <Clock size={20} />
+        <div className="rounded-xl border border-[#27272a] bg-[#18181b] p-5 transition hover:border-zinc-700">
+          <div className="flex items-center justify-between text-zinc-400">
+            <span className="text-xs font-medium">In Progress</span>
+            <div className="rounded-lg bg-zinc-800 p-2 text-zinc-300">
+              <Clock size={16} />
             </div>
           </div>
-          <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-3xl font-bold text-white">{activeTasks}</span>
-            <span className="text-xs text-slate-500">pending</span>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-2xl font-bold text-white">{activeTasks}</span>
+            <span className="text-[11px] text-zinc-500">pending</span>
           </div>
-          <div className="mt-3 flex items-center gap-2 text-xs text-blue-400">
-            <Calendar size={13} />
+          <div className="mt-2 flex items-center gap-1.5 text-[11px] text-zinc-400">
+            <Calendar size={12} />
             <span>{dueTodayTasks.length} task(s) due today</span>
           </div>
         </div>
 
         {/* Completed Rate */}
-        <div className="rounded-2xl border border-slate-800 bg-[#111827] p-6 shadow-sm transition hover:border-slate-700">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-slate-400">Completion</span>
-            <div className="rounded-xl bg-emerald-500/10 p-2.5 text-emerald-400">
-              <CheckCircle2 size={20} />
+        <div className="rounded-xl border border-[#27272a] bg-[#18181b] p-5 transition hover:border-zinc-700">
+          <div className="flex items-center justify-between text-zinc-400">
+            <span className="text-xs font-medium">Completion</span>
+            <div className="rounded-lg bg-emerald-500/10 p-2 text-emerald-400">
+              <CheckCircle2 size={16} />
             </div>
           </div>
-          <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-3xl font-bold text-white">{completionRate}%</span>
-            <span className="text-xs text-emerald-400 font-medium">
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-2xl font-bold text-white">{completionRate}%</span>
+            <span className="text-[11px] font-medium text-emerald-400">
               {completedTasks} of {totalTasks}
             </span>
           </div>
-          <div className="mt-3">
-            <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-800">
+          <div className="mt-2.5">
+            <div className="h-1.5 w-full overflow-hidden rounded-full border border-[#27272a] bg-[#09090b]">
               <div
-                className="h-full rounded-full bg-emerald-500 transition-all duration-500"
+                className="h-full rounded-full bg-white transition-all duration-500"
                 style={{ width: `${completionRate}%` }}
               />
             </div>
@@ -176,58 +173,80 @@ function DashboardView({
         </div>
 
         {/* Overdue Attention */}
-        <div className="rounded-2xl border border-slate-800 bg-[#111827] p-6 shadow-sm transition hover:border-slate-700">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-slate-400">Needs Attention</span>
-            <div className={`rounded-xl p-2.5 ${overdueTasks.length > 0 ? "bg-rose-500/10 text-rose-400" : "bg-slate-800 text-slate-400"}`}>
-              <AlertTriangle size={20} />
+        <div className="rounded-xl border border-[#27272a] bg-[#18181b] p-5 transition hover:border-zinc-700">
+          <div className="flex items-center justify-between text-zinc-400">
+            <span className="text-xs font-medium">Needs Attention</span>
+            <div
+              className={`rounded-lg p-2 ${
+                overdueTasks.length > 0
+                  ? "bg-rose-500/10 text-rose-400"
+                  : "bg-zinc-800 text-zinc-400"
+              }`}
+            >
+              <AlertTriangle size={16} />
             </div>
           </div>
-          <div className="mt-4 flex items-baseline gap-2">
-            <span className={`text-3xl font-bold ${overdueTasks.length > 0 ? "text-rose-400" : "text-white"}`}>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span
+              className={`text-2xl font-bold ${
+                overdueTasks.length > 0 ? "text-rose-400" : "text-white"
+              }`}
+            >
               {overdueTasks.length}
             </span>
-            <span className="text-xs text-slate-500">overdue</span>
+            <span className="text-[11px] text-zinc-500">overdue</span>
           </div>
-          <div className="mt-3 flex items-center gap-2 text-xs text-slate-400">
+          <div className="mt-2 flex items-center gap-1.5 text-[11px]">
             {overdueTasks.length > 0 ? (
-              <span className="text-rose-400">Requires your focus</span>
+              <span className="text-rose-400">Requires attention</span>
             ) : (
-              <span className="text-emerald-400">All tasks are on schedule!</span>
+              <span className="text-emerald-400">All tasks on track!</span>
             )}
           </div>
         </div>
       </div>
 
       {/* Middle Section: Priorities & Subtasks */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         {/* Priority Breakdown Card */}
-        <div className="rounded-3xl border border-slate-800 bg-[#111827] p-7 shadow-sm">
+        <div className="rounded-2xl border border-[#27272a] bg-[#18181b] p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-semibold text-white">Priority Distribution</h2>
-              <p className="text-xs text-slate-400 mt-1">Breakdown of tasks by urgency level</p>
+              <h2 className="text-sm font-semibold text-white">
+                Priority Distribution
+              </h2>
+              <p className="mt-0.5 text-xs text-zinc-400">
+                Breakdown of tasks by urgency level
+              </p>
             </div>
-            <TrendingUp size={20} className="text-violet-400" />
+            <TrendingUp size={18} className="text-zinc-400" />
           </div>
 
-          <div className="mt-6 space-y-4">
+          <div className="mt-5 space-y-3.5">
             {/* High */}
             <div>
               <div className="flex justify-between text-xs font-medium">
-                <span className="flex items-center gap-2 text-rose-400">
-                  <span className="h-2 w-2 rounded-full bg-rose-500" />
+                <span className="flex items-center gap-2 text-amber-400">
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
                   High Priority
                 </span>
-                <span className="text-slate-400">
-                  {highPriority.length} task{highPriority.length === 1 ? "" : "s"} ({totalTasks === 0 ? 0 : Math.round((highPriority.length / totalTasks) * 100)}%)
+                <span className="text-zinc-400">
+                  {highPriority.length} (
+                  {totalTasks === 0
+                    ? 0
+                    : Math.round((highPriority.length / totalTasks) * 100)}
+                  %)
                 </span>
               </div>
-              <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-slate-800">
+              <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full border border-[#27272a] bg-[#09090b]">
                 <div
-                  className="h-full rounded-full bg-rose-500 transition-all duration-500"
+                  className="h-full rounded-full bg-amber-500 transition-all duration-500"
                   style={{
-                    width: `${totalTasks === 0 ? 0 : (highPriority.length / totalTasks) * 100}%`,
+                    width: `${
+                      totalTasks === 0
+                        ? 0
+                        : (highPriority.length / totalTasks) * 100
+                    }%`,
                   }}
                 />
               </div>
@@ -236,19 +255,27 @@ function DashboardView({
             {/* Medium */}
             <div>
               <div className="flex justify-between text-xs font-medium">
-                <span className="flex items-center gap-2 text-amber-400">
-                  <span className="h-2 w-2 rounded-full bg-amber-500" />
+                <span className="flex items-center gap-2 text-zinc-300">
+                  <span className="h-1.5 w-1.5 rounded-full bg-zinc-400" />
                   Medium Priority
                 </span>
-                <span className="text-slate-400">
-                  {mediumPriority.length} task{mediumPriority.length === 1 ? "" : "s"} ({totalTasks === 0 ? 0 : Math.round((mediumPriority.length / totalTasks) * 100)}%)
+                <span className="text-zinc-400">
+                  {mediumPriority.length} (
+                  {totalTasks === 0
+                    ? 0
+                    : Math.round((mediumPriority.length / totalTasks) * 100)}
+                  %)
                 </span>
               </div>
-              <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-slate-800">
+              <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full border border-[#27272a] bg-[#09090b]">
                 <div
-                  className="h-full rounded-full bg-amber-500 transition-all duration-500"
+                  className="h-full rounded-full bg-zinc-400 transition-all duration-500"
                   style={{
-                    width: `${totalTasks === 0 ? 0 : (mediumPriority.length / totalTasks) * 100}%`,
+                    width: `${
+                      totalTasks === 0
+                        ? 0
+                        : (mediumPriority.length / totalTasks) * 100
+                    }%`,
                   }}
                 />
               </div>
@@ -257,19 +284,27 @@ function DashboardView({
             {/* Low */}
             <div>
               <div className="flex justify-between text-xs font-medium">
-                <span className="flex items-center gap-2 text-blue-400">
-                  <span className="h-2 w-2 rounded-full bg-blue-500" />
+                <span className="flex items-center gap-2 text-zinc-400">
+                  <span className="h-1.5 w-1.5 rounded-full bg-zinc-600" />
                   Low Priority
                 </span>
-                <span className="text-slate-400">
-                  {lowPriority.length} task{lowPriority.length === 1 ? "" : "s"} ({totalTasks === 0 ? 0 : Math.round((lowPriority.length / totalTasks) * 100)}%)
+                <span className="text-zinc-400">
+                  {lowPriority.length} (
+                  {totalTasks === 0
+                    ? 0
+                    : Math.round((lowPriority.length / totalTasks) * 100)}
+                  %)
                 </span>
               </div>
-              <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-slate-800">
+              <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full border border-[#27272a] bg-[#09090b]">
                 <div
-                  className="h-full rounded-full bg-blue-500 transition-all duration-500"
+                  className="h-full rounded-full bg-zinc-600 transition-all duration-500"
                   style={{
-                    width: `${totalTasks === 0 ? 0 : (lowPriority.length / totalTasks) * 100}%`,
+                    width: `${
+                      totalTasks === 0
+                        ? 0
+                        : (lowPriority.length / totalTasks) * 100
+                    }%`,
                   }}
                 />
               </div>
@@ -278,14 +313,17 @@ function DashboardView({
 
           {/* Pinned Tasks Summary */}
           {pinnedTasks.length > 0 && (
-            <div className="mt-6 rounded-2xl border border-slate-800/80 bg-[#1E293B]/40 p-4">
-              <div className="flex items-center gap-2 text-xs font-semibold text-amber-300">
-                <Star size={14} className="fill-amber-400 text-amber-400" />
-                <span>{pinnedTasks.length} Pinned Priority Task{pinnedTasks.length === 1 ? "" : "s"}</span>
+            <div className="mt-5 rounded-lg border border-[#27272a] bg-[#131316] p-3">
+              <div className="flex items-center gap-2 text-xs font-semibold text-amber-400">
+                <Star size={13} className="fill-amber-400 text-amber-400" />
+                <span>
+                  {pinnedTasks.length} Pinned Priority Task
+                  {pinnedTasks.length === 1 ? "" : "s"}
+                </span>
               </div>
-              <div className="mt-2 space-y-1">
+              <div className="mt-1.5 space-y-1">
                 {pinnedTasks.slice(0, 2).map((t) => (
-                  <p key={t.id} className="truncate text-xs text-slate-300">
+                  <p key={t.id} className="truncate text-xs text-zinc-300">
                     • {t.title}
                   </p>
                 ))}
@@ -295,72 +333,78 @@ function DashboardView({
         </div>
 
         {/* Subtask Execution Card */}
-        <div className="rounded-3xl border border-slate-800 bg-[#111827] p-7 shadow-sm">
+        <div className="rounded-2xl border border-[#27272a] bg-[#18181b] p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-semibold text-white">Subtask Progression</h2>
-              <p className="text-xs text-slate-400 mt-1">Granular step completion performance</p>
+              <h2 className="text-sm font-semibold text-white">
+                Subtask Progression
+              </h2>
+              <p className="mt-0.5 text-xs text-zinc-400">
+                Step-by-step deliverable completion
+              </p>
             </div>
-            <ListChecks size={20} className="text-violet-400" />
+            <ListChecks size={18} className="text-zinc-400" />
           </div>
 
-          <div className="mt-6 flex flex-col items-center justify-center rounded-2xl border border-slate-800/60 bg-[#0F172A]/80 p-6 text-center">
-            <div className="relative flex h-28 w-28 items-center justify-center rounded-full border-4 border-violet-500/20">
-              <span className="text-2xl font-bold text-white">{subtaskRate}%</span>
-              <div
-                className="absolute inset-0 rounded-full border-4 border-violet-500"
-                style={{
-                  clipPath: `polygon(50% 50%, -50% -50%, ${subtaskRate}% 0%, 100% 100%)`,
-                }}
-              />
+          <div className="mt-5 flex flex-col items-center justify-center rounded-xl border border-[#27272a] bg-[#131316] p-6 text-center">
+            <div className="relative flex h-24 w-24 items-center justify-center rounded-full border-2 border-zinc-800">
+              <span className="text-xl font-bold text-white">
+                {subtaskRate}%
+              </span>
             </div>
-            <p className="mt-4 text-sm font-medium text-slate-200">
-              {completedSubtasks} of {totalSubtasks} subtasks checked off
+            <p className="mt-3 text-xs font-medium text-zinc-200">
+              {completedSubtasks} of {totalSubtasks} subtasks completed
             </p>
-            <p className="text-xs text-slate-400 mt-1">
-              Breaking big tasks into steps boosts completion speed.
+            <p className="mt-0.5 text-[11px] text-zinc-500">
+              Granular breakdown accelerates delivery time.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Bottom Section: Task Lists Health */}
-      <div className="rounded-3xl border border-slate-800 bg-[#111827] p-7 shadow-sm">
+      {/* Bottom Section: Task Lists Workload */}
+      <div className="rounded-2xl border border-[#27272a] bg-[#18181b] p-6">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-semibold text-white">List Workload & Distribution</h2>
-            <p className="text-xs text-slate-400 mt-1">Status across all categories</p>
+            <h2 className="text-sm font-semibold text-white">
+              List Workload &amp; Distribution
+            </h2>
+            <p className="mt-0.5 text-xs text-zinc-400">
+              Active load across all task categories
+            </p>
           </div>
-          <Folder size={20} className="text-violet-400" />
+          <Folder size={18} className="text-zinc-400" />
         </div>
 
-        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {listStats.map((item) => {
             const listRate =
-              item.total === 0 ? 0 : Math.round((item.completed / item.total) * 100);
+              item.total === 0
+                ? 0
+                : Math.round((item.completed / item.total) * 100);
 
             return (
               <div
                 key={item.name}
-                className="rounded-2xl border border-slate-800 bg-[#1E293B]/40 p-4 transition hover:border-slate-700"
+                className="rounded-lg border border-[#27272a] bg-[#131316] p-3.5 transition hover:border-zinc-700"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-white truncate">
+                  <span className="truncate text-xs font-semibold text-white">
                     {item.name}
                   </span>
-                  <span className="rounded-full bg-slate-800 px-2 py-0.5 text-xs text-slate-400 font-medium">
+                  <span className="rounded bg-zinc-800 px-1.5 py-0.2 text-[10px] font-medium text-zinc-400">
                     {item.total}
                   </span>
                 </div>
 
-                <div className="mt-3 flex items-center justify-between text-xs text-slate-400">
+                <div className="mt-2.5 flex items-center justify-between text-[11px] text-zinc-400">
                   <span>{item.active} active</span>
-                  <span>{listRate}% complete</span>
+                  <span>{listRate}% done</span>
                 </div>
 
-                <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-800">
+                <div className="mt-1.5 h-1 w-full overflow-hidden rounded-full bg-zinc-800">
                   <div
-                    className="h-full rounded-full bg-violet-500 transition-all duration-300"
+                    className="h-full rounded-full bg-white transition-all duration-300"
                     style={{ width: `${listRate}%` }}
                   />
                 </div>
@@ -370,28 +414,6 @@ function DashboardView({
         </div>
       </div>
     </div>
-  );
-}
-
-function SparklesIcon({ size = 16, className = "" }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
-      <path d="M5 3v4" />
-      <path d="M19 17v4" />
-      <path d="M3 5h4" />
-      <path d="M17 19h4" />
-    </svg>
   );
 }
 
