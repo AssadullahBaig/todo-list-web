@@ -193,11 +193,6 @@ function TodoCard({
               {title}
             </h3>
 
-            {/* Task Code/ID */}
-            <span className="hidden font-mono text-[10px] text-zinc-500 lg:inline">
-              #TF-{String(id).slice(-3)}
-            </span>
-
             {/* List / Category Badge */}
             <span className="rounded border border-[#27272a] bg-[#18181b] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-zinc-400">
               {list || "Inbox"}
