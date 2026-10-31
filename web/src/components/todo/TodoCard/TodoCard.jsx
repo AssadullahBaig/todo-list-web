@@ -215,28 +215,31 @@ function TodoCard({
           </div>
 
           {/* Right Metadata & Action Buttons */}
-          <div className="flex shrink-0 items-center gap-3">
-            {/* Priority Badge */}
-            {getPriorityBadge(priority, completed)}
+          <div className="flex shrink-0 items-center justify-end">
+            {/* Badges Container - stays flush right and slides left on hover */}
+            <div className="flex items-center gap-2.5 transition-transform duration-300 ease-in-out">
+              {/* Priority Badge */}
+              {getPriorityBadge(priority, completed)}
 
-            {/* Due Date Indicator */}
-            <div className={`flex items-center gap-1.5 text-xs ${dueDateStatus.color}`}>
-              <Calendar size={14} className="text-zinc-500" />
-              <span>{dueDateStatus.label}</span>
+              {/* Due Date Indicator */}
+              <div className={`flex items-center gap-1.5 text-xs ${dueDateStatus.color}`}>
+                <Calendar size={14} className="text-zinc-500" />
+                <span>{dueDateStatus.label}</span>
+              </div>
+
+              {/* Category / User Initials Circle */}
+              <div className="flex h-7 w-7 items-center justify-center rounded-full border border-[#27272a] bg-zinc-800 text-[11px] font-semibold text-zinc-300">
+                {(list || "T")[0].toUpperCase()}
+              </div>
             </div>
 
-            {/* Category / User Initials Circle */}
-            <div className="flex h-7 w-7 items-center justify-center rounded-full border border-[#27272a] bg-zinc-800 text-[11px] font-semibold text-zinc-300">
-              {(list || "T")[0].toUpperCase()}
-            </div>
-
-            {/* Action Buttons on Hover */}
-            <div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+            {/* Action Buttons - smoothly slides in from right on hover */}
+            <div className="flex items-center gap-1 max-w-0 opacity-0 overflow-hidden pointer-events-none transition-all duration-300 ease-in-out group-hover:max-w-[220px] group-hover:opacity-100 group-hover:pointer-events-auto group-hover:ml-3">
               {/* Pin Button */}
               <button
                 type="button"
                 onClick={() => onTogglePinned(id)}
-                className={`rounded p-1 transition-colors ${
+                className={`rounded p-1 transition-colors shrink-0 ${
                   pinned ? "text-amber-400" : "text-zinc-500 hover:text-amber-400"
                 }`}
                 title={pinned ? "Unpin task" : "Pin task"}
@@ -248,7 +251,7 @@ function TodoCard({
               <button
                 type="button"
                 onClick={() => onEdit(todo)}
-                className="rounded p-1 text-zinc-500 transition-colors hover:text-white"
+                className="rounded p-1 text-zinc-500 transition-colors hover:text-white shrink-0"
                 title="Edit task"
               >
                 <Pencil size={15} />
@@ -259,7 +262,7 @@ function TodoCard({
                 <button
                   type="button"
                   onClick={() => setAreNotesVisible((prev) => !prev)}
-                  className={`rounded p-1 transition-colors ${
+                  className={`rounded p-1 transition-colors shrink-0 ${
                     areNotesVisible ? "text-white" : "text-zinc-500 hover:text-white"
                   }`}
                   title="View notes"
@@ -273,7 +276,7 @@ function TodoCard({
                 <button
                   type="button"
                   onClick={() => setAreSubtasksVisible((prev) => !prev)}
-                  className={`flex items-center gap-1 rounded p-1 transition-colors ${
+                  className={`flex items-center gap-1 rounded p-1 transition-colors shrink-0 ${
                     areSubtasksVisible ? "text-white" : "text-zinc-500 hover:text-white"
                   }`}
                   title="View subtasks"
@@ -289,7 +292,7 @@ function TodoCard({
               <button
                 type="button"
                 onClick={() => onDelete(id)}
-                className="rounded p-1 text-zinc-500 transition-colors hover:text-rose-400"
+                className="rounded p-1 text-zinc-500 transition-colors hover:text-rose-400 shrink-0"
                 title="Delete task"
               >
                 <Trash2 size={15} />
