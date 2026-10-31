@@ -7,7 +7,6 @@ import {
   Plus,
   Search,
   SlidersHorizontal,
-  Download,
   Star,
   Trash2,
   Pencil,
@@ -86,22 +85,6 @@ function TodoHeader({
           >
             <SlidersHorizontal size={14} />
             <span>View Analytics</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(localStorage.getItem("todos") || "[]");
-              const downloadAnchor = document.createElement("a");
-              downloadAnchor.setAttribute("href", dataStr);
-              downloadAnchor.setAttribute("download", "tasks-export.json");
-              document.body.appendChild(downloadAnchor);
-              downloadAnchor.click();
-              downloadAnchor.remove();
-            }}
-            className="flex items-center gap-1.5 rounded-lg border border-[#27272a] bg-[#18181b] px-3 py-1.5 text-xs font-medium text-zinc-300 transition-all hover:bg-[#201f22] hover:text-white"
-          >
-            <Download size={14} />
-            <span>Export</span>
           </button>
         </div>
       </div>
