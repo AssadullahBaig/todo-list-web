@@ -7,7 +7,7 @@ that we may add to TaskFlow in future versions.
 
 ## UI & Design
 
-- [ ] Improve overall UI polish
+- [x] Improve overall UI polish
 - [x] Improve spacing and typography
 - [x] Improve task cards
 - [x] Add better empty states

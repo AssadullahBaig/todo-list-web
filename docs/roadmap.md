@@ -1,3 +1,31 @@
+# Version 10 – UI Overhaul & Workspace Dashboard (v1.10.0)
+
+**Status:** Completed
+
+## Objective
+
+Overhaul TaskFlow into a modern dark productivity workspace with interactive analytics, custom task lists, and refined task controls.
+
+## Work Completed
+
+- Added custom task lists with inline creation and deletion in the sidebar.
+- Persisted custom lists to LocalStorage.
+- Added interactive Dashboard view with productivity stats and priority breakdowns.
+- Overhauled UI to a modern Linear Zinc dark aesthetic.
+- Restructured layout with a full-height sidebar and content-aligned breadcrumb header.
+- Added smooth hover slide-in animations for task action buttons.
+- Maintained clear visual separation between Overdue and Other tasks.
+- Cleaned up redundant navigation, badges, and export controls.
+- Kept all existing logic, recurrence, subtasks, notes, filters, and search fully working.
+
+## Concepts Learned
+
+- View switching between Workspace and Analytics Dashboard
+- Interactive CSS transitions (width expansion and slide-reveals on hover)
+
+
+---
+
 # Version 9 – Task Lists & Inbox
 
 **Status:** Completed

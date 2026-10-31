@@ -70,7 +70,7 @@ function Sidebar({
   }
 
   return (
-    <aside className="fixed left-0 top-16 z-40 flex h-[calc(100vh-64px)] w-[260px] flex-col justify-between border-r border-[#27272a] bg-[#0e0e11] p-4 font-sans">
+    <aside className="fixed left-0 top-0 z-40 flex h-screen w-[260px] flex-col justify-between border-r border-[#27272a] bg-[#0e0e11] p-4 font-sans">
       {/* Top Section */}
       <div className="min-h-0 flex-1 overflow-y-auto custom-scrollbar">
         {/* Brand / Subtitle Header */}

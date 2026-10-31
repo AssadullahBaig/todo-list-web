@@ -19,16 +19,8 @@ function MainLayout({
 }) {
   return (
     <div className="min-h-screen bg-[#09090b] text-[#f8fafc]">
-      {/* TopNavBar */}
-      <Header
-        activeView={activeView}
-        onViewChange={onViewChange}
-        searchTerm={searchTerm}
-        onSearchChange={onSearchChange}
-      />
-
       <div className="flex">
-        {/* SideNavBar */}
+        {/* Full-Height SideNavBar */}
         <Sidebar
           onToggleForm={onToggleForm}
           isFormVisible={isFormVisible}
@@ -43,8 +35,16 @@ function MainLayout({
           onViewChange={onViewChange}
         />
 
-        {/* Main Content Area */}
-        <div className="flex min-h-[calc(100vh-64px)] flex-1 flex-col md:ml-[260px]">
+        {/* Main Content Column */}
+        <div className="flex min-h-screen flex-1 flex-col md:ml-[260px]">
+          {/* Top Header - Sits directly above main content */}
+          <Header
+            activeView={activeView}
+            searchTerm={searchTerm}
+            onSearchChange={onSearchChange}
+            listFilter={listFilter}
+          />
+
           <main className="flex-1 bg-[#09090b]">
             <div className="mx-auto w-full max-w-[960px] px-6 py-10 lg:px-8">
               {children}

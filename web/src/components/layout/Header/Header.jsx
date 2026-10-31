@@ -2,50 +2,25 @@ import { Search, Moon } from "lucide-react";
 
 function Header({
   activeView = "todo",
-  onViewChange,
   searchTerm = "",
   onSearchChange,
+  listFilter = "All",
 }) {
   return (
-    <nav className="sticky top-0 z-50 flex h-16 w-full items-center justify-between border-b border-[#27272a] bg-[#0e0e11]/85 px-6 backdrop-blur-md lg:px-8">
-      {/* Brand & Top Nav Links */}
-      <div className="flex items-center gap-8">
-        <span className="text-xl font-bold tracking-tight text-white">
-          TaskFlow
+    <nav className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-[#27272a] bg-[#09090b]/85 px-6 backdrop-blur-md lg:px-8">
+      {/* Breadcrumb Indicator */}
+      <div className="flex items-center gap-2.5 text-sm">
+        <span className="font-semibold text-white">
+          {activeView === "dashboard" ? "Dashboard" : "My Tasks"}
         </span>
-
-        <div className="hidden md:flex items-center gap-6">
-          <button
-            type="button"
-            onClick={() => onViewChange && onViewChange("dashboard")}
-            className={`text-sm font-medium transition-colors px-3 py-1 rounded-lg ${
-              activeView === "dashboard"
-                ? "text-white font-semibold border-b-2 border-white rounded-none"
-                : "text-zinc-400 hover:text-white hover:bg-zinc-800/60"
-            }`}
-          >
-            Dashboard
-          </button>
-
-          <button
-            type="button"
-            onClick={() => onViewChange && onViewChange("todo")}
-            className={`text-sm font-medium transition-colors px-3 py-1 ${
-              activeView === "todo"
-                ? "text-white font-semibold border-b-2 border-white"
-                : "text-zinc-400 hover:text-white hover:bg-zinc-800/60 rounded-lg"
-            }`}
-          >
-            Todo
-          </button>
-
-          <button
-            type="button"
-            className="text-zinc-400 hover:text-white hover:bg-zinc-800/60 transition-colors px-3 py-1.5 rounded-lg text-sm font-medium"
-          >
-            Calendar
-          </button>
-        </div>
+        {activeView === "todo" && listFilter && listFilter !== "All" && (
+          <>
+            <span className="text-zinc-600">/</span>
+            <span className="rounded bg-zinc-800/80 px-2 py-0.5 text-xs text-zinc-300">
+              {listFilter}
+            </span>
+          </>
+        )}
       </div>
 
       {/* Right Controls */}
