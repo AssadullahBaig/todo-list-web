@@ -33,6 +33,7 @@ function TodoHeader({
   onEditSelected,
   onPinSelected,
   onDeleteSelected,
+  onOpenDashboard,
 }) {
   return (
     <section className="mb-7 w-full">
@@ -48,10 +49,15 @@ function TodoHeader({
           </p>
         </div>
 
-        {/* Productivity */}
-        <div className="hidden min-w-[220px] rounded-2xl border border-slate-800 bg-[#111827] px-5 py-4 lg:block">
+        {/* Productivity Card (Clickable to Dashboard) */}
+        <button
+          type="button"
+          onClick={onOpenDashboard}
+          title="Click to view detailed productivity dashboard"
+          className="group hidden min-w-[220px] text-left rounded-2xl border border-slate-800 bg-[#111827] px-5 py-4 transition hover:border-violet-500/50 hover:bg-[#151d30] hover:shadow-lg hover:shadow-violet-950/20 lg:block cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60"
+        >
           <div className="flex items-center justify-between gap-6">
-            <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
+            <span className="text-xs font-medium uppercase tracking-wide text-slate-500 group-hover:text-slate-400">
               Productivity
             </span>
 
@@ -74,7 +80,7 @@ function TodoHeader({
               style={{ width: `${completionPercentage}%` }}
             />
           </div>
-        </div>
+        </button>
       </div>
 
       {/* Task Views */}

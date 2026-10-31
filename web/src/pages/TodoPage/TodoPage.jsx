@@ -4,6 +4,7 @@ import MainLayout from "../../components/layout/MainLayout";
 import TodoHeader from "../../components/todo/TodoHeader";
 import TodoForm from "../../components/todo/TodoForm";
 import TodoList from "../../components/todo/TodoList";
+import DashboardView from "../../components/dashboard/DashboardView";
 
 import initialTodos from "../../data/initialTodos";
 
@@ -193,6 +194,7 @@ function TodoPage() {
   const [recentlyDeleted, setRecentlyDeleted] = useState(null);
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [selectedTodoIds, setSelectedTodoIds] = useState([]);
+  const [activeView, setActiveView] = useState("todo");
 
   function handleAddCustomList(name) {
     const trimmed = name.trim();
@@ -570,6 +572,10 @@ function TodoPage() {
   }
 
   function handleToggleForm() {
+    if (activeView !== "todo") {
+      setActiveView("todo");
+    }
+
     if (isFormVisible && editingTodoId !== null) {
       handleCancelEdit();
       return;
@@ -756,66 +762,84 @@ function TodoPage() {
       onDeleteCustomList={handleDeleteCustomList}
       taskCountsByList={taskCountsByList}
       totalTasks={totalTasks}
+      activeView={activeView}
+      onViewChange={setActiveView}
     >
-      <TodoHeader
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        filter={filter}
-        onFilterChange={setFilter}
-        sortBy={sortBy}
-        onSortChange={setSortBy}
-        priorityFilter={priorityFilter}
-        onPriorityFilterChange={setPriorityFilter}
-        taskView={taskView}
-        onTaskViewChange={setTaskView}
-        totalTasks={totalTasks}
-        completedTasks={completedTasks}
-        completionPercentage={completionPercentage}
-        isSelectionMode={isSelectionMode}
-        onToggleSelectionMode={handleToggleSelectionMode}
-        selectedCount={selectedTodoIds.length}
-        visibleTaskCount={sortedTodos.length}
-        onSelectVisible={handleSelectVisibleTodos}
-        onClearSelection={handleClearSelection}
-        onCompleteSelected={handleCompleteSelectedTodos}
-        onEditSelected={handleEditSelectedTodo}
-        onPinSelected={handlePinSelectedTodos}
-        onDeleteSelected={handleDeleteSelectedTodos}
-      />
-
-      {isFormVisible && (
-        <TodoForm
-          newTodo={newTodo}
-          onInputChange={handleInputChange}
-          onAddSubtask={handleAddSubtask}
-          onSubtaskChange={handleSubtaskChange}
-          onRemoveSubtask={handleRemoveSubtask}
-          onSubmit={handleSubmit}
-          isEditing={editingTodoId !== null}
-          onCancel={handleCancelEdit}
-          availableLists={[...DEFAULT_LISTS, ...customLists]}
+      {activeView === "dashboard" ? (
+        <DashboardView
+          todos={todos}
+          customLists={customLists}
+          onNavigateToTasks={() => setActiveView("todo")}
+          onOpenNewTask={() => {
+            setActiveView("todo");
+            setIsFormVisible(true);
+          }}
+          isTaskOverdue={isTaskOverdue}
         />
-      )}
+      ) : (
+        <>
+          <TodoHeader
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            filter={filter}
+            onFilterChange={setFilter}
+            sortBy={sortBy}
+            onSortChange={setSortBy}
+            priorityFilter={priorityFilter}
+            onPriorityFilterChange={setPriorityFilter}
+            taskView={taskView}
+            onTaskViewChange={setTaskView}
+            totalTasks={totalTasks}
+            completedTasks={completedTasks}
+            completionPercentage={completionPercentage}
+            isSelectionMode={isSelectionMode}
+            onToggleSelectionMode={handleToggleSelectionMode}
+            selectedCount={selectedTodoIds.length}
+            visibleTaskCount={sortedTodos.length}
+            onSelectVisible={handleSelectVisibleTodos}
+            onClearSelection={handleClearSelection}
+            onCompleteSelected={handleCompleteSelectedTodos}
+            onEditSelected={handleEditSelectedTodo}
+            onPinSelected={handlePinSelectedTodos}
+            onDeleteSelected={handleDeleteSelectedTodos}
+            onOpenDashboard={() => setActiveView("dashboard")}
+          />
 
-      <TodoList
-        todos={regularTodos}
-        overdueTodos={overdueTodos}
-        totalTaskCount={todos.length}
-        searchTerm={searchTerm}
-        filter={filter}
-        priorityFilter={priorityFilter}
-        taskView={taskView}
-        listFilter={listFilter}
-        onClearFilters={handleClearFilters}
-        onDelete={handleDeleteTodo}
-        onToggle={handleToggleComplete}
-        onEdit={handleEditTodo}
-        onTogglePinned={handleTogglePinned}
-        isSelectionMode={isSelectionMode}
-        selectedTodoIds={selectedTodoIds}
-        onToggleSelection={handleToggleTodoSelection}
-        onToggleSubtask={handleToggleSubtask}
-      />
+          {isFormVisible && (
+            <TodoForm
+              newTodo={newTodo}
+              onInputChange={handleInputChange}
+              onAddSubtask={handleAddSubtask}
+              onSubtaskChange={handleSubtaskChange}
+              onRemoveSubtask={handleRemoveSubtask}
+              onSubmit={handleSubmit}
+              isEditing={editingTodoId !== null}
+              onCancel={handleCancelEdit}
+              availableLists={[...DEFAULT_LISTS, ...customLists]}
+            />
+          )}
+
+          <TodoList
+            todos={regularTodos}
+            overdueTodos={overdueTodos}
+            totalTaskCount={todos.length}
+            searchTerm={searchTerm}
+            filter={filter}
+            priorityFilter={priorityFilter}
+            taskView={taskView}
+            listFilter={listFilter}
+            onClearFilters={handleClearFilters}
+            onDelete={handleDeleteTodo}
+            onToggle={handleToggleComplete}
+            onEdit={handleEditTodo}
+            onTogglePinned={handleTogglePinned}
+            isSelectionMode={isSelectionMode}
+            selectedTodoIds={selectedTodoIds}
+            onToggleSelection={handleToggleTodoSelection}
+            onToggleSubtask={handleToggleSubtask}
+          />
+        </>
+      )}
 
       {recentlyDeleted && (
         <div

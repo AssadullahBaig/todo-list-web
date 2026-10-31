@@ -1,12 +1,18 @@
 import { Bell, Sun } from "lucide-react";
 
-function Header() {
+function Header({ activeView = "todo" }) {
+  const pageTitle = activeView === "dashboard" ? "Dashboard" : "Workspace";
+  const pageSubtitle =
+    activeView === "dashboard"
+      ? "Productivity & performance metrics"
+      : "Welcome back 👋";
+
   return (
     <header className="sticky top-0 z-40 flex h-20 items-center justify-between border-b border-slate-800 bg-[#070B1A]/95 px-10 backdrop-blur-md">
       <div>
-        <h2 className="text-xl font-semibold text-white">Dashboard</h2>
+        <h2 className="text-xl font-semibold text-white">{pageTitle}</h2>
 
-        <p className="text-sm text-slate-400">Welcome back 👋</p>
+        <p className="text-sm text-slate-400">{pageSubtitle}</p>
       </div>
 
       {/* Right Side */}

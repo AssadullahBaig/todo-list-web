@@ -60,7 +60,7 @@ Possible lists:
 - [ ] Weekly task view
 - [x] Overdue task section
 - [x] Upcoming tasks
-- [ ] Task statistics
+- [x] Task statistics
 - [x] Completion progress
 - [x] Recurring task system
 - [ ] Reminders and notifications

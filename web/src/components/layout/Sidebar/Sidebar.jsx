@@ -34,6 +34,8 @@ function Sidebar({
   onDeleteCustomList,
   taskCountsByList = {},
   totalTasks = 0,
+  activeView = "todo",
+  onViewChange,
 }) {
   const [isAddingList, setIsAddingList] = useState(false);
   const [newListName, setNewListName] = useState("");
@@ -59,6 +61,14 @@ function Sidebar({
     setErrorMessage("");
     setIsAddingList(false);
   }
+
+  function handleListClick(listName) {
+    onListFilterChange(listName);
+    if (onViewChange && activeView !== "todo") {
+      onViewChange("todo");
+    }
+  }
+
   return (
     <aside className="fixed left-0 top-0 flex h-screen w-[260px] flex-col justify-between border-r border-slate-800 bg-[#0F172A]">
       {/* Top Section */}
@@ -79,36 +89,26 @@ function Sidebar({
         {/* Navigation */}
         <nav className="space-y-2 px-4 py-8">
           <button
-            className="
-              flex w-full items-center gap-4 rounded-xl px-5 py-3
-              text-slate-400
-              transition-all duration-200
-              hover:bg-slate-800 hover:text-white
-              focus-visible:outline-none
-              focus-visible:ring-2
-              focus-visible:ring-violet-500/60
-              focus-visible:ring-offset-2
-              focus-visible:ring-offset-[#0F172A]
-            "
+            type="button"
+            onClick={() => onViewChange && onViewChange("dashboard")}
+            className={`flex w-full items-center gap-4 rounded-xl px-5 py-3 transition-all duration-200 ${
+              activeView === "dashboard"
+                ? "bg-gradient-to-r from-violet-700 to-violet-600 font-semibold text-white shadow-lg shadow-violet-900/30"
+                : "text-slate-400 hover:bg-slate-800 hover:text-white"
+            } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]`}
           >
             <LayoutDashboard size={20} />
             <span>Dashboard</span>
           </button>
 
           <button
-            className="
-              flex w-full items-center gap-4 rounded-xl
-              bg-gradient-to-r from-violet-700 to-violet-600
-              px-5 py-3 font-semibold text-white
-              shadow-lg shadow-violet-900/30
-              transition-all duration-200
-              hover:from-violet-600 hover:to-violet-500
-              focus-visible:outline-none
-              focus-visible:ring-2
-              focus-visible:ring-violet-400/70
-              focus-visible:ring-offset-2
-              focus-visible:ring-offset-[#0F172A]
-            "
+            type="button"
+            onClick={() => onViewChange && onViewChange("todo")}
+            className={`flex w-full items-center gap-4 rounded-xl px-5 py-3 transition-all duration-200 ${
+              activeView === "todo"
+                ? "bg-gradient-to-r from-violet-700 to-violet-600 font-semibold text-white shadow-lg shadow-violet-900/30"
+                : "text-slate-400 hover:bg-slate-800 hover:text-white"
+            } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]`}
           >
             <CheckSquare size={20} />
             <span>Todo</span>
@@ -225,7 +225,7 @@ function Sidebar({
                 <button
                   key={taskList.name}
                   type="button"
-                  onClick={() => onListFilterChange(taskList.name)}
+                  onClick={() => handleListClick(taskList.name)}
                   className={`group flex w-full items-center justify-between rounded-xl px-4 py-2.5 text-sm transition ${
                     isActive
                       ? "bg-violet-500/10 font-medium text-violet-300"
@@ -268,7 +268,7 @@ function Sidebar({
                 >
                   <button
                     type="button"
-                    onClick={() => onListFilterChange(customName)}
+                    onClick={() => handleListClick(customName)}
                     className="flex min-w-0 flex-1 items-center gap-3 text-left focus-visible:outline-none"
                   >
                     <Folder size={17} className="shrink-0 text-violet-400" />
