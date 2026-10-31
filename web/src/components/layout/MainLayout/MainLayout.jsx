@@ -7,6 +7,11 @@ function MainLayout({
   isFormVisible,
   listFilter,
   onListFilterChange,
+  customLists,
+  onAddCustomList,
+  onDeleteCustomList,
+  taskCountsByList,
+  totalTasks,
 }) {
   return (
     <div className="flex min-h-screen bg-[#0B1120] text-white">
@@ -16,6 +21,11 @@ function MainLayout({
         isFormVisible={isFormVisible}
         listFilter={listFilter}
         onListFilterChange={onListFilterChange}
+        customLists={customLists}
+        onAddCustomList={onAddCustomList}
+        onDeleteCustomList={onDeleteCustomList}
+        taskCountsByList={taskCountsByList}
+        totalTasks={totalTasks}
       />
 
       {/* Main Content */}

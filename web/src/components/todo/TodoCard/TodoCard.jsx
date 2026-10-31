@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Check,
   ChevronDown,
@@ -155,12 +155,6 @@ function TodoCard({
       }
     : dueDateStatus;
 
-  useEffect(() => {
-    if (!completed) {
-      setIsAnimating(false);
-    }
-  }, [completed]);
-
   function handleToggle() {
     if (!completed) {
       setIsAnimating(true);
@@ -168,6 +162,8 @@ function TodoCard({
       setTimeout(() => {
         setIsAnimating(false);
       }, 700);
+    } else {
+      setIsAnimating(false);
     }
 
     onToggle(id);

@@ -29,7 +29,7 @@ that we may add to TaskFlow in future versions.
 - [x] Task lists
 - [x] Inbox
 - [ ] Custom task ordering
-- [ ] Custom labels
+- [x] Custom labels
 - [x] Subtasks
 - [x] Labels
 - [ ] Comments
@@ -46,20 +46,20 @@ that we may add to TaskFlow in future versions.
 
 Possible lists:
 
-- Inbox
-- Work
-- Study
-- Personal
-- Custom lists
+- [x] Inbox
+- [x] Work
+- [x] Study
+- [x] Personal
+- [x] Custom lists
 
 ---
 
 ## Productivity
 
-- [ ] Daily task view
+- [x] Daily task view
 - [ ] Weekly task view
 - [x] Overdue task section
-- [ ] Upcoming tasks
+- [x] Upcoming tasks
 - [ ] Task statistics
 - [x] Completion progress
 - [x] Recurring task system
@@ -120,11 +120,11 @@ Future backend work:
 
 ## Deployment & DevOps
 
-- [ ] GitHub Actions
+- [x] GitHub Actions
 - [ ] Continuous Integration (CI)
-- [ ] Continuous Deployment (CD)
-- [ ] Automatically build on push
-- [ ] Automatically deploy on push
+- [x] Continuous Deployment (CD)
+- [x] Automatically build on push
+- [x] Automatically deploy on push
 
 ---
 

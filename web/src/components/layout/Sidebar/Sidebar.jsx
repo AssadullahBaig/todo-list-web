@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   LayoutDashboard,
   CheckSquare,
@@ -9,6 +10,11 @@ import {
   Briefcase,
   BookOpen,
   User,
+  Folder,
+  FolderPlus,
+  Check,
+  X,
+  Trash2,
 } from "lucide-react";
 
 const taskLists = [
@@ -19,7 +25,40 @@ const taskLists = [
   { name: "Personal", label: "Personal", icon: User },
 ];
 
-function Sidebar({ onToggleForm, listFilter, onListFilterChange }) {
+function Sidebar({
+  onToggleForm,
+  listFilter,
+  onListFilterChange,
+  customLists = [],
+  onAddCustomList,
+  onDeleteCustomList,
+  taskCountsByList = {},
+  totalTasks = 0,
+}) {
+  const [isAddingList, setIsAddingList] = useState(false);
+  const [newListName, setNewListName] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  function handleCreateList(e) {
+    e.preventDefault();
+    const trimmed = newListName.trim();
+    if (!trimmed) {
+      setErrorMessage("List name cannot be empty");
+      return;
+    }
+
+    if (onAddCustomList) {
+      const result = onAddCustomList(trimmed);
+      if (result && !result.success) {
+        setErrorMessage(result.error || "Cannot add list");
+        return;
+      }
+    }
+
+    setNewListName("");
+    setErrorMessage("");
+    setIsAddingList(false);
+  }
   return (
     <aside className="fixed left-0 top-0 flex h-screen w-[260px] flex-col justify-between border-r border-slate-800 bg-[#0F172A]">
       {/* Top Section */}
@@ -112,28 +151,163 @@ function Sidebar({ onToggleForm, listFilter, onListFilterChange }) {
 
         {/* Task Lists */}
         <div className="px-4 pb-6">
-          <p className="mb-3 px-3 text-xs font-semibold uppercase tracking-wider text-slate-600">
-            Lists
-          </p>
+          <div className="mb-3 flex items-center justify-between px-3">
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-600">
+              Lists
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                setIsAddingList((prev) => !prev);
+                setErrorMessage("");
+              }}
+              className="rounded-lg p-1 text-slate-400 transition hover:bg-slate-800 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60"
+              title="Add new list"
+              aria-label="Add new list"
+            >
+              <Plus size={15} />
+            </button>
+          </div>
+
+          {/* Inline List Creator */}
+          {isAddingList && (
+            <form onSubmit={handleCreateList} className="mb-3 px-1">
+              <div className="flex items-center gap-1.5 rounded-xl border border-violet-500/50 bg-[#1E293B] px-3 py-1.5 shadow-sm">
+                <FolderPlus size={15} className="shrink-0 text-violet-400" />
+                <input
+                  type="text"
+                  autoFocus
+                  value={newListName}
+                  onChange={(e) => {
+                    setNewListName(e.target.value);
+                    if (errorMessage) setErrorMessage("");
+                  }}
+                  placeholder="New list..."
+                  className="w-full bg-transparent text-sm text-white placeholder:text-slate-500 outline-none"
+                />
+                <button
+                  type="submit"
+                  className="rounded p-1 text-violet-400 transition hover:bg-violet-500/20 hover:text-violet-300"
+                  title="Save list"
+                >
+                  <Check size={14} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsAddingList(false);
+                    setNewListName("");
+                    setErrorMessage("");
+                  }}
+                  className="rounded p-1 text-slate-400 transition hover:bg-slate-700 hover:text-white"
+                  title="Cancel"
+                >
+                  <X size={14} />
+                </button>
+              </div>
+              {errorMessage && (
+                <p className="mt-1 px-1 text-xs text-red-400">{errorMessage}</p>
+              )}
+            </form>
+          )}
 
           <div className="space-y-1">
+            {/* Standard Lists */}
             {taskLists.map((taskList) => {
               const Icon = taskList.icon;
               const isActive = listFilter === taskList.name;
+              const count =
+                taskList.name === "All"
+                  ? totalTasks
+                  : taskCountsByList[taskList.name] || 0;
 
               return (
                 <button
                   key={taskList.name}
                   type="button"
                   onClick={() => onListFilterChange(taskList.name)}
-                  className={`flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-sm transition ${isActive
-                    ? "bg-violet-500/10 font-medium text-violet-300"
-                    : "text-slate-500 hover:bg-slate-800 hover:text-slate-200"
-                    } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60`}
+                  className={`group flex w-full items-center justify-between rounded-xl px-4 py-2.5 text-sm transition ${
+                    isActive
+                      ? "bg-violet-500/10 font-medium text-violet-300"
+                      : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                  } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60`}
                 >
-                  <Icon size={17} />
-                  <span>{taskList.label}</span>
+                  <div className="flex items-center gap-3 truncate">
+                    <Icon size={17} className="shrink-0" />
+                    <span className="truncate">{taskList.label}</span>
+                  </div>
+
+                  {count > 0 && (
+                    <span
+                      className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
+                        isActive
+                          ? "bg-violet-500/20 text-violet-300"
+                          : "bg-slate-800 text-slate-400 group-hover:text-slate-300"
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  )}
                 </button>
+              );
+            })}
+
+            {/* Custom Lists */}
+            {customLists.map((customName) => {
+              const isActive = listFilter === customName;
+              const count = taskCountsByList[customName] || 0;
+
+              return (
+                <div
+                  key={customName}
+                  className={`group flex w-full items-center justify-between rounded-xl px-4 py-2 text-sm transition ${
+                    isActive
+                      ? "bg-violet-500/10 font-medium text-violet-300"
+                      : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => onListFilterChange(customName)}
+                    className="flex min-w-0 flex-1 items-center gap-3 text-left focus-visible:outline-none"
+                  >
+                    <Folder size={17} className="shrink-0 text-violet-400" />
+                    <span className="truncate">{customName}</span>
+                  </button>
+
+                  <div className="flex items-center gap-1.5">
+                    {count > 0 && (
+                      <span
+                        className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
+                          isActive
+                            ? "bg-violet-500/20 text-violet-300"
+                            : "bg-slate-800 text-slate-400 group-hover:text-slate-300"
+                        }`}
+                      >
+                        {count}
+                      </span>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (
+                          window.confirm(
+                            `Delete list "${customName}"? Any tasks inside will be moved to Inbox.`
+                          )
+                        ) {
+                          onDeleteCustomList(customName);
+                        }
+                      }}
+                      className="rounded p-1 text-slate-500 opacity-0 transition hover:bg-red-500/20 hover:text-red-400 group-hover:opacity-100"
+                      title={`Delete "${customName}" list`}
+                      aria-label={`Delete "${customName}" list`}
+                    >
+                      <Trash2 size={13} />
+                    </button>
+                  </div>
+                </div>
               );
             })}
           </div>

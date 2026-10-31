@@ -7,6 +7,25 @@ import TodoList from "../../components/todo/TodoList";
 
 import initialTodos from "../../data/initialTodos";
 
+const DEFAULT_LISTS = ["Inbox", "Work", "Study", "Personal"];
+
+function loadCustomLists() {
+  const savedLists = localStorage.getItem("customLists");
+
+  if (savedLists) {
+    try {
+      const parsed = JSON.parse(savedLists);
+      if (Array.isArray(parsed)) {
+        return parsed;
+      }
+    } catch {
+      return [];
+    }
+  }
+
+  return [];
+}
+
 function loadTodos() {
   const savedTodos = localStorage.getItem("todos");
 
@@ -170,9 +189,45 @@ function TodoPage() {
   const [priorityFilter, setPriorityFilter] = useState("All");
   const [taskView, setTaskView] = useState("all");
   const [listFilter, setListFilter] = useState("All");
+  const [customLists, setCustomLists] = useState(loadCustomLists);
   const [recentlyDeleted, setRecentlyDeleted] = useState(null);
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [selectedTodoIds, setSelectedTodoIds] = useState([]);
+
+  function handleAddCustomList(name) {
+    const trimmed = name.trim();
+    if (!trimmed) {
+      return { success: false, error: "List name cannot be empty" };
+    }
+
+    const allListNames = ["All", ...DEFAULT_LISTS, ...customLists];
+    const isDuplicate = allListNames.some(
+      (existing) => existing.toLowerCase() === trimmed.toLowerCase()
+    );
+
+    if (isDuplicate) {
+      return { success: false, error: "List already exists" };
+    }
+
+    setCustomLists((previous) => [...previous, trimmed]);
+    return { success: true };
+  }
+
+  function handleDeleteCustomList(nameToDelete) {
+    setCustomLists((previous) =>
+      previous.filter((name) => name !== nameToDelete)
+    );
+
+    if (listFilter === nameToDelete) {
+      setListFilter("All");
+    }
+
+    setTodos((previousTodos) =>
+      previousTodos.map((todo) =>
+        todo.list === nameToDelete ? { ...todo, list: "Inbox" } : todo
+      )
+    );
+  }
 
   function handleToggleSelectionMode() {
     if (isSelectionMode) {
@@ -543,6 +598,10 @@ function TodoPage() {
   }, [todos]);
 
   useEffect(() => {
+    localStorage.setItem("customLists", JSON.stringify(customLists));
+  }, [customLists]);
+
+  useEffect(() => {
     if (!recentlyDeleted) {
       return;
     }
@@ -561,6 +620,12 @@ function TodoPage() {
 
   const completionPercentage =
     totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
+
+  const taskCountsByList = todos.reduce((acc, todo) => {
+    const listName = todo.list || "Inbox";
+    acc[listName] = (acc[listName] || 0) + 1;
+    return acc;
+  }, {});
 
   const normalizedSearchTerm = searchTerm.trim().toLowerCase();
 
@@ -686,6 +751,11 @@ function TodoPage() {
       isFormVisible={isFormVisible}
       listFilter={listFilter}
       onListFilterChange={setListFilter}
+      customLists={customLists}
+      onAddCustomList={handleAddCustomList}
+      onDeleteCustomList={handleDeleteCustomList}
+      taskCountsByList={taskCountsByList}
+      totalTasks={totalTasks}
     >
       <TodoHeader
         searchTerm={searchTerm}
@@ -723,6 +793,7 @@ function TodoPage() {
           onSubmit={handleSubmit}
           isEditing={editingTodoId !== null}
           onCancel={handleCancelEdit}
+          availableLists={[...DEFAULT_LISTS, ...customLists]}
         />
       )}
 

@@ -9,6 +9,7 @@ function TodoForm({
   onSubmit,
   isEditing,
   onCancel,
+  availableLists = ["Inbox", "Work", "Study", "Personal"],
 }) {
   return (
     <section className="mb-8 rounded-3xl border border-slate-800 bg-[#111827] p-7 shadow-xl shadow-black/20">
@@ -331,10 +332,11 @@ function TodoForm({
               focus:ring-violet-500/20
             "
           >
-            <option value="Inbox">Inbox</option>
-            <option value="Work">Work</option>
-            <option value="Study">Study</option>
-            <option value="Personal">Personal</option>
+            {availableLists.map((listName) => (
+              <option key={listName} value={listName}>
+                {listName}
+              </option>
+            ))}
           </select>
         </div>
 

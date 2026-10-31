@@ -1,4 +1,4 @@
-import { Search, Bell, Sun } from "lucide-react";
+import { Bell, Sun } from "lucide-react";
 
 function Header() {
   return (
