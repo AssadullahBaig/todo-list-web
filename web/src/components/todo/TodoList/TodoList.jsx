@@ -1,5 +1,5 @@
 import TodoCard from "../TodoCard";
-import { AlertTriangle, ClipboardList } from "lucide-react";
+import { AlertTriangle, ClipboardList, ListTodo } from "lucide-react";
 
 function TodoList({
   todos,
@@ -119,21 +119,38 @@ function TodoList({
 
       {/* Regular Tasks List */}
       {todos.length > 0 && (
-        <div className="space-y-2.5">
-          {todos.map((todo) => (
-            <TodoCard
-              key={todo.id}
-              todo={todo}
-              onDelete={onDelete}
-              onToggle={onToggle}
-              onEdit={onEdit}
-              onTogglePinned={onTogglePinned}
-              isSelectionMode={isSelectionMode}
-              isSelected={selectedTodoIds.includes(todo.id)}
-              onToggleSelection={onToggleSelection}
-              onToggleSubtask={onToggleSubtask}
-            />
-          ))}
+        <div className={overdueTodos.length > 0 ? "pt-2" : ""}>
+          {overdueTodos.length > 0 && (
+            <div className="mb-2.5 flex items-center justify-between border-t border-zinc-800/80 pt-4">
+              <div className="flex items-center gap-2">
+                <ListTodo size={15} className="text-zinc-400" />
+                <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-400">
+                  Other Tasks
+                </h2>
+              </div>
+
+              <span className="text-[11px] text-zinc-500">
+                {todos.length} {todos.length === 1 ? "task" : "tasks"}
+              </span>
+            </div>
+          )}
+
+          <div className="space-y-2.5">
+            {todos.map((todo) => (
+              <TodoCard
+                key={todo.id}
+                todo={todo}
+                onDelete={onDelete}
+                onToggle={onToggle}
+                onEdit={onEdit}
+                onTogglePinned={onTogglePinned}
+                isSelectionMode={isSelectionMode}
+                isSelected={selectedTodoIds.includes(todo.id)}
+                onToggleSelection={onToggleSelection}
+                onToggleSubtask={onToggleSubtask}
+              />
+            ))}
+          </div>
         </div>
       )}
     </section>
