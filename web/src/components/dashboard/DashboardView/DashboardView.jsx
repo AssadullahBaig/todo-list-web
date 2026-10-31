@@ -110,7 +110,7 @@ function DashboardView({
         </div>
       </div>
 
-      {/* Top 4 KPI Metrics */}
+      {/* Top 4 Metrics */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {/* Total Tasks */}
         <div className="rounded-xl border border-[#27272a] bg-[#18181b] p-5 transition hover:border-zinc-700">
@@ -177,20 +177,18 @@ function DashboardView({
           <div className="flex items-center justify-between text-zinc-400">
             <span className="text-xs font-medium">Needs Attention</span>
             <div
-              className={`rounded-lg p-2 ${
-                overdueTasks.length > 0
+              className={`rounded-lg p-2 ${overdueTasks.length > 0
                   ? "bg-rose-500/10 text-rose-400"
                   : "bg-zinc-800 text-zinc-400"
-              }`}
+                }`}
             >
               <AlertTriangle size={16} />
             </div>
           </div>
           <div className="mt-3 flex items-baseline gap-2">
             <span
-              className={`text-2xl font-bold ${
-                overdueTasks.length > 0 ? "text-rose-400" : "text-white"
-              }`}
+              className={`text-2xl font-bold ${overdueTasks.length > 0 ? "text-rose-400" : "text-white"
+                }`}
             >
               {overdueTasks.length}
             </span>
@@ -242,11 +240,10 @@ function DashboardView({
                 <div
                   className="h-full rounded-full bg-amber-500 transition-all duration-500"
                   style={{
-                    width: `${
-                      totalTasks === 0
+                    width: `${totalTasks === 0
                         ? 0
                         : (highPriority.length / totalTasks) * 100
-                    }%`,
+                      }%`,
                   }}
                 />
               </div>
@@ -271,11 +268,10 @@ function DashboardView({
                 <div
                   className="h-full rounded-full bg-zinc-400 transition-all duration-500"
                   style={{
-                    width: `${
-                      totalTasks === 0
+                    width: `${totalTasks === 0
                         ? 0
                         : (mediumPriority.length / totalTasks) * 100
-                    }%`,
+                      }%`,
                   }}
                 />
               </div>
@@ -300,11 +296,10 @@ function DashboardView({
                 <div
                   className="h-full rounded-full bg-zinc-600 transition-all duration-500"
                   style={{
-                    width: `${
-                      totalTasks === 0
+                    width: `${totalTasks === 0
                         ? 0
                         : (lowPriority.length / totalTasks) * 100
-                    }%`,
+                      }%`,
                   }}
                 />
               </div>
