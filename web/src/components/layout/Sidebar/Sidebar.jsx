@@ -78,7 +78,10 @@ function Sidebar({
           <h2 className="text-lg font-bold tracking-tight text-white">
             TaskFlow
           </h2>
-          <p className="text-xs text-zinc-400">Linear Slate &amp; Zinc</p>
+          <p className="text-xs text-zinc-400">Premium Productivity</p>
+          <span className="mt-3 inline-block rounded-md bg-slate-800 px-2 py-1 text-xs font-medium text-slate-500">
+            v1.10.0
+          </span>
         </div>
 
         {/* Navigation */}
@@ -86,11 +89,10 @@ function Sidebar({
           <button
             type="button"
             onClick={() => onViewChange && onViewChange("dashboard")}
-            className={`flex w-full items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all ${
-              activeView === "dashboard"
-                ? "bg-white text-zinc-950 shadow-sm"
-                : "text-zinc-400 hover:bg-zinc-800/60 hover:text-white"
-            }`}
+            className={`flex w-full items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all ${activeView === "dashboard"
+              ? "bg-white text-zinc-950 shadow-sm"
+              : "text-zinc-400 hover:bg-zinc-800/60 hover:text-white"
+              }`}
           >
             <LayoutDashboard size={18} />
             <span>Dashboard</span>
@@ -99,11 +101,10 @@ function Sidebar({
           <button
             type="button"
             onClick={() => onViewChange && onViewChange("todo")}
-            className={`flex w-full items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all ${
-              activeView === "todo"
-                ? "bg-white text-zinc-950 shadow-sm"
-                : "text-zinc-400 hover:bg-zinc-800/60 hover:text-white"
-            }`}
+            className={`flex w-full items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all ${activeView === "todo"
+              ? "bg-white text-zinc-950 shadow-sm"
+              : "text-zinc-400 hover:bg-zinc-800/60 hover:text-white"
+              }`}
           >
             <CheckSquare size={18} />
             <span>Todo</span>
@@ -203,11 +204,10 @@ function Sidebar({
                   key={taskList.name}
                   type="button"
                   onClick={() => handleListClick(taskList.name)}
-                  className={`group flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition ${
-                    isActive
-                      ? "bg-zinc-800 text-white font-semibold"
-                      : "text-zinc-400 hover:bg-zinc-800/50 hover:text-white"
-                  }`}
+                  className={`group flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition ${isActive
+                    ? "bg-zinc-800 text-white font-semibold"
+                    : "text-zinc-400 hover:bg-zinc-800/50 hover:text-white"
+                    }`}
                 >
                   <div className="flex items-center gap-2.5 truncate">
                     <Icon size={15} className="shrink-0 text-zinc-400" />
@@ -216,11 +216,10 @@ function Sidebar({
 
                   {count > 0 && (
                     <span
-                      className={`rounded-full px-1.5 py-0.2 text-[10px] font-medium ${
-                        isActive
-                          ? "bg-zinc-700 text-white"
-                          : "bg-[#18181b] text-zinc-400 group-hover:text-zinc-300"
-                      }`}
+                      className={`rounded-full px-1.5 py-0.2 text-[10px] font-medium ${isActive
+                        ? "bg-zinc-700 text-white"
+                        : "bg-[#18181b] text-zinc-400 group-hover:text-zinc-300"
+                        }`}
                     >
                       {count}
                     </span>
@@ -237,11 +236,10 @@ function Sidebar({
               return (
                 <div
                   key={customName}
-                  className={`group flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition ${
-                    isActive
-                      ? "bg-zinc-800 text-white font-semibold"
-                      : "text-zinc-400 hover:bg-zinc-800/50 hover:text-white"
-                  }`}
+                  className={`group flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition ${isActive
+                    ? "bg-zinc-800 text-white font-semibold"
+                    : "text-zinc-400 hover:bg-zinc-800/50 hover:text-white"
+                    }`}
                 >
                   <button
                     type="button"
@@ -255,11 +253,10 @@ function Sidebar({
                   <div className="flex items-center gap-1.5">
                     {count > 0 && (
                       <span
-                        className={`rounded-full px-1.5 py-0.2 text-[10px] font-medium ${
-                          isActive
-                            ? "bg-zinc-700 text-white"
-                            : "bg-[#18181b] text-zinc-400 group-hover:text-zinc-300"
-                        }`}
+                        className={`rounded-full px-1.5 py-0.2 text-[10px] font-medium ${isActive
+                          ? "bg-zinc-700 text-white"
+                          : "bg-[#18181b] text-zinc-400 group-hover:text-zinc-300"
+                          }`}
                       >
                         {count}
                       </span>
